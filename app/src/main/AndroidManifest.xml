@@ -6,6 +6,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
 
 
 
@@ -49,6 +52,10 @@
 
         <activity android:name=".account.SignupActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".media.MediaplayerActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
 
 
 

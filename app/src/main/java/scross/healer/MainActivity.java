@@ -13,8 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import scross.healer.account.LoginActivity;
+import scross.healer.media.MediaplayerActivity;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,8 +37,6 @@ public class MainActivity extends BaseActivity
         finish();
 
 */
-
-
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -94,6 +94,9 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.timeline) {
+
+            Intent intent = new Intent(getApplicationContext(), MediaplayerActivity.class);
+            startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.survay) {
 
@@ -124,7 +127,6 @@ public class MainActivity extends BaseActivity
         //menu.findItem(R.id.nav_pkg_manage).setVisible(false);//In case you want to remove menu item
         navigationView.setNavigationItemSelectedListener(this);
 */
-
 
 
 }
