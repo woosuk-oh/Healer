@@ -1,0 +1,45 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">#504443</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="NavigationTheme" parent="AppTheme">
+        <item name="android:layout_marginTop">80dp</item>
+       <!-- <item name="android:layout_marginLeft">10dp</item>-->
+    </style>
+
+    <style name="NavDrawer">
+        <item name="android:layout_marginLeft">50dp</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme">
+    <item name="android:background">@drawable/survayicon</item>
+</style>
+
+    <!--  DatePickerAlert-->
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <!--buttons color-->
+    <item name="colorAccent">@color/pink</item>
+    <!--title and message color-->
+    <item name="android:textColorPrimary">@color/grayFont</item>
+    <!--dialog background-->
+    <item name="android:windowBackground">@drawable/dialog_background</item>
+    </style>
+
+
+</resources>
