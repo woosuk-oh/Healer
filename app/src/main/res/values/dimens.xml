@@ -9,8 +9,8 @@
     <dimen name="design_navigation_icon_size" tools:override="true">22dp</dimen>
     <dimen name="design_navigation_max_width" tools:override="true">240dp</dimen>
 
-    <dimen name="design_navigation_padding_bottom" tools:override="true">30dp</dimen>
-    <dimen name="design_navigation_separator_vertical_padding" tools:override="true" >30dp</dimen>
+    <dimen name="design_navigation_padding_bottom" tools:override="true">0dp</dimen>
+    <dimen name="design_navigation_separator_vertical_padding" tools:override="true" >0dp</dimen>
 
     <dimen name="design_navigation_elevation" tools:override="true">20dp</dimen>
     <dimen name="design_navigation_icon_padding" tools:override="true">30dp</dimen>

@@ -1,19 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:gravity="center"
+    android:layout_height="match_parent"
+    android:background="@color/color1">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0일차"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="31dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="초기트라우마 \n 부정적 기억 내보내기"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="31dp"
+        />
 
     <Button
         android:id="@+id/play"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/playbtn"
-        android:text="play" />
+        />
 
     <Button
         android:id="@+id/pause"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/pausebtn"
-        android:text="play/pause" />
+        />
+
+    <TextView
+        android:layout_marginTop="26dp"
+        android:id="@+id/current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="재생시간: 00:00"
+        android:textColor="#FFFFFF"
+        />
+    <TextView
+        android:layout_marginTop="8dp"
+        android:id="@+id/time_remaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="남은시간: 00:00"
+        android:textColor="#FFFFFF"
+
+        />
+
+
 </LinearLayout>

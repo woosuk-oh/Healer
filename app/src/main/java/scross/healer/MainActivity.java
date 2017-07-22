@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import scross.healer.account.LoginActivity;
+import scross.healer.home.TimelineActivity;
 import scross.healer.media.MediaplayerActivity;
 
 public class MainActivity extends BaseActivity
@@ -95,7 +96,7 @@ public class MainActivity extends BaseActivity
 
         if (id == R.id.timeline) {
 
-            Intent intent = new Intent(getApplicationContext(), MediaplayerActivity.class);
+            Intent intent = new Intent(getApplicationContext(), TimelineActivity.class);
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.survay) {
@@ -104,6 +105,8 @@ public class MainActivity extends BaseActivity
 
         } else if (id == R.id.setting) {
 
+            Intent intent = new Intent(getApplicationContext(), MediaplayerActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
