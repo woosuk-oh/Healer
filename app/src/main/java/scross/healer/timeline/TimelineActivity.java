@@ -1,7 +1,6 @@
-package scross.healer.home;
+package scross.healer.timeline;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;

@@ -16,6 +16,7 @@ import com.tsengvn.typekit.TypekitContextWrapper;
 public class BaseActivity extends AppCompatActivity {
 
 
+    int currentState; //현재까지 완료한 단계.
 
     @Override
     protected void attachBaseContext(Context newBase) {
