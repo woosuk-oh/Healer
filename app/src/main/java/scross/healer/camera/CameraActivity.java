@@ -33,6 +33,9 @@ public class CameraActivity extends BaseActivity{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_before_shoot_picture);
+
+
         cameraStart = (ImageButton) findViewById(R.id.camera_start);
         contentDay = (TextView) findViewById(R.id.content_day);
         contentName = (TextView) findViewById(R.id.content_name);

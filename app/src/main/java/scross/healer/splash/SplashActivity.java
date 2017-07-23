@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import scross.healer.MainActivity;
-import scross.healer.R;
 import scross.healer.account.LoginActivity;
 
 /**

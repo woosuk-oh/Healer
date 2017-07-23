@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import scross.healer.BaseActivity;
-import scross.healer.HealerContext;
 import scross.healer.MainActivity;
 import scross.healer.R;
 

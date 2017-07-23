@@ -1,9 +1,14 @@
 package scross.healer;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.AttributeSet;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,8 +17,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import scross.healer.timeline.TimelineActivity;
+
+import scross.healer.BaseActivity;
+import scross.healer.R;
 import scross.healer.media.MediaplayerActivity;
+import scross.healer.profile.ProfileDialogFragment;
+import scross.healer.survay.SurvayFragment;
+import scross.healer.timeline.TimelineEmotionDialog;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,7 +78,25 @@ public class MainActivity extends BaseActivity
             super.onBackPressed();
         }
     }
+    //TODO 프레그먼트 붙여야됨.
 /*
+    @Override
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+        FragmentManager fragmentManager = getFragmentManager();
+
+        TimelieFragment fragment = new TestFragment();
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id., fragment);
+        fragmentTransaction.commit();
+
+        inflater.inflate(R.layout.example_fragment, container, false);
+
+        return super.onCreateView(parent, name, context, attrs);
+    }*/
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -91,13 +119,23 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.timeline) {
+            TimelineEmotionDialog dialog = new TimelineEmotionDialog();
+            dialog.show(getFragmentManager(), "Timeline Emotion Test");
 
-            Intent intent = new Intent(getApplicationContext(), TimelineActivity.class);
-            startActivity(intent);
+
+            /*Intent intent = new Intent(getApplicationContext(), TimelineFragment.class);
+            startActivity(intent);*/
+
             // Handle the camera action
         } else if (id == R.id.survay) {
-
+        /*    Intent intent = new Intent(getApplicationContext(), SurvayFragment.class);
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.right_container, new FragmentB(), FRAGMENT_TAG);
+            ft.commit();
+*/
         } else if (id == R.id.profile) {
+            ProfileDialogFragment dialog = new ProfileDialogFragment();
+            dialog.show(getFragmentManager(), "Profile Update test");
 
         } else if (id == R.id.setting) {
 

@@ -56,7 +56,8 @@
         <activity android:name=".media.MediaplayerActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".timeline.TimelineActivity"
+        <activity android:name=".timeline.TimelineFragment"
+            android:theme="@style/AppTheme.NoActionBar"
             />
 
 

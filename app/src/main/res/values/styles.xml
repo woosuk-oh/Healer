@@ -1,4 +1,4 @@
-<resources>
+<resources >
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -54,6 +54,11 @@
     <!--dialog background-->
     <item name="android:windowBackground">@drawable/dialog_background</item>
     </style>
+<!--
+    <style name="ToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="android:contentInsetLeft">0dp</item>
 
+    </style>-->
 
 </resources>

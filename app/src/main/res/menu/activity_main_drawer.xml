@@ -3,28 +3,31 @@
 
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+
     >
+
 
 
     <group android:checkableBehavior="single">
 
+
         <item
             android:id="@+id/timeline"
             android:icon="@drawable/timelineicon"
-            android:title="Timeline" />
+            android:title="타임라인"/>
         <item
             android:id="@+id/survay"
             android:icon="@drawable/survayicon"
-            android:title="Survay" />
+            android:title="서베이" />
         <item
             android:id="@+id/profile"
             android:icon="@drawable/profileediticon"
-            android:title="Profile" />
+            android:title="프로필 수정" />
 
         <item
             android:id="@+id/setting"
             android:icon="@drawable/settingsicon"
-            android:title="Setting"/>
+            android:title="환경설정"/>
     </group>
 
 

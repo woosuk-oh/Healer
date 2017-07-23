@@ -33,8 +33,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import scross.healer.R;
+import scross.healer.SharedPreferenceUtil;
 
 import static android.view.View.GONE;
+import static scross.healer.HealerContext.getContext;
 
 public class MediaplayerActivity extends Activity implements OnErrorListener,
         OnBufferingUpdateListener, OnCompletionListener,
@@ -52,6 +54,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     private AudioManager audioManager;
     private TextView tv;
     private TextView tv2;
+    int savetime=0;
 
     SimpleDateFormat mmss = new SimpleDateFormat("mm:ss");
 
@@ -64,6 +67,15 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         super.onCreate(icicle);
 
         setContentView(R.layout.activity_audioplayer);
+
+
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
+
+
+        if(sharedPreferenceUtil.getSaveTime() != 0) {
+            savetime = sharedPreferenceUtil.getSaveTime();
+            Log.e("쉐어드프리페이런스: " + savetime, "세이브타임.");
+        }
 
         // Set up the play/pause/reset/stop buttons
         mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-1.mp3";
@@ -79,22 +91,30 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
         mPause.setVisibility(GONE);
 
-        mPlay.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                mPause.setVisibility(view.VISIBLE);
-                mPlay.setVisibility(GONE);
-                playVideo();
-            }
-        });
-        mPause.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                if (mp != null) {
-                    mp.pause();
-                    mPlay.setVisibility(view.VISIBLE);
-                    mPause.setVisibility(GONE);
+
+
+            mPlay.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    mPause.setVisibility(view.VISIBLE);
+                    mPlay.setVisibility(GONE);
+                    if(savetime == 0) {
+                        playVideo(0);
+                    }else{
+                        playVideo(savetime);
+                    }
                 }
-            }
-        });
+            });
+            mPause.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    if (mp != null) {
+                        mp.pause();
+                        mPlay.setVisibility(view.VISIBLE);
+                        mPause.setVisibility(GONE);
+                    }
+                }
+            });
+
+
 
 
     }
@@ -124,14 +144,17 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         }
     };*/
 
-    private void playVideo() {
+    private void playVideo(int loadtime) {
         try {
             final String path = mPath/*.getText().toString()*/;
             Log.v(TAG, "path: " + path);
 
             // If the path has not changed, just start the media player
             if (path.equals(current) && mp != null) {
+                Log.e("saveTime"+savetime, "테스트: ");
+
                 mp.start();
+
 
 
                 return;
@@ -169,6 +192,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                         e.printStackTrace();
                     }
                     Log.v(TAG, "Duration:  ===>" + mp.getDuration());
+                    mp.seekTo(savetime);
                     mp.start();
 
 
@@ -303,5 +327,15 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
     public void surfaceDestroyed(SurfaceHolder surfaceholder) {
         Log.d(TAG, "surfaceDestroyed called");
+    }
+
+    @Override
+    public void onBackPressed() {
+        savetime = mp.getCurrentPosition();
+
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
+        sharedPreferenceUtil.setSaveTime(savetime);
+
+        super.onBackPressed();
     }
 }

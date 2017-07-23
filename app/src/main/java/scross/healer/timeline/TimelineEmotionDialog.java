@@ -1,4 +1,4 @@
-package scross.healer.timeline.dialog;
+package scross.healer.timeline;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
