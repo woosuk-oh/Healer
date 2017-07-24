@@ -28,16 +28,25 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="초기 트라우마 \n 부정적 기억 내보내기"
+        android:text="초기 트라우마"
         android:textSize="25sp"
         android:textColor="#ffffff"
+
+        />
+    <TextView
+        android:id="@+id/content_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="부정적 기억 내보내기"
+        android:textSize="25sp"
+        android:textColor="@color/white"
         android:layout_marginBottom="29dp"
 
         />
 
-    <TextView
-        android:id="@+id/content_body"
 
+    <TextView
+        android:id="@+id/content_explain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="시작 전/후로 웃는 얼굴을 촬영 합니다. \n 카메라를 보고 '치~즈'라고 \n 말하며 사진 촬영을 해주세요."

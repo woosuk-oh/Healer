@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="오늘은 0월 0일"
+        android:textColor="@color/color5"
+        android:textSize="20sp"
+        android:layout_marginBottom="26.5dp"
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/nophoto"
+        android:layout_marginBottom="27.25dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="현재 홍길동님의 상태는"
+        android:textColor="@color/color5"
+        android:layout_marginBottom="13dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textColor="@color/color5"
+        android:text="상태값"
+        android:layout_marginBottom="38.5dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:background="@color/color4"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="14.5dp"
+            android:text="프로그램 진행률"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+
+            android:layout_marginEnd="41dp"
+            android:layout_alignTop="@+id/imageView3"
+            android:layout_toStartOf="@+id/textView4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="14.5dp"
+            android:text="00%"
+            android:textColor="@color/white"
+            android:textSize="45sp"
+            android:id="@+id/textView4"
+            android:layout_marginEnd="42dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/imageView3" />
+
+        <ImageView
+
+            android:layout_width="11.75dp"
+            android:layout_height="18dp"
+            android:src="@drawable/mainbtn"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="22dp"
+            android:id="@+id/imageView3" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

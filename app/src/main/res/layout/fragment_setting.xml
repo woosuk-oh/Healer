@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13.75dp"
+        android:layout_marginLeft="30.25dp"
+        android:layout_marginRight="30.25dp"
+        android:layout_marginTop="26.25dp"
+
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Wi-fi로만 연결"
+            android:textColor="@color/color5"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30.25dp"
+        android:text="Wi-fi로만 연결하여 컨텐츠를 재생 합니다.\n3G/LTE환경에서는 재생되지 않습니다."
+        android:textColor="@color/color5"
+        android:textSize="15sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30.25dp"
+        android:layout_marginRight="30.25dp"
+        android:layout_marginTop="38dp"
+        android:onClick="onClick"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color5"
+            android:text="로그아웃"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageButton
+            android:layout_width="18.75dp"
+            android:layout_height="18.75dp"
+            android:src="@drawable/projectstartbtn"
+            android:background=""
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="7dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
