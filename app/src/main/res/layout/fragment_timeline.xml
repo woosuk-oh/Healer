@@ -69,13 +69,13 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="133dp"
+            android:layout_width="86.5dp"
+            android:paddingLeft="23.25dp"
             android:layout_height="match_parent">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:id="@+id/frameLayout"
@@ -85,19 +85,77 @@
                     android:background="#b0b1b2"
                     android:orientation="horizontal" />
 
-                <ImageView
-                    android:foreground=""
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    android:layout_alignEnd="@+id/frameLayout"
-                    android:layout_alignParentTop="true"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="36.5dp"
-                    android:src="@drawable/projectnull"
-                    android:text="dd"
-                    android:textColor="@color/blackFont" />
+                    <ImageView
+                        android:id="@+id/timeline_state_icon1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="36.5dp"
+                        android:src="@drawable/projectnull" />
+
+                    <ImageView
+                        android:id="@+id/timeline_state_icon2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="41.75dp"
+                        android:src="@drawable/projectnull" />
+
+                    <ImageView
+                        android:id="@+id/timeline_state_icon3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="41.75dp"
+                        android:src="@drawable/projectnull" />
+
+                    <ImageView
+                        android:id="@+id/timeline_state_icon4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="41.75dp"
+                        android:src="@drawable/projectnull" />
+
+                    <ImageView
+                        android:id="@+id/timeline_state_icon5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="41.75dp"
+                        android:src="@drawable/projectnull" />
+
+
+                    <ImageView
+                        android:id="@+id/timeline_state_icon6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="41.75dp"
+                        android:src="@drawable/projectnull" />
+
+                    <ImageView
+                        android:id="@+id/timeline_state_icon7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="41.75dp"
+                        android:src="@drawable/projectnull" />
+
+                    <ImageView
+                        android:id="@+id/timeline_state_icon8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="41.75dp"
+                        android:src="@drawable/projectnull" />
+
+                </LinearLayout>
 
             </FrameLayout>
         </LinearLayout>
@@ -126,18 +184,17 @@
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/color5"
-                        android:text="서베이 등록"
-                        android:textSize="15sp"
                         android:layout_marginBottom="7.75dp"
-                        />
+                        android:text="서베이 등록"
+                        android:textColor="@color/color5"
+                        android:textSize="15sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/color5"
                         android:text="2017.01.01"
-                        android:textSize="12.5sp"
-                        />
+                        android:textColor="@color/color5"
+                        android:textSize="12.5sp" />
                 </LinearLayout>
 
 
