@@ -20,13 +20,12 @@ public class HealerContext  extends Application {
         mContext = this;
 
         Typekit.getInstance()
-                .addNormal(Typekit.createFromAsset(mContext, "fonts/NanumSquareRegular.ttf"))//나눔M
-                .addBold(Typekit.createFromAsset(mContext, "fonts/NanumSquareBold.ttf"))//나눔B
-                .addItalic(Typekit.createFromAsset(mContext, "fonts/Gotham-Black.otf"));//고담B
+                .addNormal(Typekit.createFromAsset(mContext, "fonts/NanumSquareOTFRegular.otf"))//나눔스퀘어 Regular
+                .addBold(Typekit.createFromAsset(mContext, "fonts/NanumSquareOTFBold.otf"))//나눔스퀘어 Bold
+                .addCustom1(Typekit.createFromAsset(mContext, "fonts/NanumSquareOTFExtraBold.otf"));//나눔스퀘어 ExtraBold
 
 
     }
-    // TODO 07-18. 폰트 다운받아서 적용  해야됨. 이전의 폰트로 적용해놨음.
 
     public static Context getContext() {
         return mContext;

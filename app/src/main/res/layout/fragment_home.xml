@@ -6,6 +6,7 @@
     >
 
     <TextView
+        android:id="@+id/home_today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="오늘은 0월 0일"
@@ -20,6 +21,7 @@
         android:layout_marginBottom="27.25dp"
         />
     <TextView
+        android:id="@+id/home_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
@@ -28,6 +30,7 @@
         android:layout_marginBottom="13dp"
         />
     <TextView
+        android:id="@+id/home_user_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
@@ -37,10 +40,13 @@
         />
 
     <RelativeLayout
+        android:id="@+id/home_inside_timeline"
         android:layout_width="300dp"
         android:layout_height="75dp"
         android:background="@color/color4"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:onClick="onClick"
+        >
 
         <TextView
             android:layout_width="wrap_content"

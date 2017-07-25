@@ -1,5 +1,6 @@
 package scross.healer;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -9,6 +10,8 @@ import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,15 +21,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 
+import java.sql.Time;
+
 import scross.healer.BaseActivity;
 import scross.healer.R;
+import scross.healer.home.HomeFragment;
 import scross.healer.media.MediaplayerActivity;
 import scross.healer.profile.ProfileDialogFragment;
+import scross.healer.setting.SettingFragment;
 import scross.healer.survay.SurvayFragment;
 import scross.healer.timeline.TimelineEmotionDialog;
+import scross.healer.timeline.TimelineFragment;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Fragment fragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +60,14 @@ public class MainActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,7 +78,15 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Fragment fragment = new HomeFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_home, fragment);
+        fragmentTransaction.commit();
+
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -119,28 +138,28 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.timeline) {
-            TimelineEmotionDialog dialog = new TimelineEmotionDialog();
-            dialog.show(getFragmentManager(), "Timeline Emotion Test");
+
+            fragment = new TimelineFragment();
+            ChangeFragment();
 
 
-            /*Intent intent = new Intent(getApplicationContext(), TimelineFragment.class);
-            startActivity(intent);*/
+
 
             // Handle the camera action
         } else if (id == R.id.survay) {
-        /*    Intent intent = new Intent(getApplicationContext(), SurvayFragment.class);
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.right_container, new FragmentB(), FRAGMENT_TAG);
-            ft.commit();
-*/
+
+        fragment = new SurvayFragment();
+            ChangeFragment();
+
+
         } else if (id == R.id.profile) {
             ProfileDialogFragment dialog = new ProfileDialogFragment();
             dialog.show(getFragmentManager(), "Profile Update test");
 
         } else if (id == R.id.setting) {
+            fragment = new SettingFragment();
+            ChangeFragment();
 
-            Intent intent = new Intent(getApplicationContext(), MediaplayerActivity.class);
-            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -165,5 +184,26 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 */
 
+
+    public void ChangeFragment() {
+
+
+   /*     switch( v.getId() ) {
+            default:
+            case R.id.button1: {
+                fragment = new FirstFragment();
+                break;
+            }
+            case R.id.button2: {
+                fragment = new SecondFragment();
+                break;
+            }
+        }*/
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_home, fragment);
+        fragmentTransaction.commit();
+    }
 
 }
