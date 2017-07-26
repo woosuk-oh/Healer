@@ -2,6 +2,8 @@ package scross.healer.network.home;
 
 import android.net.Network;
 
+import java.net.NetworkInterface;
+
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 

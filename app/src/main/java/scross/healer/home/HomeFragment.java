@@ -1,6 +1,7 @@
 package scross.healer.home;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,9 +10,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import java.net.NetworkInterface;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import scross.healer.BaseFragment;
 import scross.healer.R;
+import scross.healer.network.home.NetworkApi;
 import scross.healer.profile.ProfileDialogFragment;
+import scross.healer.timeline.TimelineFragment;
 
 /**
  * Created by hanee on 2017-07-25.
@@ -32,7 +42,7 @@ public class HomeFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         apiService = NetworkApi.getInstance().getServce();
-        Call<ResponseBody> getMain = apiService.main();
+//        Call<ResponseBody> getMain = apiService.main();
 //        getMain.enqueue(new Callback<ResponseBody>() {
 //            @Override
 //            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

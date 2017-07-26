@@ -4,27 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.net.NetworkInterface;
 
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import scross.healer.BaseActivity;
 import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.network.home.NetworkApi;
-import scross.healer.network.home.NetworkInterface;
 
 /**
  * Created by hanee on 2017-07-18.
