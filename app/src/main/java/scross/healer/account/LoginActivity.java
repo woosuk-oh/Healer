@@ -4,13 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import scross.healer.BaseActivity;
-import scross.healer.MainActivity;
 import scross.healer.R;
+import scross.healer.network.home.NetworkApi;
+import scross.healer.network.home.NetworkInterface;
 
 /**
  * Created by hanee on 2017-07-18.
@@ -21,6 +31,9 @@ public class LoginActivity extends BaseActivity {
 
     Button loginBtn;
     TextView signupBtn;
+    EditText phoneInput;
+    EditText passwordInput;
+    NetworkInterface apiService;
    // private BackPressCloseHandler backPressCloseHandler;
 
 
@@ -29,15 +42,46 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-
-
+        apiService = NetworkApi.getInstance().getServce();
         loginBtn = (Button) findViewById(R.id.login_btn);
+        phoneInput = (EditText) findViewById(R.id.phone_input);
+        passwordInput = (EditText) findViewById(R.id.password_input);
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
 
+
+                if(phoneInput.getText().length() < 10){
+                    Toast.makeText(LoginActivity.this, "핸드폰 번호를 제대로 입력해주세요", Toast.LENGTH_SHORT).show();
+                }else if(passwordInput.getText().length() == 0){
+                    Toast.makeText(LoginActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }else {
+                    int phone = Integer.valueOf(phoneInput.getText().toString());
+                    String password = passwordInput.getText().toString();
+                    Call<ResponseBody> postRate = apiService.login(phone, password);
+                    postRate.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            try {
+                                if(response.body() != null) {
+                                    Log.d("value", response.body().string());
+                                }else{
+                                    Toast.makeText(LoginActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            Log.d("value", t.getMessage());
+
+                        }
+                    });
+                }
 
                 /*
 

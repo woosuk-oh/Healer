@@ -32,7 +32,9 @@
                 android:layout_height="42dp"
                 android:background="#beb7b0"
                 android:hint="휴대전화 번호"
-                android:paddingLeft="20dp" />
+                android:paddingLeft="20dp"
+                android:inputType="number"
+                android:id="@+id/phone_input"/>
 
             <LinearLayout
                 android:layout_width="320dp"
@@ -44,7 +46,8 @@
                 android:layout_height="42dp"
                 android:background="#beb7b0"
                 android:hint="비밀번호"
-                android:paddingLeft="20dp" />
+                android:paddingLeft="20dp"
+                android:id="@+id/password_input"/>
 
         </LinearLayout>
 
