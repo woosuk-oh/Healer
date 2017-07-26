@@ -157,8 +157,12 @@ public class MainActivity extends BaseActivity
             dialog.show(getFragmentManager(), "Profile Update test");
 
         } else if (id == R.id.setting) {
-            fragment = new SettingFragment();
-            ChangeFragment();
+
+            Intent intent = new Intent(getApplicationContext(), MediaplayerActivity.class);
+            startActivity(intent);
+
+          /*  fragment = new SettingFragment();
+            ChangeFragment();*/
 
         }
 

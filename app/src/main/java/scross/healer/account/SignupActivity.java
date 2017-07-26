@@ -59,7 +59,6 @@ public class SignupActivity extends BaseActivity {
                 DatePickerDialog dp = new DatePickerDialog(SignupActivity.this,R.style.MyDialogTheme, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH));
-                dp.getDatePicker().setMinDate(myCalendar.getTimeInMillis()); //날짜제한
                 dp.show();
             }
         });
