@@ -6,4 +6,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+
+      <string-array name="sex_array">
+            <item>남자</item>
+            <item>여자</item>
+        </string-array>
 </resources>

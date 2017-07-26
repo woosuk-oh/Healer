@@ -174,6 +174,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
             mp.setVolume(1,1);
 
+
+
             // Set the surface for the video output
 
             // Set the data source in another thread
@@ -258,6 +260,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 }
             };
             new Thread(r).start();
+
         } catch (Exception e) {
             Log.e(TAG, "error: " + e.getMessage(), e);
             if (mp != null) {
@@ -265,6 +268,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 mp.release();
             }
         }
+
+
     }
 
     /**
@@ -341,10 +346,16 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     @Override
     public void onBackPressed() {
         //TODO 재생/일시정지 버튼 안누른 상태에서 백프레스하면 튕김. 겟커런트값이 없기때문인듯??
+
         savetime = mp.getCurrentPosition();
 
         SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
         sharedPreferenceUtil.setSaveTime(savetime);
+
+        if (mp != null) {
+            mp.stop();
+            mp.release();
+        }
 
         super.onBackPressed();
     }

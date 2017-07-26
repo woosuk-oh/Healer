@@ -8,9 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,9 +29,22 @@ import scross.healer.timeline.TimelineFragment;
  * Created by hanee on 2017-07-18.
  */
 
-public class ProfileDialogFragment extends DialogFragment implements View.OnClickListener {
+public class ProfileDialogFragment extends DialogFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     final Calendar myCalendar = Calendar.getInstance();
+    public static String select_item = "";
 
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String str = (String) adapterView.getSelectedItem();
+                select_item = str;
+                Toast.makeText(HealerContext.getContext(), adapterView.getItemAtPosition(i).toString()+"를 선택하셨습니다", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 
     TextView updateBirth;
 
@@ -86,12 +103,25 @@ public class ProfileDialogFragment extends DialogFragment implements View.OnClic
         updateBirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog dp = new DatePickerDialog(HealerContext.getContext(),R.style.MyDialogTheme, date, myCalendar
+                DatePickerDialog dp = new DatePickerDialog(getActivity(),R.style.MyDialogTheme, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH));
                 dp.show();
             }
         });
+
+
+        Spinner spinner = (Spinner) view.findViewById(R.id.profile_update_sex);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),R.array.sex_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+
+        spinner.setOnItemSelectedListener(this);
+
         return  view;
     }
 }

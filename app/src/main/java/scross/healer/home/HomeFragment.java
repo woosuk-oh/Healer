@@ -41,7 +41,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        apiService = NetworkApi.getInstance().getServce();
+//        apiService = NetworkApi.getInstance().getServce();
 //        Call<ResponseBody> getMain = apiService.main();
 //        getMain.enqueue(new Callback<ResponseBody>() {
 //            @Override

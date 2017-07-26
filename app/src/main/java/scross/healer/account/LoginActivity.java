@@ -27,7 +27,7 @@ public class LoginActivity extends BaseActivity {
     TextView signupBtn;
     EditText phoneInput;
     EditText passwordInput;
-    NetworkInterface apiService;
+//    NetworkInterface apiService;
    // private BackPressCloseHandler backPressCloseHandler;
 
 
@@ -36,7 +36,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-        apiService = NetworkApi.getInstance().getServce();
+//        apiService = NetworkApi.getInstance().getServce();
         loginBtn = (Button) findViewById(R.id.login_btn);
         phoneInput = (EditText) findViewById(R.id.phone_input);
         passwordInput = (EditText) findViewById(R.id.password_input);
