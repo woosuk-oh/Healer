@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
@@ -18,6 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import scross.healer.BaseActivity;
+import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.network.home.NetworkApi;
 import scross.healer.network.home.NetworkInterface;
@@ -50,38 +54,49 @@ public class LoginActivity extends BaseActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+//
+//                if(phoneInput.getText().length() < 10){
+//                    Toast.makeText(LoginActivity.this, "핸드폰 번호를 제대로 입력해주세요", Toast.LENGTH_SHORT).show();
+//                }else if(passwordInput.getText().length() == 0){
+//                    Toast.makeText(LoginActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+//                }else {
+//                    int phone = Integer.valueOf(phoneInput.getText().toString());
+//                    String password = passwordInput.getText().toString();
+//                    Call<ResponseBody> postRate = apiService.login(phone, password);
+//                    postRate.enqueue(new Callback<ResponseBody>() {
+//                        @Override
+//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                            try {
+//                                if(response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+//                                    String code = new JSONObject(response.body().string()).get("code").toString();
+//                                    if(code.equals("1")){
+//                                        Toast.makeText(LoginActivity.this, "성공", Toast.LENGTH_SHORT).show();
+//                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                                        startActivity(intent);
+//                                    }else{
+//                                        Toast.makeText(LoginActivity.this, "로그인에 실패했습니다", Toast.LENGTH_SHORT).show();
+//                                    }
+//
+//                                }else{
+//                                    Toast.makeText(LoginActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
+//                                }
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//                            Log.d("value", t.getMessage());
+//
+//                        }
+//                    });
 
-
-                if(phoneInput.getText().length() < 10){
-                    Toast.makeText(LoginActivity.this, "핸드폰 번호를 제대로 입력해주세요", Toast.LENGTH_SHORT).show();
-                }else if(passwordInput.getText().length() == 0){
-                    Toast.makeText(LoginActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
-                }else {
-                    int phone = Integer.valueOf(phoneInput.getText().toString());
-                    String password = passwordInput.getText().toString();
-                    Call<ResponseBody> postRate = apiService.login(phone, password);
-                    postRate.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            try {
-                                if(response.body() != null) {
-                                    Log.d("value", response.body().string());
-                                }else{
-                                    Toast.makeText(LoginActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                            Log.d("value", t.getMessage());
-
-                        }
-                    });
-                }
 
                 /*
 
