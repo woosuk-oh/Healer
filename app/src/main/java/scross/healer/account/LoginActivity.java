@@ -15,7 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.NetworkInterface;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -38,8 +37,9 @@ public class LoginActivity extends BaseActivity {
     TextView signupBtn;
     EditText phoneInput;
     EditText passwordInput;
+
     NetworkService apiService;
-   // private BackPressCloseHandler backPressCloseHandler;
+    // private BackPressCloseHandler backPressCloseHandler;
 
 
     @Override

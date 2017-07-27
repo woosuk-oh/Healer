@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.NetworkInterface;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -44,6 +43,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         apiService = NetworkApi.getInstance(getActivity()).getServce();
         Call<ResponseBody> getMain = apiService.main();
         getMain.enqueue(new Callback<ResponseBody>() {
