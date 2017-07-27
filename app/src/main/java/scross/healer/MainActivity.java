@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Fragment fragment = new HomeFragment();
+        BaseFragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_home, fragment);
@@ -157,8 +157,12 @@ public class MainActivity extends BaseActivity
             dialog.show(getFragmentManager(), "Profile Update test");
 
         } else if (id == R.id.setting) {
-            fragment = new SettingFragment();
-            ChangeFragment();
+
+            Intent intent = new Intent(getApplicationContext(), MediaplayerActivity.class);
+            startActivity(intent);
+
+          /*  fragment = new SettingFragment();
+            ChangeFragment();*/
 
         }
 

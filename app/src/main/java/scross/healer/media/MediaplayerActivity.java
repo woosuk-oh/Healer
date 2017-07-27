@@ -174,6 +174,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
             mp.setVolume(1,1);
 
+
+
             // Set the surface for the video output
 
             // Set the data source in another thread
@@ -213,22 +215,6 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
                                             }
                                         });
-                                    } else {
-                             /*       timer.cancel();
-                                    timer.purge();*/
-                                    }
-                                }
-                            });
-                        }
-                    }, 0, 1000);
-                    Timer timer2 = new Timer();
-                    timer2.scheduleAtFixedRate(new TimerTask() {
-                        @Override
-                        public void run() {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (mp != null && mp.isPlaying()) {
                                         tv2.post(new Runnable() {
                                             @Override
                                             public void run() {
@@ -246,9 +232,35 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                             });
                         }
                     }, 0, 1000);
+                 /*   Timer timer2 = new Timer();
+                    timer2.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (mp != null && mp.isPlaying()) {
+                                        tv2.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+
+                                                tv2.setText("남은시간: " + mmss.format(mp.getDuration() - mp.getCurrentPosition()));
+
+
+                                            }
+                                        });
+                                    } else {
+                             *//*       timer.cancel();
+                                    timer.purge();*//*
+                                    }
+                                }
+                            });
+                        }
+                    }, 0, 1000);*/
                 }
             };
             new Thread(r).start();
+
         } catch (Exception e) {
             Log.e(TAG, "error: " + e.getMessage(), e);
             if (mp != null) {
@@ -256,6 +268,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 mp.release();
             }
         }
+
+
     }
 
     /**
@@ -331,10 +345,17 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
     @Override
     public void onBackPressed() {
+        //TODO 재생/일시정지 버튼 안누른 상태에서 백프레스하면 튕김. 겟커런트값이 없기때문인듯??
+
         savetime = mp.getCurrentPosition();
 
         SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
         sharedPreferenceUtil.setSaveTime(savetime);
+
+        if (mp != null) {
+            mp.stop();
+            mp.release();
+        }
 
         super.onBackPressed();
     }

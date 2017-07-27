@@ -1,6 +1,7 @@
 package scross.healer.timeline;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Camera;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import scross.healer.BaseFragment;
 import scross.healer.R;
 import scross.healer.camera.CameraActivity;
 import scross.healer.profile.ProfileDialogFragment;
@@ -21,7 +23,7 @@ import scross.healer.profile.ProfileDialogFragment;
  * Created by hanee on 2017-07-18.
  */
 
-public class TimelineFragment extends Fragment implements View.OnClickListener {
+public class TimelineFragment extends BaseFragment implements View.OnClickListener {
     public TimelineFragment() {
         super();
     }
@@ -87,6 +89,16 @@ public class TimelineFragment extends Fragment implements View.OnClickListener {
                 break;
 
         }
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }
 

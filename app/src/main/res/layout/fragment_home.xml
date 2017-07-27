@@ -40,7 +40,7 @@
         />
 
     <RelativeLayout
-        android:id="@+id/home_inside_timeline"
+        android:id="@+id/program_in"
         android:layout_width="300dp"
         android:layout_height="75dp"
         android:background="@color/color4"

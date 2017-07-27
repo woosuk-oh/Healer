@@ -1,4 +1,4 @@
-package scross.healer.network.home;
+package scross.healer.networkService;
 
 /**
  * Created by gta2v on 2017-07-23.
