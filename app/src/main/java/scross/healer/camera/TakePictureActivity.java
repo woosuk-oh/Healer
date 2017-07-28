@@ -48,7 +48,7 @@ public class TakePictureActivity  extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "TakePictureActivity";
 
     private static final int REQUEST_CAMERA_PERMISSION = 1;
 
@@ -116,7 +116,7 @@ public class TakePictureActivity  extends AppCompatActivity implements
         super.onResume();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
-//            mCameraView.start();
+            mCameraView.start();
         } else if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CAMERA)) {
             ConfirmationDialogFragment

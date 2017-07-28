@@ -1,3 +1,4 @@
+/*
 package scross.healer.camera;
 
 import android.graphics.Bitmap;
@@ -25,9 +26,11 @@ import scross.healer.R;
 import static android.content.ContentValues.TAG;
 
 
+*/
 /**
  * Created by gta2v on 2017-07-28.
- */
+ *//*
+
 
 public class CameraActivity2 extends AppCompatActivity {
 
@@ -99,3 +102,4 @@ public class CameraActivity2 extends AppCompatActivity {
         return mBackgroundHandler;
     }
 }
+*/

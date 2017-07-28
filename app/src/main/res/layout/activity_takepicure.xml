@@ -18,7 +18,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".camera.TakePictureActivity">
 
     <com.google.android.cameraview.CameraView
         android:id="@+id/camera"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/camerabtn"
+        app:srcCompat="@drawable/ic_camera"
         app:useCompatPadding="true"/>
 
 </RelativeLayout>

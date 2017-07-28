@@ -1,3 +1,4 @@
+/*
 package scross.healer.camera;
 
 import android.content.Context;
@@ -13,9 +14,11 @@ import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
+*/
 /**
  * Created by gta2v on 2017-07-28.
- */
+ *//*
+
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private Camera mCamera;
@@ -217,4 +220,4 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
 
-}
+}*/
