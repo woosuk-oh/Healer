@@ -1,9 +1,10 @@
 package scross.healer.camera;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ import scross.healer.R;
 public class CameraActivity extends BaseActivity{
 
 
-    private ImageButton cameraStart;
+    private Button cameraStart;
     private ImageView cameraCheck;
     private TextView contentName;
     private TextView contentDay;
@@ -39,7 +40,7 @@ public class CameraActivity extends BaseActivity{
         setContentView(R.layout.activity_before_shoot_picture);
 
 
-        cameraStart = (ImageButton) findViewById(R.id.camera_start);
+        cameraStart = (Button) findViewById(R.id.camera_start);
         contentDay = (TextView) findViewById(R.id.content_day);
         contentName = (TextView) findViewById(R.id.content_name);
         contentBody = (TextView) findViewById(R.id.content_body);
@@ -52,7 +53,16 @@ public class CameraActivity extends BaseActivity{
 
             contentExplain.setText("시작 전/후로 웃는 얼굴을 촬영 합니다.\n카메라를 보고 '치~즈'라고\n말하며 사진 촬영을 해주세요.");
 
+            cameraStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                    //TODO 카메라 촬영하는 액티비티로 이동
+                    //TODO 카메라 촬영 액티비티에서 촬영버튼, 닫기버튼해서 닫기버튼 누르면 state +1 되도록!
+                    Intent intent = new Intent(getApplication(), TakePictureActivity.class);
+                    startActivity(intent);
+                }
+            });
             // 몇일차인지에 따라 컨텐츠 제목이랑 일자 수정!
             switch (dayState) {
 
@@ -126,7 +136,8 @@ public class CameraActivity extends BaseActivity{
 
                     //TODO 카메라 촬영하는 액티비티로 이동
                     //TODO 카메라 촬영 액티비티에서 촬영버튼, 닫기버튼해서 닫기버튼 누르면 state +1 되도록!
-
+                    Intent intent = new Intent(getApplication(), TakePictureActivity.class);
+                    startActivity(intent);
                 }
             });
         }

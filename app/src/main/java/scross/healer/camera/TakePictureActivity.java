@@ -1,4 +1,3 @@
-/*
 package scross.healer.camera;
 
 import android.Manifest;
@@ -27,19 +26,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.cameraview.AspectRatio;
+import com.google.android.cameraview.CameraView;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
 
-*/
-/**
+import scross.healer.R;
+/*
+
+*
  * Created by gta2v on 2017-07-26.
- *//*
+
+*/
 
 
-public class TakePictureActivity extends AppCompatActivity implements
+public class TakePictureActivity  extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener {
 
@@ -111,7 +116,7 @@ public class TakePictureActivity extends AppCompatActivity implements
         super.onResume();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
-            mCameraView.start();
+//            mCameraView.start();
         } else if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CAMERA)) {
             ConfirmationDialogFragment
@@ -312,5 +317,5 @@ public class TakePictureActivity extends AppCompatActivity implements
         }
 
     }
+
 }
-*/

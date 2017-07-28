@@ -1,9 +1,7 @@
 package scross.healer.timeline;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,6 +15,7 @@ import android.widget.LinearLayout;
 import scross.healer.BaseFragment;
 import scross.healer.R;
 import scross.healer.camera.CameraActivity;
+import scross.healer.camera.TakePictureActivity;
 import scross.healer.profile.ProfileDialogFragment;
 
 /**

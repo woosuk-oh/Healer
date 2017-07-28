@@ -12,4 +12,15 @@
             <item>남자</item>
             <item>여자</item>
         </string-array>
+
+    <string name="camera_permission_confirmation">이 앱은 키메라 권한을 승인해야만 이용이 가능합니다.</string>
+    <string name="camera_permission_not_granted">이 앱은 키메라 권한을 승인해야만 이용이 가능합니다.</string>
+    <string name="picture_taken">Picture taken</string>
+    <string name="aspect_ratio">Aspect ratio</string>
+    <string name="switch_flash">Switch flash</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="flash_auto">Flash auto</string>
+    <string name="flash_off">Flash off</string>
+    <string name="flash_on">Flash on</string>
+
 </resources>

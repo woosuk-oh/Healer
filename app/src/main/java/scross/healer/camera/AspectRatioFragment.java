@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2016 The Android Open Source Project
+/* * Copyright (C) 2016 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +11,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *//*
+ */
 
 
 package scross.healer.camera;
@@ -35,11 +34,10 @@ import com.google.android.cameraview.AspectRatio;
 import java.util.Arrays;
 import java.util.Set;
 
-
-*/
-/**
+/*
+*
  * A simple dialog that allows user to pick an aspect ratio.
- *//*
+ */
 
 public class AspectRatioFragment extends DialogFragment {
 
@@ -52,8 +50,7 @@ public class AspectRatioFragment extends DialogFragment {
             AspectRatio currentRatio) {
         final AspectRatioFragment fragment = new AspectRatioFragment();
         final Bundle args = new Bundle();
-        args.putParcelableArray(ARG_ASPECT_RATIOS,
-                ratios.toArray(new AspectRatio[ratios.size()]));
+        args.putParcelableArray(ARG_ASPECT_RATIOS,ratios.toArray(new AspectRatio[ratios.size()]));
         args.putParcelable(ARG_CURRENT_ASPECT_RATIO, currentRatio);
         fragment.setArguments(args);
         return fragment;
@@ -149,4 +146,3 @@ public class AspectRatioFragment extends DialogFragment {
     }
 
 }
-*/
