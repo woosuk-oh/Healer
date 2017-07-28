@@ -1,4 +1,4 @@
-package scross.healer.network.home;
+package scross.healer.networkService;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

@@ -1,26 +1,28 @@
 package scross.healer.home;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.net.NetworkInterface;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import scross.healer.BaseFragment;
 import scross.healer.R;
-import scross.healer.network.home.NetworkApi;
-import scross.healer.profile.ProfileDialogFragment;
+import scross.healer.networkService.NetworkApi;
+import scross.healer.networkService.NetworkService;
 import scross.healer.timeline.TimelineFragment;
 
 /**
@@ -32,7 +34,7 @@ public class HomeFragment extends BaseFragment {
     public HomeFragment() {
         super();
     }
-    NetworkInterface apiService;
+    NetworkService apiService;
     TextView progressView;
 
     private RelativeLayout programRate;
@@ -41,36 +43,38 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        apiService = NetworkApi.getInstance().getServce();
-//        Call<ResponseBody> getMain = apiService.main();
-//        getMain.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                if(response.body()!= null){
-//                    try{
-//                        JSONObject data = new JSONObject(response.body().string());
-//                        String code = data.get("code").toString();
-//                        if(code.equals("1")){
-//                            JSONObject results = data.getJSONObject("results");
-//                            progressView.setText(results.get("progressRate")+"%");
-//                        }else{
-//                            Toast.makeText(getActivity().getApplicationContext(), data.get("results").toString(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }else{
-//                    Toast.makeText(getActivity().getApplicationContext(), "서버오류입니다", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//
-//            }
-//        });
+
+        apiService = NetworkApi.getInstance(getActivity()).getServce();
+        Call<ResponseBody> getMain = apiService.main();
+        getMain.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.body()!= null){
+                    try{
+                        JSONObject data = new JSONObject(response.body().string());
+                        String code = data.get("code").toString();
+                        if(code.equals("1")){
+                            JSONObject results = data.getJSONObject("results");
+                            progressView.setText(results.get("progressRate")+"%");
+                        }else{
+                            Toast.makeText(getActivity().getApplicationContext(), data.get("results").toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(), "서버오류입니다", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
     }
 
     @Nullable

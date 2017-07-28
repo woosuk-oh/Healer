@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import scross.healer.R;
-import scross.healer.network.home.EmotionEntityObject;
+import scross.healer.networkService.EmotionEntityObject;
 
 /**
  * Created by gta2v on 2017-07-23.
