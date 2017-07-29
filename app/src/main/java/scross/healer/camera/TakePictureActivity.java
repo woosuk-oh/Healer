@@ -3,6 +3,7 @@ package scross.healer.camera;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,13 +30,27 @@ import android.widget.Toast;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import scross.healer.MainActivity;
 import scross.healer.R;
+import scross.healer.account.LoginActivity;
+import scross.healer.networkService.NetworkApi;
+import scross.healer.networkService.NetworkService;
 /*
 
 *
@@ -48,6 +63,7 @@ public class TakePictureActivity  extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener {
 
+    NetworkService apiService;
     private static final String TAG = "TakePictureActivity";
 
     private static final int REQUEST_CAMERA_PERMISSION = 1;
@@ -109,6 +125,7 @@ public class TakePictureActivity  extends AppCompatActivity implements
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
         }
+        apiService = NetworkApi.getInstance(this).getServce();
     }
 
     @Override
@@ -243,24 +260,57 @@ public class TakePictureActivity  extends AppCompatActivity implements
             getBackgroundHandler().post(new Runnable() {
                 @Override
                 public void run() {
-                    File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                    final File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                             "picture.jpg");
-                    OutputStream os = null;
-                    try {
-                        os = new FileOutputStream(file);
-                        os.write(data);
-                        os.close();
-                    } catch (IOException e) {
-                        Log.w(TAG, "Cannot write to " + file, e);
-                    } finally {
-                        if (os != null) {
+                    //이미지 처리 부분
+                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/jpg"), file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), reqFile);
+                    Call<ResponseBody> process1 = apiService.process1("1", body);
+                    process1.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             try {
-                                os.close();
+                                if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                                    String code = new JSONObject(response.body().string()).get("code").toString();
+                                    if (code.equals("1")) {
+                                        Toast.makeText(TakePictureActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                                        //파일처리부분
+                                        OutputStream os = null;
+                                        try {
+                                            os = new FileOutputStream(file);
+                                            os.write(data);
+                                            os.close();
+                                        } catch (IOException e) {
+                                            Log.w(TAG, "Cannot write to " + file, e);
+                                        } finally {
+                                            if (os != null) {
+                                                try {
+                                                    os.close();
+                                                } catch (IOException e) {
+                                                    // Ignore
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        Toast.makeText(TakePictureActivity.this, "앱을 끄고 다시 시작해주세요.", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                } else {
+                                    Toast.makeText(TakePictureActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                }
                             } catch (IOException e) {
-                                // Ignore
+                                Toast.makeText(TakePictureActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                Toast.makeText(TakePictureActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
+
                         }
-                    }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Toast.makeText(TakePictureActivity.this, "서버 오류입니다. 잠시후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             });
         }
