@@ -3,6 +3,7 @@ package scross.healer.home;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import scross.healer.BaseFragment;
+import scross.healer.HealerContext;
 import scross.healer.R;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
@@ -44,6 +48,9 @@ public class HomeFragment extends BaseFragment {
     ImageView homeUserImage;
     TextView homeUserState;
     TextView homeUserName;
+    String imageUrl;
+    String userEmotion;
+    String userName;
 
 
     private RelativeLayout programRate;
@@ -54,21 +61,50 @@ public class HomeFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
 
 
+        Log.e("AAA","onCreate");
 
 
 
         apiService = NetworkApi.getInstance(getActivity()).getServce();
         Call<ResponseBody> getMain = apiService.main();
         getMain.enqueue(new Callback<ResponseBody>() {
+
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("AAA","Retrofit");
+
                 if(response.body()!= null){
                     try{
                         JSONObject data = new JSONObject(response.body().string());
                         String code = data.get("code").toString();
                         if(code.equals("1")){
+
                             JSONObject results = data.getJSONObject("results");
+
+
+//
                             progressView.setText(results.get("progressRate")+"%");
+
+                            userName = (results.getString("name"));
+                            userEmotion = results.getString("emotion");
+                            imageUrl = results.getString("profile");
+
+
+
+                            homeUserName.setText("현재 "+userName+"님의 상태는");
+
+
+                            if(userEmotion == "null" || userEmotion == null){
+                                homeUserState.setText("알 수 없음");
+                            }else{
+                                homeUserState.setText(userEmotion);
+                            }
+                            if(imageUrl != "null"){
+                                Glide.with(HealerContext.getContext()).load(imageUrl).into(homeUserImage);
+                            }
+
+
+
                         }else{
                             Toast.makeText(getActivity().getApplicationContext(), data.get("results").toString(), Toast.LENGTH_SHORT).show();
                         }
@@ -95,8 +131,12 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         progressView = (TextView) view.findViewById(R.id.tv_progress);
-        /*Intent intent = new Intent(getApplicationContext(), MediaplayerActivity.class);
-        startActivity(intent);*/
+
+        homeToday = (TextView) view.findViewById(R.id.home_today);
+        homeUserImage = (ImageView) view.findViewById(R.id.home_user_image);
+        homeUserState = (TextView) view.findViewById(R.id.home_user_state);
+        homeUserName = (TextView) view.findViewById(R.id.home_user_name);
+
         programRate =  (RelativeLayout) view.findViewById(R.id.program_in);
 
         programRate.setOnClickListener(new View.OnClickListener() {
@@ -105,15 +145,16 @@ public class HomeFragment extends BaseFragment {
                 startFragment(getFragmentManager(), TimelineFragment.class);
             }
         });
+        Log.e("AAA","onCreateView");
 
-        DateFormat df = new SimpleDateFormat("dd MM");
+        DateFormat df = new SimpleDateFormat("MM월 dd일");
         String date = df.format(Calendar.getInstance().getTime());
 
-        homeToday = (TextView) view.findViewById(R.id.home_today);
-        homeUserImage = (ImageView) view.findViewById(R.id.home_user_image);
-        homeUserState = (TextView) view.findViewById(R.id.home_user_state);
-        homeUserName = (TextView) view.findViewById(R.id.home_user_name);
-
+   /*     Log.e("aaa", homeUserState.getText()+"");
+        Log.e("bbb", userEmotion+"");
+*/
+   Log.e("name",userName+"");
+        homeToday.setText("오늘은 "+date);
 
 
         return view;

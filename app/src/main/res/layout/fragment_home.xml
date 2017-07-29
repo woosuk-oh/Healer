@@ -26,7 +26,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
-        android:text="현재 홍길동님의 상태는"
         android:textColor="@color/color5"
         android:textSize="15sp" />
 
