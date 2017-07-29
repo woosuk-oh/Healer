@@ -81,8 +81,12 @@ public class LoginActivity extends BaseActivity {
                 }else if(passwordInput.getText().length() == 0){
                     Toast.makeText(LoginActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                 }else {
+
+
                     int phone = Integer.valueOf(phoneInput.getText().toString());
                     String password = passwordInput.getText().toString();
+
+
                     Call<ResponseBody> postRate = apiService.login(phone, password);
                     postRate.enqueue(new Callback<ResponseBody>() {
                         @Override

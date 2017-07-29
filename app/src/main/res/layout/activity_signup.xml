@@ -87,12 +87,14 @@
         <include layout="@layout/line_bar_util" />
 
         <TextView
+            android:id="@+id/signup_phone_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginTop="6dp"
             android:text="* 이미 가입된 번호 입니다."
-            android:textColor="#c3473d" />
+            android:textColor="#c3473d"
+            android:visibility="invisible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,8 +145,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#cac3bb"
-                android:hint="*****"
+                android:hint="비밀번호는 4자리 숫자로 입력"
                 android:inputType="textPassword"
                 android:textColor="#574b4a"
                 android:textSize="15sp" />
@@ -172,8 +173,7 @@
                 android:id="@+id/password2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#cac3bb"
-                android:hint="*****"
+                android:hint="비밀번호는 4자리 숫자로 입력"
                 android:inputType="textPassword"
                 android:textColor="#574b4a"
                 android:textSize="15sp" />
@@ -223,11 +223,15 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="100dp"
+            <Spinner
+                android:id="@+id/signup_user_sex"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="성별"
-                android:textSize="15sp" />
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"
+
+                />
 
             <EditText
                 android:id="@+id/user_sex"

@@ -26,6 +26,19 @@ public interface NetworkService {
             @Field("phone") int phone,
             @Field("pw") String pw
     );
+
+    @FormUrlEncoded
+    @POST("signup")
+    Call<ResponseBody> signup(
+            @Field("phone") int phone,
+            @Field("name") String name,
+            @Field("pw") String pw,
+            @Field("birth") int birth,
+            @Field("gender") String sex
+    );
+
+
+
     @Multipart
     @POST("upload")
     Call<ResponseBody> PostImage(

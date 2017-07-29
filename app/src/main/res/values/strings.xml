@@ -9,8 +9,8 @@
 
 
       <string-array name="sex_array">
-            <item>남자</item>
-            <item>여자</item>
+            <item>남</item>
+            <item>여</item>
         </string-array>
 
     <string name="camera_permission_confirmation">이 앱은 키메라 권한을 승인해야만 이용이 가능합니다.</string>
