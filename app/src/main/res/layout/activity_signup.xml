@@ -213,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:hint="19900101"
+                android:hint="클릭해주세요"
                 android:inputType="date"
                 android:onClick="onClick"
                 android:textColor="#574b4a"

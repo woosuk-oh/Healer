@@ -37,6 +37,9 @@ public interface NetworkService {
             @Field("gender") String sex
     );
 
+    @GET("timeline")
+    Call<ResponseBody> timeline();
+
 
 
     @Multipart

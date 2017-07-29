@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.telephony.PhoneNumberUtils;
 import android.text.InputType;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
@@ -52,6 +54,8 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
     EditText sex;
     CheckBox checkSelect;
 
+    String seletedGender;
+
     final Calendar myCalendar = Calendar.getInstance();
 
     NetworkService apiService;
@@ -60,9 +64,8 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String str = (String) adapterView.getSelectedItem();
-        select_item = str;
-//        Toast.makeText(HealerContext.getContext(), adapterView.getItemAtPosition(i).toString()+"를 선택하셨습니다", Toast.LENGTH_SHORT).show();
+        seletedGender= (String) adapterView.getSelectedItem();
+
     }
 
     @Override
@@ -127,13 +130,20 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
         });
 
 
+        phoneInput.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
+        phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); // 폰번호에 하이픈 붙이기
+
+        Log.e("phoneNum:",phoneInput.getText()+"");
+
+
+
         submit = (Button) findViewById(R.id.signup_submit_btn);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (phoneInput.getText().length() < 10) {
+                if (phoneInput.getText().length() < 11  ) {
                     Toast.makeText(SignupActivity.this, "핸드폰 번호를 제대로 입력해주세요", Toast.LENGTH_SHORT).show();
                 } else if (pw1.getText().length() == 0 || pw2.getText().length() == 0) {
                     Toast.makeText(SignupActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
@@ -141,16 +151,28 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
                     Toast.makeText(SignupActivity.this, "비밀번호가 맞지 않습니다.", Toast.LENGTH_SHORT).show();
 
 
-                }*/ else {
+                }*/
+                /*else if(seletedGender == null){
+                    Toast.makeText(SignupActivity.this, "성별을 선택해주세요", Toast.LENGTH_SHORT).show();
+
+
+                } */
+                else if (userName.length() < 2){
+                    Toast.makeText(SignupActivity.this, "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
                     if (checkSelect.isChecked()){
 
 
-                    int phone = Integer.valueOf(phoneInput.getText().toString());
+
+                        int phone  = Integer.valueOf(phoneInput.getText().toString().replaceAll("-",""));
+                        Log.e("phone",phone+"");
+
                     String name = userName.getText().toString();
                     String password = pw1.getText().toString();
                     int birthday = Integer.valueOf(birth.getText().toString());
-                    String gender = sex.getText().toString();
-
+                    String gender = seletedGender;
 
                     Call<ResponseBody> postRate = apiService.signup(phone, name, password, birthday, gender);
                     postRate.enqueue(new Callback<ResponseBody>() {
@@ -185,7 +207,7 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
 
                         }
                     });
-                    ;
+
                 }
                 else{
                         Toast.makeText(SignupActivity.this, "동의해주셔야 가입이 가능합니다..", Toast.LENGTH_SHORT).show();

@@ -1,21 +1,36 @@
 package scross.healer.timeline;
 
-import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import scross.healer.BaseFragment;
 import scross.healer.R;
 import scross.healer.camera.CameraActivity;
-import scross.healer.camera.TakePictureActivity;
+import scross.healer.databinding.FragmentTimelineBinding;
+import scross.healer.networkService.NetworkApi;
+import scross.healer.networkService.NetworkService;
+import scross.healer.networkService.object.TimelineObject;
 import scross.healer.profile.ProfileDialogFragment;
 
 /**
@@ -23,23 +38,35 @@ import scross.healer.profile.ProfileDialogFragment;
  */
 
 public class TimelineFragment extends BaseFragment implements View.OnClickListener {
+
     public TimelineFragment() {
         super();
     }
 
+    boolean surveyBefore;
+    boolean surveyAfter;
+    int lastDay=1;
+
+
+
+    FragmentTimelineBinding binding; // 데이터 바인딩 셋팅 (바인딩으로 인해 자동으로 생성된 클래스.)
+    TimelineObject timelineObject; // 데이터 바인딩 셋팅 (레이아웃에 넣을 데이터 객체. 네트워크로부터 받아온 데이터는 여기에 넣으면 됨.)
+
+    NetworkService apiService;
     private LinearLayout content1;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
+        network();
+        Log.e("ddd","onCreate");
 
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu items for use in the action bar
 
         inflater.inflate(R.menu.actionbar_menu_profile, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -58,13 +85,101 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
+    /** 프레그먼트에서의 데이터 바인딩 **/
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        Log.e("ddd","onCreateView");
 
-//        TimelineEmotionDialog dialog = new TimelineEmotionDialog();
-//        dialog.show(getFragmentManager(), "Timeline Emotion Test");
-        View view = inflater.inflate(R.layout.fragment_timeline, container, false);
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_timeline, container,false); // 데이터 바인딩 2
+        View view = binding.getRoot(); // 데이터 바인딩 3
+
+        ImageView timelineStateIcon1;
+        ImageView timelineStateIcon2;
+        ImageView timelineStateIcon3;
+        ImageView timelineStateIcon4;
+        ImageView timelineStateIcon5;
+        ImageView timelineStateIcon6;
+        ImageView timelineStateIcon7;
+        ImageView timelineStateIcon8;
+        timelineStateIcon1 = (ImageView) view.findViewById(R.id.timeline_state_icon1);
+        timelineStateIcon2 = (ImageView) view.findViewById(R.id.timeline_state_icon2);
+        timelineStateIcon3 = (ImageView) view.findViewById(R.id.timeline_state_icon3);
+        timelineStateIcon4 = (ImageView) view.findViewById(R.id.timeline_state_icon4);
+        timelineStateIcon5 = (ImageView) view.findViewById(R.id.timeline_state_icon5);
+        timelineStateIcon6 = (ImageView) view.findViewById(R.id.timeline_state_icon6);
+        timelineStateIcon7 = (ImageView) view.findViewById(R.id.timeline_state_icon7);
+        timelineStateIcon8 = (ImageView) view.findViewById(R.id.timeline_state_icon8);
+
+
+
+        switch (lastDay){
+            case 1:
+                timelineStateIcon1.setBackgroundResource(R.drawable.projectprogress);
+                break;
+            case 2:
+                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectprogress);
+                break;
+            case 3:
+                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectprogress);
+
+                break;
+            case 4:
+                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon4.setBackgroundResource(R.drawable.projectprogress);
+
+                break;
+            case 5:
+                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon5.setBackgroundResource(R.drawable.projectprogress);
+
+                break;
+            case 6:
+                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon6.setBackgroundResource(R.drawable.projectprogress);
+
+                break;
+            case 7:
+                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon6.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon7.setBackgroundResource(R.drawable.projectprogress);
+
+                break;
+            case 8:
+                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon6.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon7.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon8.setBackgroundResource(R.drawable.projectprogress);
+
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+
+
+        }
 
         content1 = (LinearLayout) view.findViewById(R.id.timeline_content6);
         content1.setOnClickListener(this);
@@ -72,10 +187,12 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
         return view;
 
+
         //TODO 텍스트가 25자 이상이면 ...으로 표시
         //TODO 진행 완료한 컨텐츠는 content_name 옆에 +' 완료' 추가하기.
         //TODO 상세보기 누르면 왼쪽 아이콘이랑 오른쪽 리니어레이아웃 탑마진 주기
     }
+
 
     @Override
     public void onClick(View view) {
@@ -89,10 +206,69 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
         }
     }
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
 
+
+
+    public void network(){
+
+        apiService = NetworkApi.getInstance(getActivity()).getServce();
+        Call<ResponseBody> getTimeline = apiService.timeline();
+        getTimeline.enqueue(new Callback<ResponseBody>() {
+
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.body()!= null){
+                    try{
+                        JSONObject data = new JSONObject(response.body().string());
+                        String code = data.get("code").toString();
+                        if(code.equals("1")){
+
+
+                            String userEmotion;
+                            JSONObject results = data.getJSONObject("results");
+
+                            userEmotion = results.getString("emotion");
+                            if(results.getString("emotion").equals("null")){
+                                    userEmotion = "감정 상태 : 알 수 없음";
+                            }else{
+                                userEmotion = "감정 상태 : "+userEmotion;
+                            }
+
+                            timelineObject = new TimelineObject(results.getString("name"),results.getString("birth"), userEmotion, results.getString("gender"), "finish_date1", "finish_date2", "finish_date3", "finish_date4", "finish_date5", "finish_date6", "finish_date7", "finish_date8", "finish_date9"); // 데이터 바인딩 4
+
+
+                            Log.e("ddd","network");
+
+                            Log.e("dddd",timelineObject.getName()+"");
+                            Log.e("dddd",timelineObject.getBirth()+"");
+                            Log.e("dddd",timelineObject.getEmotion()+"");
+
+
+
+                            binding.setTimeline(timelineObject); // 데이터 바인딩 5
+
+
+                        }else{
+                            Toast.makeText(getActivity().getApplicationContext(), data.get("results").toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(), "서버오류입니다", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -100,6 +276,8 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         super.onDetach();
     }
 }
+
+
 
     /*
     @Override

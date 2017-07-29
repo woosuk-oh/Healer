@@ -8,6 +8,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -70,6 +73,12 @@ public class LoginActivity extends BaseActivity {
         phoneInput = (EditText) findViewById(R.id.phone_input);
         passwordInput = (EditText) findViewById(R.id.password_input);
 
+        phoneInput.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
+        phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); // 폰번호에 하이픈 붙이기
+
+        passwordInput.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD); //TODO 패스워드 *** 형식으로 바꿔야되는데 안먹음..
+        passwordInput.addTextChangedListener(new PasswordTransformationMethod());
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +92,7 @@ public class LoginActivity extends BaseActivity {
                 }else {
 
 
-                    int phone = Integer.valueOf(phoneInput.getText().toString());
+                    int phone  = Integer.valueOf(phoneInput.getText().toString().replaceAll("-",""));
                     String password = passwordInput.getText().toString();
 
 
