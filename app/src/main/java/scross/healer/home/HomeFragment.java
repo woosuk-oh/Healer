@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -36,6 +40,11 @@ public class HomeFragment extends BaseFragment {
     }
     NetworkService apiService;
     TextView progressView;
+    TextView homeToday;
+    ImageView homeUserImage;
+    TextView homeUserState;
+    TextView homeUserName;
+
 
     private RelativeLayout programRate;
 
@@ -43,6 +52,10 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
 
         apiService = NetworkApi.getInstance(getActivity()).getServce();
         Call<ResponseBody> getMain = apiService.main();
@@ -92,6 +105,14 @@ public class HomeFragment extends BaseFragment {
                 startFragment(getFragmentManager(), TimelineFragment.class);
             }
         });
+
+        DateFormat df = new SimpleDateFormat("dd MM");
+        String date = df.format(Calendar.getInstance().getTime());
+
+        homeToday = (TextView) view.findViewById(R.id.home_today);
+        homeUserImage = (ImageView) view.findViewById(R.id.home_user_image);
+        homeUserState = (TextView) view.findViewById(R.id.home_user_state);
+        homeUserName = (TextView) view.findViewById(R.id.home_user_name);
 
 
 

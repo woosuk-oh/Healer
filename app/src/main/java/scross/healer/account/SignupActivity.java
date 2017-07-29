@@ -3,6 +3,7 @@ package scross.healer.account;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.text.InputType;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -30,6 +32,7 @@ import scross.healer.BaseActivity;
 import scross.healer.HealerContext;
 import scross.healer.MainActivity;
 import scross.healer.R;
+import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 
 /**
@@ -44,9 +47,10 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
     Button submit;
     EditText phoneInput;
     EditText userName;
-    EditText pw1;
-    EditText pw2;
+    TextInputEditText pw1;
+    TextInputEditText pw2;
     EditText sex;
+    CheckBox checkSelect;
 
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -58,7 +62,7 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String str = (String) adapterView.getSelectedItem();
         select_item = str;
-        Toast.makeText(HealerContext.getContext(), adapterView.getItemAtPosition(i).toString()+"를 선택하셨습니다", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(HealerContext.getContext(), adapterView.getItemAtPosition(i).toString()+"를 선택하셨습니다", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -72,6 +76,10 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_signup);
+
+        apiService = NetworkApi.getInstance(this).getServce();
+
+
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -99,9 +107,10 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
 
         phoneInput = (EditText) findViewById(R.id.phone_number);
         userName = (EditText) findViewById(R.id.user_name);
-        pw1 = (EditText) findViewById(R.id.password1);
-        pw2 = (EditText) findViewById(R.id.password2);
+        pw1 = (TextInputEditText) findViewById(R.id.password1);
+        pw2 = (TextInputEditText) findViewById(R.id.password2);
         sex = (EditText) findViewById(R.id.user_sex);
+        checkSelect = (CheckBox) findViewById(R.id.signup_check);
 
         birth = (EditText) findViewById(R.id.user_birth);
 
@@ -133,6 +142,7 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
 
 
                 }*/ else {
+                    if (checkSelect.isChecked()){
 
 
                     int phone = Integer.valueOf(phoneInput.getText().toString());
@@ -177,10 +187,16 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
                     });
                     ;
                 }
+                else{
+                        Toast.makeText(SignupActivity.this, "동의해주셔야 가입이 가능합니다..", Toast.LENGTH_SHORT).show();
+
+                    }
+            }
 
 
             }
         });
+
 
 
     }

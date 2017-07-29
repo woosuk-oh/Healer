@@ -9,35 +9,35 @@
         android:id="@+id/home_today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="26.5dp"
         android:text="오늘은 0월 0일"
         android:textColor="@color/color5"
-        android:textSize="20sp"
-        android:layout_marginBottom="26.5dp"
-        />
+        android:textSize="20sp" />
+
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/home_user_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/nophoto"
         android:layout_marginBottom="27.25dp"
-        />
+        android:src="@drawable/nophoto" />
+
     <TextView
         android:id="@+id/home_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:layout_marginBottom="13dp"
         android:text="현재 홍길동님의 상태는"
         android:textColor="@color/color5"
-        android:layout_marginBottom="13dp"
-        />
+        android:textSize="15sp" />
+
     <TextView
         android:id="@+id/home_user_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textColor="@color/color5"
-        android:text="상태값"
         android:layout_marginBottom="38.5dp"
-        />
+        android:text="상태값"
+        android:textColor="@color/color5"
+        android:textSize="30sp" />
 
     <RelativeLayout
         android:id="@+id/program_in"
@@ -49,14 +49,14 @@
         >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="14.5dp"
             android:text="프로그램 진행률"
             android:textColor="@color/white"
             android:textSize="15sp"
+            android:gravity="center"
 
-            android:layout_marginEnd="41dp"
             android:layout_alignTop="@+id/imageView3"
             android:layout_toStartOf="@+id/tv_progress" />
 
