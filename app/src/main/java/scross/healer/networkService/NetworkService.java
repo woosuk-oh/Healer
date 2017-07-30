@@ -37,6 +37,13 @@ public interface NetworkService {
             @Field("gender") String sex
     );
 
+    @FormUrlEncoded
+    @POST("edit_profile")
+    Call<ResponseBody> editProfile(
+            @Field("birth") int birth,
+            @Field("gender") String name
+    );
+
     @GET("timeline")
     Call<ResponseBody> timeline();
 

@@ -349,6 +349,8 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
             startActivity(intent);
 
                 break;*/
+
+
             case R.id.timeline_content_arrow1:
                 Intent intent = new Intent(getActivity(), CameraActivity.class);
                 startActivity(intent);
