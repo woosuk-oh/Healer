@@ -2,6 +2,7 @@ package scross.healer.timeline;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -103,58 +105,82 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         ImageView timelineStateIcon6;
         ImageView timelineStateIcon7;
         ImageView timelineStateIcon8;
-        timelineStateIcon1 = (ImageView) view.findViewById(R.id.timeline_state_icon1);
-        timelineStateIcon2 = (ImageView) view.findViewById(R.id.timeline_state_icon2);
+        ImageView timelineStateIcon9;
+        timelineStateIcon1 = (ImageView) view.findViewById(R.id.timeline_state_icon1); //사전 서베이
+        timelineStateIcon2 = (ImageView) view.findViewById(R.id.timeline_state_icon2); //사후 서베이
         timelineStateIcon3 = (ImageView) view.findViewById(R.id.timeline_state_icon3);
         timelineStateIcon4 = (ImageView) view.findViewById(R.id.timeline_state_icon4);
         timelineStateIcon5 = (ImageView) view.findViewById(R.id.timeline_state_icon5);
         timelineStateIcon6 = (ImageView) view.findViewById(R.id.timeline_state_icon6);
         timelineStateIcon7 = (ImageView) view.findViewById(R.id.timeline_state_icon7);
         timelineStateIcon8 = (ImageView) view.findViewById(R.id.timeline_state_icon8);
+        timelineStateIcon9 = (ImageView) view.findViewById(R.id.timeline_state_icon9);
 
+        TextView timelineContentName1;
+        TextView timelineContentName2;
+        TextView timelineContentName3;
+        TextView timelineContentName4;
+        TextView timelineContentName5;
+        TextView timelineContentName6;
+        TextView timelineContentName7;
+        TextView timelineContentName8;
+        TextView timelineContentName9;
+        TextView timelineContentName10;
+        timelineContentName1 = (TextView) view.findViewById(R.id.timeline_content_name1);
+        timelineContentName2 = (TextView) view.findViewById(R.id.timeline_content_name2);
+        timelineContentName3 = (TextView) view.findViewById(R.id.timeline_content_name3);
+        timelineContentName4 = (TextView) view.findViewById(R.id.timeline_content_name4);
+        timelineContentName5 = (TextView) view.findViewById(R.id.timeline_content_name5);
+        timelineContentName6 = (TextView) view.findViewById(R.id.timeline_content_name6);
+        timelineContentName7 = (TextView) view.findViewById(R.id.timeline_content_name7);
+        timelineContentName8 = (TextView) view.findViewById(R.id.timeline_content_name8);
+        timelineContentName9 = (TextView) view.findViewById(R.id.timeline_content_name9);
+        timelineContentName10 = (TextView) view.findViewById(R.id.timeline_content_name10);
+
+
+
+        if(surveyBefore == true){
+            timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
+
+        }else{
+            timelineStateIcon1.setBackgroundResource(R.drawable.projectprogress);
+            timelineContentName1.setTextColor(Color.GRAY);
+
+
+        }
+
+        if(surveyAfter == true){
+            timelineStateIcon2.setBackgroundResource(R.drawable.projectcomp lete);
+
+        }else {
+            timelineStateIcon1.setBackgroundResource(R.drawable.projectprogress);
+
+        }
 
 
         switch (lastDay){
             case 1:
-                timelineStateIcon1.setBackgroundResource(R.drawable.projectprogress);
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectprogress);
                 break;
             case 2:
-                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon2.setBackgroundResource(R.drawable.projectprogress);
-                break;
-            case 3:
-                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon3.setBackgroundResource(R.drawable.projectprogress);
-
-                break;
-            case 4:
-                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon4.setBackgroundResource(R.drawable.projectprogress);
 
                 break;
-            case 5:
-                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+            case 3:
                 timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon5.setBackgroundResource(R.drawable.projectprogress);
 
                 break;
-            case 6:
-                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+            case 4:
                 timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon6.setBackgroundResource(R.drawable.projectprogress);
 
                 break;
-            case 7:
-                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+            case 5:
                 timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
@@ -162,9 +188,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                 timelineStateIcon7.setBackgroundResource(R.drawable.projectprogress);
 
                 break;
-            case 8:
-                timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+            case 6:
                 timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
@@ -173,12 +197,30 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                 timelineStateIcon8.setBackgroundResource(R.drawable.projectprogress);
 
                 break;
+            case 7:
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon6.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon7.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon8.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon9.setBackgroundResource(R.drawable.projectprogress);
+
+                break;
+            case 8:
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon6.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon7.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon8.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon9.setBackgroundResource(R.drawable.projectcomplete);
+                break;
             case 9:
                 break;
+
             case 10:
                 break;
-
-
         }
 
         content1 = (LinearLayout) view.findViewById(R.id.timeline_content6);
@@ -236,7 +278,19 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                                 userEmotion = "감정 상태 : "+userEmotion;
                             }
 
-                            timelineObject = new TimelineObject(results.getString("name"),results.getString("birth"), userEmotion, results.getString("gender"), "finish_date1", "finish_date2", "finish_date3", "finish_date4", "finish_date5", "finish_date6", "finish_date7", "finish_date8", "finish_date9"); // 데이터 바인딩 4
+                            lastDay = results.getInt("lastday");
+
+
+                            //TODO switch case문으로 finish_date 값 null 이면 "시작하지 않음"으로 처리
+
+
+                            timelineObject = new TimelineObject(results.getString("name"),results.getString("birth"), userEmotion, results.getString("gender"),
+                                    "finish_date1", "finish_date2", "finish_date3", "finish_date4", "finish_date5", "finish_date6",
+                                    "finish_date7", "finish_date8", "finish_date9","finish_date10"
+
+                            ); // 데이터 바인딩 4
+
+
 
 
                             Log.e("ddd","network");

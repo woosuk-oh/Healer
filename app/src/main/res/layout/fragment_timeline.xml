@@ -72,8 +72,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text='@{" / "+timeline.gender}'
-                            android:textColor="@color/white"
-                            />
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
                     <TextView
@@ -124,7 +123,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="36.5dp"
-                                android:src="@drawable/projectnull" />
+                                android:background="@drawable/projectnull" />
 
                             <ImageView
                                 android:id="@+id/timeline_state_icon2"
@@ -132,7 +131,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="41.75dp"
-                                android:src="@drawable/projectnull" />
+                                android:background="@drawable/projectnull" />
 
                             <ImageView
                                 android:id="@+id/timeline_state_icon3"
@@ -140,7 +139,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="41.75dp"
-                                android:src="@drawable/projectnull" />
+                                android:background="@drawable/projectnull" />
 
                             <ImageView
                                 android:id="@+id/timeline_state_icon4"
@@ -148,7 +147,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="41.75dp"
-                                android:src="@drawable/projectnull" />
+                                android:background="@drawable/projectnull" />
 
                             <ImageView
                                 android:id="@+id/timeline_state_icon5"
@@ -156,7 +155,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="41.75dp"
-                                android:src="@drawable/projectnull" />
+                                android:background="@drawable/projectnull" />
 
 
                             <ImageView
@@ -165,7 +164,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="41.75dp"
-                                android:src="@drawable/projectnull" />
+                                android:background="@drawable/projectnull" />
 
                             <ImageView
                                 android:id="@+id/timeline_state_icon7"
@@ -173,7 +172,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="41.75dp"
-                                android:src="@drawable/projectnull" />
+                                android:background="@drawable/projectnull" />
 
                             <ImageView
                                 android:id="@+id/timeline_state_icon8"
@@ -181,7 +180,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="41.75dp"
-                                android:src="@drawable/projectnull" />
+                                android:background="@drawable/projectnull" />
 
                             <ImageView
                                 android:id="@+id/timeline_state_icon9"
@@ -189,7 +188,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="41.75dp"
-                                android:src="@drawable/projectnull" />
+                                android:background="@drawable/projectnull" />
 
                             <ImageView
                                 android:id="@+id/timeline_state_icon10"
@@ -197,7 +196,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="41.75dp"
-                                android:src="@drawable/projectnull" />
+                                android:background="@drawable/projectnull" />
 
 
                         </LinearLayout>
@@ -233,7 +232,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
-                                android:text="서베이 등록"
+                                android:text="사전 서베이 등록"
                                 android:textColor="@color/color5"
                                 android:textSize="15sp" />
 
@@ -244,7 +243,16 @@
                                 android:text="@{timeline.finish_date1}"
                                 android:textColor="@color/color5"
                                 android:textSize="12.5sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="진행 완료 여부: 완료"
+                                android:textSize="10sp"
+                                android:textColor="@color/color5"
+                                />
                         </LinearLayout>
+
 
                         <ImageView
                             android:id="@+id/timeline_content_arrow1"
@@ -258,50 +266,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/timeline_content2"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginRight="30dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-
-                            <TextView
-                                android:id="@+id/timeline_content_name2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="7.75dp"
-                                android:text="서베이 등록"
-                                android:textColor="@color/color5"
-                                android:textSize="15sp" />
-
-                            <TextView
-                                android:id="@+id/timeline_content_day2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{timeline.finish_date2}"
-                                android:textColor="@color/color5"
-                                android:textSize="12.5sp" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:id="@+id/timeline_content_arrow2"
-                            android:layout_width="11.75dp"
-                            android:layout_height="18dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/projectstartbtn"
-                            android:visibility="invisible">
-
-                        </ImageView>
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/timeline_content3"
@@ -669,7 +633,53 @@
                         </ImageView>
 
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/timeline_content2"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="30dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/timeline_content_name2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="7.75dp"
+                                android:text="사후 서베이 등록"
+                                android:textColor="@color/color5"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/timeline_content_day2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{timeline.finish_date2}"
+                                android:textColor="@color/color5"
+                                android:textSize="12.5sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/timeline_content_arrow2"
+                            android:layout_width="11.75dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/projectstartbtn"
+                            android:visibility="invisible">
+
+                        </ImageView>
+
+                    </LinearLayout>
                 </LinearLayout>
+
 
             </RelativeLayout>
         </LinearLayout>

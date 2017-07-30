@@ -22,8 +22,9 @@ public class TimelineObject extends TimelineFragment {
     public final String finish_date7;
     public final String finish_date8;
     public final String finish_date9;
+    public final String finish_date10;
 
-    public TimelineObject(String name, String birth, String emotion, String gender, String finish_date1, String finish_date2, String finish_date3, String finish_date4, String finish_date5, String finish_date6, String finish_date7, String finish_date8, String finish_date9) {
+    public TimelineObject(String name, String birth, String emotion, String gender, String finish_date1, String finish_date2, String finish_date3, String finish_date4, String finish_date5, String finish_date6, String finish_date7, String finish_date8, String finish_date9, String finish_date10) {
         this.name = name;
         this.birth = birth;
         this.emotion = emotion;
@@ -37,6 +38,7 @@ public class TimelineObject extends TimelineFragment {
         this.finish_date7 = finish_date7;
         this.finish_date8 = finish_date8;
         this.finish_date9 = finish_date9;
+        this.finish_date10 = finish_date10;
     }
 
     public String getName() {
