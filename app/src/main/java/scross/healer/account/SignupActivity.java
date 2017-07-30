@@ -51,7 +51,6 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
     EditText userName;
     TextInputEditText pw1;
     TextInputEditText pw2;
-    EditText sex;
     CheckBox checkSelect;
 
     String seletedGender;
@@ -112,7 +111,6 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
         userName = (EditText) findViewById(R.id.user_name);
         pw1 = (TextInputEditText) findViewById(R.id.password1);
         pw2 = (TextInputEditText) findViewById(R.id.password2);
-        sex = (EditText) findViewById(R.id.user_sex);
         checkSelect = (CheckBox) findViewById(R.id.signup_check);
 
         birth = (EditText) findViewById(R.id.user_birth);

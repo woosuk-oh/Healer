@@ -129,7 +129,7 @@ public class TimelineEmotionDialog extends DialogFragment implements View.OnClic
                 //TODO emotionValue 네트워크로 값 보내야댐!
                 break;
 
-            case R.id.emotion_fail_btn:
+            case R.id.emotion_cancel_btn:
                 dismiss();
                 break;
 
