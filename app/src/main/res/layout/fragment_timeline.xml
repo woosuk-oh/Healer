@@ -214,7 +214,7 @@
 
                     <LinearLayout
                         android:id="@+id/timeline_content1"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
@@ -222,7 +222,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="270dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -233,24 +233,120 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
                                 android:text="사전 서베이 등록"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="15sp" />
 
-                            <TextView
-                                android:id="@+id/timeline_content_day1"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{timeline.finish_date1}"
-                                android:textColor="@color/color5"
-                                android:textSize="12.5sp" />
+                                android:orientation="horizontal">
 
-                            <TextView
+
+                                <TextView
+                                    android:id="@+id/timeline_content_day1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{timeline.finish_date1}"
+                                    android:textColor="@color/grayFont"
+                                    android:textSize="12.5sp" />
+
+                                <TextView
+                                    android:id="@+id/timeline_detail_btn1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="상세보기"
+                                    android:onClick="onClick"
+                                    />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/timeline_content_detail1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="진행 완료 여부: 완료"
-                                android:textSize="10sp"
-                                android:textColor="@color/color5"
-                                />
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <!--android:visibility="gone"-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="진행 완료 여부: 완료"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="사진 촬영:"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작전 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_before_emotion_img1"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.before_motion1}" />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작 후 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_after_emotion_img1"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.after_motion1}" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+
                         </LinearLayout>
 
 
@@ -269,7 +365,7 @@
 
                     <LinearLayout
                         android:id="@+id/timeline_content3"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
@@ -277,7 +373,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="270dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -288,7 +384,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
                                 android:text="도입 - 자기 관찰하기"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -296,9 +392,96 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{timeline.finish_date3}"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="12.5sp" />
+
+                            <LinearLayout
+                                android:id="@+id/timeline_content_detail2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <!--android:visibility="gone"-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="진행 완료 여부: 완료"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="사진 촬영:"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작전 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_before_emotion_img2"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.before_motion2}" />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작 후 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_after_emotion_img2"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.after_motion2}" />
+
+                                </LinearLayout>
+                            </LinearLayout>
                         </LinearLayout>
+
 
                         <ImageView
                             android:id="@+id/timeline_content_arrow3"
@@ -314,7 +497,7 @@
 
                     <LinearLayout
                         android:id="@+id/timeline_content4"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
@@ -322,7 +505,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="270dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -333,7 +516,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
                                 android:text="초기 트라우마 - 부정적 기억 내보내기"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -341,8 +524,94 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{timeline.finish_date4}"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="12.5sp" />
+
+                            <LinearLayout
+                                android:id="@+id/timeline_content_detail3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <!--android:visibility="gone"-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="진행 완료 여부: 완료"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="사진 촬영:"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작전 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_before_emotion_img3"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.before_motion3}" />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작 후 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_after_emotion_img3"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.after_motion3}" />
+
+                                </LinearLayout>
+                            </LinearLayout>
                         </LinearLayout>
 
                         <ImageView
@@ -359,7 +628,7 @@
 
                     <LinearLayout
                         android:id="@+id/timeline_content5"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
@@ -367,7 +636,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="270dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -378,7 +647,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
                                 android:text="초기 트라우마 - 긍정적 정서 떠올리기"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -386,8 +655,94 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{timeline.finish_date5}"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="12.5sp" />
+
+                            <LinearLayout
+                                android:id="@+id/timeline_content_detail4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <!--android:visibility="gone"-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="진행 완료 여부: 완료"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="사진 촬영:"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작전 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_before_emotion_img4"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.before_motion4}" />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작 후 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_after_emotion_img4"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.after_motion4}" />
+
+                                </LinearLayout>
+                            </LinearLayout>
                         </LinearLayout>
 
                         <ImageView
@@ -408,7 +763,6 @@
 
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:onClick="onClick"
                         android:orientation="horizontal">
 
 
@@ -416,7 +770,7 @@
                         <LinearLayout
                             android:id="@+id/timeline_child_content6"
 
-                            android:layout_width="200dp"
+                            android:layout_width="270dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -427,7 +781,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
                                 android:text="초기 트라우마 - 감정 조절 배우기"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -435,8 +789,94 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{timeline.finish_date6}"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="12.5sp" />
+
+                            <LinearLayout
+                                android:id="@+id/timeline_content_detail5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <!--android:visibility="gone"-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="진행 완료 여부: 완료"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="사진 촬영:"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작전 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_before_emotion_img5"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.before_motion5}" />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작 후 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_after_emotion_img5"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.after_motion5}" />
+
+                                </LinearLayout>
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -446,8 +886,9 @@
                             android:layout_width="11.75dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center_vertical"
+                            android:onClick="onClick"
                             android:src="@drawable/projectstartbtn"
-                            android:visibility="visible">
+                            android:visibility="invisible">
 
                         </ImageView>
 
@@ -456,7 +897,7 @@
 
                     <LinearLayout
                         android:id="@+id/timeline_content7"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
@@ -464,7 +905,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="270dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -475,7 +916,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
                                 android:text="빅 트라우마 - 트라우마 정화 I"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -483,9 +924,95 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{timeline.finish_date7}"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="12.5sp" />
+                            <LinearLayout
+                                android:id="@+id/timeline_content_detail6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <!--android:visibility="gone"-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="진행 완료 여부: 완료"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="사진 촬영:"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작전 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_before_emotion_img6"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.before_motion6}" />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작 후 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_after_emotion_img6"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.after_motion6}" />
+
+                                </LinearLayout>
+                            </LinearLayout>
                         </LinearLayout>
+
 
                         <ImageView
                             android:id="@+id/timeline_content_arrow7"
@@ -501,7 +1028,7 @@
 
                     <LinearLayout
                         android:id="@+id/timeline_content8"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
@@ -509,7 +1036,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="270dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -520,7 +1047,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
                                 android:text="빅 트라우마 - 트라우마 정화 II"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -528,8 +1055,94 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{timeline.finish_date8}"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="12.5sp" />
+                            <LinearLayout
+                                android:id="@+id/timeline_content_detail7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <!--android:visibility="gone"-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="진행 완료 여부: 완료"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="사진 촬영:"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작전 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_before_emotion_img7"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.before_motion7}" />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작 후 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_after_emotion_img7"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.after_motion7}" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
                         </LinearLayout>
 
                         <ImageView
@@ -546,7 +1159,7 @@
 
                     <LinearLayout
                         android:id="@+id/timeline_content9"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
@@ -554,7 +1167,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="270dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -565,7 +1178,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
                                 android:text="빅 트라우마 - 자아 대면하기"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -573,9 +1186,96 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2017.01.09"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="12.5sp" />
+
+                            <LinearLayout
+                                android:id="@+id/timeline_content_detail8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <!--android:visibility="gone"-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="진행 완료 여부: 완료"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="사진 촬영:"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작전 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_before_emotion_img8"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.before_motion8}" />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작 후 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_after_emotion_img8"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.after_motion8}" />
+
+                                </LinearLayout>
+                            </LinearLayout>
                         </LinearLayout>
+
 
                         <ImageView
                             android:id="@+id/timeline_content_arrow9"
@@ -591,7 +1291,7 @@
 
                     <LinearLayout
                         android:id="@+id/timeline_content10"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
@@ -599,7 +1299,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="270dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -610,7 +1310,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
                                 android:text="마무리 - 자아 회복하기"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -618,8 +1318,94 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2017.01.10"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="12.5sp" />
+
+                            <LinearLayout
+                                android:id="@+id/timeline_content_detail9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <!--android:visibility="gone"-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="진행 완료 여부: 완료"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="사진 촬영:"
+                                    android:textColor="@color/color5"
+                                    android:textSize="10sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작전 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_before_emotion_img9"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.before_motion9}" />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="시작 후 감정 상태:"
+                                        android:textColor="@color/color5"
+                                        android:textSize="10sp" />
+
+                                    <ImageView
+                                        android:id="@+id/timeline_detail_after_emotion_img9"
+                                        android:layout_width="12.75dp"
+                                        android:layout_height="12.75dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/activitymini" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeline.after_motion9}" />
+
+                                </LinearLayout>
+                            </LinearLayout>
                         </LinearLayout>
 
                         <ImageView
@@ -636,7 +1422,7 @@
 
                     <LinearLayout
                         android:id="@+id/timeline_content2"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
@@ -644,7 +1430,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="270dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -655,7 +1441,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="7.75dp"
                                 android:text="사후 서베이 등록"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -663,7 +1449,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{timeline.finish_date2}"
-                                android:textColor="@color/color5"
+                                android:textColor="@color/grayFont"
                                 android:textSize="12.5sp" />
                         </LinearLayout>
 

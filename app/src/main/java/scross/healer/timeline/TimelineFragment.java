@@ -27,6 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import scross.healer.BaseFragment;
+import scross.healer.HealerContext;
 import scross.healer.R;
 import scross.healer.camera.CameraActivity;
 import scross.healer.databinding.FragmentTimelineBinding;
@@ -48,6 +49,8 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
     boolean surveyBefore;
     boolean surveyAfter;
     int lastDay=1;
+    String imageUrl;
+
 
 
 
@@ -56,6 +59,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
     NetworkService apiService;
     private LinearLayout content1;
+    private ImageView timelineContentArrow1;
 
 
     @Override
@@ -137,94 +141,194 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         timelineContentName9 = (TextView) view.findViewById(R.id.timeline_content_name9);
         timelineContentName10 = (TextView) view.findViewById(R.id.timeline_content_name10);
 
+        ImageView timelineContentArrow1;
+        ImageView timelineContentArrow2;
+        ImageView timelineContentArrow3;
+        ImageView timelineContentArrow4;
+        ImageView timelineContentArrow5;
+        ImageView timelineContentArrow6;
+        ImageView timelineContentArrow7;
+        ImageView timelineContentArrow8;
+        ImageView timelineContentArrow9;
+        ImageView timelineContentArrow10;
+        timelineContentArrow1 = (ImageView) view.findViewById(R.id.timeline_content_arrow1);
+        timelineContentArrow2 = (ImageView) view.findViewById(R.id.timeline_content_arrow2);
+        timelineContentArrow3 = (ImageView) view.findViewById(R.id.timeline_content_arrow3);
+        timelineContentArrow4 = (ImageView) view.findViewById(R.id.timeline_content_arrow4);
+        timelineContentArrow5 = (ImageView) view.findViewById(R.id.timeline_content_arrow5);
+        timelineContentArrow6 = (ImageView) view.findViewById(R.id.timeline_content_arrow6);
+        timelineContentArrow7 = (ImageView) view.findViewById(R.id.timeline_content_arrow7);
+        timelineContentArrow8 = (ImageView) view.findViewById(R.id.timeline_content_arrow8);
+        timelineContentArrow9 = (ImageView) view.findViewById(R.id.timeline_content_arrow9);
+        timelineContentArrow10 = (ImageView) view.findViewById(R.id.timeline_content_arrow10);
 
 
-        if(surveyBefore == true){
-            timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
-
-        }else{
-            timelineStateIcon1.setBackgroundResource(R.drawable.projectprogress);
-            timelineContentName1.setTextColor(Color.GRAY);
 
 
-        }
 
-        if(surveyAfter == true){
-            timelineStateIcon2.setBackgroundResource(R.drawable.projectcomp lete);
+        int textColor = HealerContext.getContext().getResources().getColor(R.color.color5);
 
-        }else {
-            timelineStateIcon1.setBackgroundResource(R.drawable.projectprogress);
-
-        }
 
 
         switch (lastDay){
             case 1:
-                timelineStateIcon3.setBackgroundResource(R.drawable.projectprogress);
+                if(surveyBefore == true){
+                    timelineStateIcon1.setBackgroundResource(R.drawable.projectcomplete);
+                    timelineStateIcon2.setBackgroundResource(R.drawable.projectprogress);
+                    timelineContentArrow2.setVisibility(View.VISIBLE);
+                    timelineContentName1.setTextColor(textColor);
+                    timelineContentName2.setTextColor(textColor);
+
+
+
+                }else{
+                    timelineStateIcon1.setBackgroundResource(R.drawable.projectprogress);
+                    timelineContentArrow1.setVisibility(View.VISIBLE);
+
+                    timelineContentName1.setTextColor(textColor);
+
+
+                }
+
                 break;
             case 2:
-                timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon4.setBackgroundResource(R.drawable.projectprogress);
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectprogress);
+                timelineContentArrow2.setVisibility(View.VISIBLE);
+
+                timelineContentName1.setTextColor(textColor);
+                timelineContentName2.setTextColor(textColor);
+                timelineContentName3.setTextColor(textColor);
+
+
+
 
                 break;
             case 3:
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon5.setBackgroundResource(R.drawable.projectprogress);
+                timelineStateIcon4.setBackgroundResource(R.drawable.projectprogress);
+                timelineContentArrow3.setVisibility(View.VISIBLE);
+
+                timelineContentName1.setTextColor(textColor);
+                timelineContentName2.setTextColor(textColor);
+                timelineContentName3.setTextColor(textColor);
+                timelineContentName4.setTextColor(textColor);
+
+
 
                 break;
             case 4:
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
+                timelineStateIcon5.setBackgroundResource(R.drawable.projectprogress);
+                timelineContentArrow4.setVisibility(View.VISIBLE);
+
+                timelineContentName1.setTextColor(textColor);
+                timelineContentName2.setTextColor(textColor);
+                timelineContentName3.setTextColor(textColor);
+                timelineContentName4.setTextColor(textColor);
+                timelineContentName5.setTextColor(textColor);
+
+
+
+                break;
+            case 5:
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon6.setBackgroundResource(R.drawable.projectprogress);
+                timelineContentArrow5.setVisibility(View.VISIBLE);
+
+                timelineContentName1.setTextColor(textColor);
+                timelineContentName2.setTextColor(textColor);
+                timelineContentName3.setTextColor(textColor);
+                timelineContentName4.setTextColor(textColor);
+                timelineContentName5.setTextColor(textColor);
+                timelineContentName6.setTextColor(textColor);
 
                 break;
-            case 5:
+            case 6:
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon6.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon7.setBackgroundResource(R.drawable.projectprogress);
+                timelineContentArrow7.setVisibility(View.VISIBLE);
+
+                timelineContentName1.setTextColor(textColor);
+                timelineContentName2.setTextColor(textColor);
+                timelineContentName3.setTextColor(textColor);
+                timelineContentName4.setTextColor(textColor);
+                timelineContentName5.setTextColor(textColor);
+                timelineContentName6.setTextColor(textColor);
+                timelineContentName7.setTextColor(textColor);
 
                 break;
-            case 6:
+            case 7:
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon6.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon7.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon8.setBackgroundResource(R.drawable.projectprogress);
+                timelineContentArrow8.setVisibility(View.VISIBLE);
 
-                break;
-            case 7:
-                timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon6.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon7.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon8.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon9.setBackgroundResource(R.drawable.projectprogress);
+                timelineContentName1.setTextColor(textColor);
+                timelineContentName2.setTextColor(textColor);
+                timelineContentName3.setTextColor(textColor);
+                timelineContentName4.setTextColor(textColor);
+                timelineContentName5.setTextColor(textColor);
+                timelineContentName6.setTextColor(textColor);
+                timelineContentName7.setTextColor(textColor);
+                timelineContentName8.setTextColor(textColor);
+
 
                 break;
             case 8:
+                timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon3.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon4.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon5.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon6.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon7.setBackgroundResource(R.drawable.projectcomplete);
                 timelineStateIcon8.setBackgroundResource(R.drawable.projectcomplete);
-                timelineStateIcon9.setBackgroundResource(R.drawable.projectcomplete);
-                break;
-            case 9:
-                break;
+                timelineContentArrow9.setVisibility(View.VISIBLE);
 
-            case 10:
-                break;
+                timelineContentName1.setTextColor(textColor);
+                timelineContentName2.setTextColor(textColor);
+                timelineContentName3.setTextColor(textColor);
+                timelineContentName4.setTextColor(textColor);
+                timelineContentName5.setTextColor(textColor);
+                timelineContentName6.setTextColor(textColor);
+                timelineContentName7.setTextColor(textColor);
+                timelineContentName8.setTextColor(textColor);
+                timelineContentName9.setTextColor(textColor);
+
+
+
+                if(surveyAfter == true){
+                    timelineStateIcon2.setBackgroundResource(R.drawable.projectcomplete);
+                    timelineContentName10.setTextColor(textColor);
+
+                }else {
+                    timelineStateIcon1.setBackgroundResource(R.drawable.projectprogress);
+                    timelineContentName10.setTextColor(textColor);
+
+
+                }
+
         }
 
-        content1 = (LinearLayout) view.findViewById(R.id.timeline_content6);
-        content1.setOnClickListener(this);
+//        content1 = (LinearLayout) view.findViewById(R.id.timeline_content6);
+//        content1.setOnClickListener(this);
+
+        timelineContentArrow1 = (ImageView) view.findViewById(R.id.timeline_content_arrow1);
+        timelineContentArrow1.setOnClickListener(this);
 
 
         return view;
@@ -239,14 +343,19 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.timeline_content6:
+           /* case R.id.timeline_content6:
 
                  Intent intent = new Intent(getActivity(), CameraActivity.class);
             startActivity(intent);
 
-                break;
+                break;*/
+            case R.id.timeline_content_arrow1:
+                Intent intent = new Intent(getActivity(), CameraActivity.class);
+                startActivity(intent);
 
         }
+
+
     }
 
 
@@ -271,6 +380,8 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             String userEmotion;
                             JSONObject results = data.getJSONObject("results");
 
+
+
                             userEmotion = results.getString("emotion");
                             if(results.getString("emotion").equals("null")){
                                     userEmotion = "감정 상태 : 알 수 없음";
@@ -286,7 +397,9 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
                             timelineObject = new TimelineObject(results.getString("name"),results.getString("birth"), userEmotion, results.getString("gender"),
                                     "finish_date1", "finish_date2", "finish_date3", "finish_date4", "finish_date5", "finish_date6",
-                                    "finish_date7", "finish_date8", "finish_date9","finish_date10"
+                                    "finish_date7", "finish_date8", "finish_date9","finish_date10","after_motion1", "after_motion2", "after_motion3", "after_motion4",
+                                    "after_motion5", "after_motion6", "after_motion7", "after_motion8", "after_motion9","before_motion1","before_motion2","before_motion3","before_motion4","before_motion5",
+                                    "before_motion6","before_motion7","before_motion8","before_motion9"
 
                             ); // 데이터 바인딩 4
 
