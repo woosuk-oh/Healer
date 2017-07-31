@@ -22,5 +22,6 @@
     <string name="flash_auto">Flash auto</string>
     <string name="flash_off">Flash off</string>
     <string name="flash_on">Flash on</string>
+    <string name="detail"><u>상세보기</u></string>
 
 </resources>
