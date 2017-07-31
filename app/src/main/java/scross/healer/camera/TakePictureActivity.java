@@ -3,8 +3,8 @@ package scross.healer.camera;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -46,9 +47,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import scross.healer.MainActivity;
 import scross.healer.R;
-import scross.healer.account.LoginActivity;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 /*
@@ -262,7 +261,23 @@ public class TakePictureActivity  extends AppCompatActivity implements
                 public void run() {
                     final File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                             "picture.jpg");
-                    //이미지 처리 부분
+                    Uri photoUri =  FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName()+".fileprovider", file);
+                    OutputStream os = null;
+                    try {
+                        os = new FileOutputStream(file);
+                        os.write(data);
+                        os.close();
+                    } catch (IOException e) {
+                        Log.w(TAG, "Cannot write to " + file, e);
+                    } finally {
+                        if (os != null) {
+                            try {
+                                os.close();
+                            } catch (IOException e) {
+                                // Ignore
+                            }
+                        }
+                    }
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/jpg"), file);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), reqFile);
                     Call<ResponseBody> process1 = apiService.process1("1", body);
@@ -275,22 +290,7 @@ public class TakePictureActivity  extends AppCompatActivity implements
                                     if (code.equals("1")) {
                                         Toast.makeText(TakePictureActivity.this, "성공", Toast.LENGTH_SHORT).show();
                                         //파일처리부분
-                                        OutputStream os = null;
-                                        try {
-                                            os = new FileOutputStream(file);
-                                            os.write(data);
-                                            os.close();
-                                        } catch (IOException e) {
-                                            Log.w(TAG, "Cannot write to " + file, e);
-                                        } finally {
-                                            if (os != null) {
-                                                try {
-                                                    os.close();
-                                                } catch (IOException e) {
-                                                    // Ignore
-                                                }
-                                            }
-                                        }
+
                                     } else {
                                         Toast.makeText(TakePictureActivity.this, "앱을 끄고 다시 시작해주세요.", Toast.LENGTH_SHORT).show();
                                     }
@@ -311,6 +311,9 @@ public class TakePictureActivity  extends AppCompatActivity implements
                             Toast.makeText(TakePictureActivity.this, "서버 오류입니다. 잠시후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+                    //이미지 처리 부분
+
                 }
             });
         }
