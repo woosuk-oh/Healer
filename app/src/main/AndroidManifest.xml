@@ -71,9 +71,9 @@
 
         <activity android:name=".camera.TakePictureActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".camera.CameraActivity2"
-            android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".emotion.EmotionActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

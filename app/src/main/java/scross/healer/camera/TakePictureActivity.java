@@ -3,6 +3,7 @@ package scross.healer.camera;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -47,9 +49,16 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import scross.healer.HealerContext;
+import scross.healer.MainActivity;
 import scross.healer.R;
+import scross.healer.emotion.EmotionActivity;
+import scross.healer.media.MediaplayerActivity;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
+import scross.healer.profile.ProfileDialogFragment;
+
+import static android.support.v4.content.FileProvider.getUriForFile;
 /*
 
 *
@@ -151,6 +160,8 @@ public class TakePictureActivity  extends AppCompatActivity implements
     protected void onPause() {
         mCameraView.stop();
         super.onPause();
+        Log.e("fffff","꺼짐 Pause");
+
     }
 
     @Override
@@ -164,6 +175,8 @@ public class TakePictureActivity  extends AppCompatActivity implements
             }
             mBackgroundHandler = null;
         }
+
+        Log.e("fffff","꺼짐 Destory");
     }
 
     @Override
@@ -261,7 +274,7 @@ public class TakePictureActivity  extends AppCompatActivity implements
                 public void run() {
                     final File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                             "picture.jpg");
-                    Uri photoUri =  FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName()+".fileprovider", file);
+//                    FileProvider.getUriForFile(HealerContext.getContext(), getApplicationContext().getPackageName()+".fileprovider", file);
                     OutputStream os = null;
                     try {
                         os = new FileOutputStream(file);
@@ -290,6 +303,24 @@ public class TakePictureActivity  extends AppCompatActivity implements
                                     if (code.equals("1")) {
                                         Toast.makeText(TakePictureActivity.this, "성공", Toast.LENGTH_SHORT).show();
                                         //파일처리부분
+
+                                       /* Intent intent1 = getIntent();
+                                        int state1 = intent1.getExtras().getInt("state");
+
+                                        if(state1 == 1){
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            intent.putExtra("state",state1+1);
+                                            startActivity(intent);
+                                        }*/
+
+
+                                        Intent intent = new Intent(getApplicationContext(), EmotionActivity.class);
+                                        int state = intent.getExtras().getInt("state");
+                                        TakePictureActivity.this.finish();
+
+
+                                        intent.putExtra("state",state+1);
+                                        startActivity(intent);
 
                                     } else {
                                         Toast.makeText(TakePictureActivity.this, "앱을 끄고 다시 시작해주세요.", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package scross.healer.timeline;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -217,10 +218,10 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
             }
             contentsLayout.addView(beforeSurveyItem);
             for (int i = 0; i < 8; i++) {
-                int day = i + 1;
-                LinearLayout contentItem = (LinearLayout) inflater.inflate(R.layout.item_timeline_content, null);
+                final int day = i + 1;
+                final LinearLayout contentItem = (LinearLayout) inflater.inflate(R.layout.item_timeline_content, null);
                 ImageView icon = contentItem.findViewById(R.id.timeline_icon);
-                TextView name = contentItem.findViewById(R.id.timeline_content_name);
+                final TextView name = contentItem.findViewById(R.id.timeline_content_name);
                 TextView state = contentItem.findViewById(R.id.timeline_content_state);
                 TextView date = contentItem.findViewById(R.id.timeline_content_date);
                 TextView detail = contentItem.findViewById(R.id.timeline_content_detail_btn);
@@ -235,6 +236,8 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                 switch (day) {
                     case 1:
                         name.setText("도입-자기 관찰하기");
+
+
                         break;
                     case 2:
                         name.setText("초기 트라우마-부정적 기억");
@@ -265,7 +268,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                     state.setTextColor(completeColor);
                     date.setTextColor(completeColor);
                     JSONObject data = info.getJSONObject(i);
-                    if(data != null){
+                    if (data != null) {
                         DateTime time = DateTime.parse(data.getString("day_latest"));
                         date.setText(time.plusHours(9).toString("yyyy.MM.dd"));
                         if (data.getInt("content_complete") == 1) {
@@ -274,75 +277,75 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                         if (!data.isNull("picture_1") && !data.isNull("picture_4")) {
                             detailcontent2.setText("모두 완료");
                         }
-                        if (!data.isNull("emotion_2")){
-                            switch (data.getInt("emotion_2")){
+                        if (!data.isNull("emotion_2")) {
+                            switch (data.getInt("emotion_2")) {
                                 case 1:
-                                    detailicon3.setBackground(getDrawable(getActivity(),R.drawable.selactivity));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selactivity));
                                     detailcontent3.setText("활기참");
                                     break;
                                 case 2:
-                                    detailicon3.setBackground(getDrawable(getActivity(),R.drawable.selcalm));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selcalm));
                                     detailcontent3.setText("평온함");
                                     break;
                                 case 3:
-                                    detailicon3.setBackground(getDrawable(getActivity(),R.drawable.selhappy));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selhappy));
                                     detailcontent3.setText("행복함");
                                     break;
                                 case 4:
-                                    detailicon3.setBackground(getDrawable(getActivity(),R.drawable.selsoso));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selsoso));
                                     detailcontent3.setText("보통");
                                     break;
                                 case 5:
-                                    detailicon3.setBackground(getDrawable(getActivity(),R.drawable.selsadly));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selsadly));
                                     detailcontent3.setText("우울함");
                                     break;
                                 case 6:
-                                    detailicon3.setBackground(getDrawable(getActivity(),R.drawable.selangry));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selangry));
                                     detailcontent3.setText("화가남");
                                     break;
                                 case 7:
-                                    detailicon3.setBackground(getDrawable(getActivity(),R.drawable.selanxious));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selanxious));
                                     detailcontent3.setText("불안함");
                                     break;
                                 default:
-                                    detailicon3.setBackground(getDrawable(getActivity(),R.drawable.selanxious));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selanxious));
                                     detailcontent3.setText("불안함");
                                     break;
 
                             }
                         }
-                        if(!data.isNull("emotion_5")){
-                            switch (data.getInt("emotion_5")){
+                        if (!data.isNull("emotion_5")) {
+                            switch (data.getInt("emotion_5")) {
                                 case 1:
-                                    detailicon4.setBackground(getDrawable(getActivity(),R.drawable.selactivity));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selactivity));
                                     detailcontent4.setText("활기참");
                                     break;
                                 case 2:
-                                    detailicon4.setBackground(getDrawable(getActivity(),R.drawable.selcalm));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selcalm));
                                     detailcontent4.setText("평온함");
                                     break;
                                 case 3:
-                                    detailicon4.setBackground(getDrawable(getActivity(),R.drawable.selhappy));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selhappy));
                                     detailcontent4.setText("행복함");
                                     break;
                                 case 4:
-                                    detailicon4.setBackground(getDrawable(getActivity(),R.drawable.selsoso));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selsoso));
                                     detailcontent4.setText("보통");
                                     break;
                                 case 5:
-                                    detailicon4.setBackground(getDrawable(getActivity(),R.drawable.selsadly));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selsadly));
                                     detailcontent4.setText("우울함");
                                     break;
                                 case 6:
-                                    detailicon4.setBackground(getDrawable(getActivity(),R.drawable.selangry));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selangry));
                                     detailcontent4.setText("화가남");
                                     break;
                                 case 7:
-                                    detailicon4.setBackground(getDrawable(getActivity(),R.drawable.selanxious));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selanxious));
                                     detailcontent4.setText("불안함");
                                     break;
                                 default:
-                                    detailicon4.setBackground(getDrawable(getActivity(),R.drawable.selanxious));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selanxious));
                                     detailcontent4.setText("불안함");
                                     break;
 
@@ -352,9 +355,9 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                     detail.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(detailLayout.getVisibility() == View.GONE){
+                            if (detailLayout.getVisibility() == View.GONE) {
                                 detailLayout.setVisibility(View.VISIBLE);
-                            }else{
+                            } else {
                                 detailLayout.setVisibility(View.GONE);
                             }
                         }
@@ -365,11 +368,21 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 //                        detail.setVisibility(View.GONE);
                         state.setText("진행중");
 
+
+
                         arrowButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+
+
                                 Intent intent = new Intent(getActivity(), CameraActivity.class);
+                                intent.putExtra("day", day);
+                                intent.putExtra("state", 1);
                                 startActivity(intent);
+
+
+
                             }
                         });
                     }
@@ -396,6 +409,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     public int getColor(Context context, int id) {
         final int version = Build.VERSION.SDK_INT;
         if (version >= Build.VERSION_CODES.M) {
@@ -405,6 +419,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Drawable getDrawable(Context context, int id) {
         final int version = Build.VERSION.SDK_INT;
         if (version >= Build.VERSION_CODES.LOLLIPOP) {

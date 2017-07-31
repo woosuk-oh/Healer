@@ -1,4 +1,4 @@
-package scross.healer.timeline;
+package scross.healer.emotion;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -18,17 +18,18 @@ import scross.healer.networkService.EmotionEntityObject;
  * 콘텐츠 시작 전/후 감정상태 다이얼로그
  */
 
-public class TimelineEmotionDialog extends DialogFragment implements View.OnClickListener {
+public class EmotionDialog extends DialogFragment implements View.OnClickListener {
 
     private EmotionEntityObject entityObject;
     private LinearLayout emotion1, emotion2, emotion3, emotion4, emotion5, emotion6, emotion7;
     private ImageView iv1, iv2, iv3, iv4, iv5, iv6, iv7;
     int emotionValue;
+    int state;
 
 
-    public static TimelineEmotionDialog newInstance() {
+    public static EmotionDialog newInstance() {
 
-        TimelineEmotionDialog emotionDialog = new TimelineEmotionDialog();
+        EmotionDialog emotionDialog = new EmotionDialog();
         return emotionDialog;
     }
 
@@ -36,6 +37,9 @@ public class TimelineEmotionDialog extends DialogFragment implements View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_FRAME, R.style.CustomDialog);
+
+        state = getArguments().getInt("state");
+
 
 
     }
@@ -127,6 +131,11 @@ public class TimelineEmotionDialog extends DialogFragment implements View.OnClic
             case R.id.emotion_success_btn:
 
                 //TODO emotionValue 네트워크로 값 보내야댐!
+
+
+                state = state+1;
+
+
                 break;
 
             case R.id.emotion_cancel_btn:

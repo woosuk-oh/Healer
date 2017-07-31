@@ -1,6 +1,7 @@
 package scross.healer.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -149,6 +150,8 @@ public class HomeFragment extends BaseFragment {
 
         DateFormat df = new SimpleDateFormat("MM월 dd일");
         String date = df.format(Calendar.getInstance().getTime());
+
+
 
    /*     Log.e("aaa", homeUserState.getText()+"");
         Log.e("bbb", userEmotion+"");
