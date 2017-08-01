@@ -23,12 +23,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -54,13 +56,13 @@ public class ProfileDialogFragment extends DialogFragment implements View.OnClic
     public static String selectGender = "";
     NetworkService apiService;
     String imageUrl;
-    String getBirth;
 
 
     ImageView profileUpdateUserPhoto;
     Button profileSuccessBtn;
     Button profileCancelBtn;
     TextView updateBirth;
+    TextView profileUpdateUserName;
 
     FragmentTimelineBinding binding;
     ProfileUpdate profileUpdate;
@@ -76,44 +78,44 @@ public class ProfileDialogFragment extends DialogFragment implements View.OnClic
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
+/*
 
     public class ClickTest{
         public void onClick(View view){
 
             switch (view.getId()){
-                case R.id.profile_cancel_btn:
-                    Toast.makeText(getActivity().getApplicationContext(),"눌 림", Toast.LENGTH_SHORT).show();
+                    case R.id.profile_cancel_btn:
+                        Toast.makeText(getActivity().getApplicationContext(),"눌 림", Toast.LENGTH_SHORT).show();
 
-                    dismiss();
-                    break;
-                case R.id.profile_success_btn:
-                    Toast.makeText(getActivity().getApplicationContext(),"눌 림", Toast.LENGTH_SHORT).show();
+                        dismiss();
+                        break;
+                    case R.id.profile_success_btn:
+                        Toast.makeText(getActivity().getApplicationContext(),"눌 림", Toast.LENGTH_SHORT).show();
 
-                    network2();
-                    break;
+                        network2();
+                        break;
 
             }
         }
-    }
+    }*/
 
 
     @Override
     public void onClick(View view) {
-/*        switch (view.getId()) {
+        switch (view.getId()) {
             case R.id.profile_cancel_btn:
-                Toast.makeText(getActivity().getApplicationContext(),"눌 림", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity().getApplicationContext(),"눌 림", Toast.LENGTH_SHORT).show();
 
                 dismiss();
                 break;
             case R.id.profile_success_btn:
-                Toast.makeText(getActivity().getApplicationContext(),"눌 림", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity().getApplicationContext(),"취소", Toast.LENGTH_SHORT).show();
 
                 network2();
                 break;
 
 
-        }*/
+        }
     }
 
     public static ProfileDialogFragment newInstance() {
@@ -127,7 +129,6 @@ public class ProfileDialogFragment extends DialogFragment implements View.OnClic
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_FRAME, R.style.CustomDialog);
 
-        network();
 
 
     }
@@ -145,17 +146,24 @@ public class ProfileDialogFragment extends DialogFragment implements View.OnClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_timeline, container,false); // 데이터 바인딩 2
-        View view = binding.getRoot(); // 데이터 바인딩 3
+        View view = inflater.inflate(R.layout.fragment_profile_update_dialog, container, false);
 
-/*
+
+
+/*        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_timeline, container,false); // 데이터 바인딩 2
+        View view = binding.getRoot(); // 데이터 바인딩 3*/
+
         profileUpdateUserPhoto = (ImageView) view.findViewById(R.id.profile_update_user_photo);
         profileSuccessBtn = (Button) view.findViewById(R.id.profile_success_btn);
         profileCancelBtn =  (Button) view.findViewById(R.id.profile_cancel_btn);
+        profileUpdateUserName = (TextView) view.findViewById(R.id.profile_update_user_name);
+        updateBirth = (TextView) view.findViewById(R.id.profile_update_birth);
+
 
         profileCancelBtn.setOnClickListener(this);
         profileSuccessBtn.setOnClickListener(this);
-*/
+
+        network();
 
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -173,7 +181,6 @@ public class ProfileDialogFragment extends DialogFragment implements View.OnClic
             }
         };
 
-        updateBirth = (TextView) view.findViewById(R.id.profile_update_birth);
         updateBirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -222,19 +229,46 @@ public class ProfileDialogFragment extends DialogFragment implements View.OnClic
 
                             imageUrl = results.getString("profile");
 
+                            profileUpdateUserName.setText(results.getString("name"));
+
+//                            long getBirth = Integer.valueOf(results.getString("birth"));
+//                            DateTime bt = new DateTime(getBirth);
+
+                            //TODO DATE타입이 아니라서 포맷이 안먹는듯. 포맷 먹여야됨substring 쓰면 됨
+/*
+
                             String myFormat = "yyyy년 MM월 dd일";
                             SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-                            getBirth = sdf.format(results.getString("birth"));
+*/
 
-                            profileUpdate = new ProfileUpdate(results.getString("name"), getBirth, results.getString("gender"));
+             /*               String dd = results.getString("birth");
+                            dd.split()
+*/
+
+                            DateTime time = DateTime.parse(results.getString("birth"));
+                            updateBirth.setText(time.plusHours(9).toString("yyyy년 MM월 dd일"));
+
+//                            updateBirth.setText(sdf.format(bt));
+
+                            updateBirth.setText(results.getString("birth"));
+
+                            /*String myFormat = "yyyyMMdd";
+                            SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+                            getBirth = sdf.format();*/
+/*
+                            Log.e("qqqq",""+getBirth);
+                            Log.e("qqq2",""+bt);
+                            Log.e("qqq3",""+tt);*/
+
+
+//                            profileUpdate = new ProfileUpdate(results.getString("name"), getBirth, results.getString("gender"));
 
 
 
-                 /*           if(!results.isNull("profile")){//프로필 이미지 널이 아닌 경우
+                            if(!results.isNull("profile")){//프로필 이미지 널이 아닌 경우
                                 Glide.with(HealerContext.getContext()).load(imageUrl).into(profileUpdateUserPhoto);
                             }
 
-*/
 
                         }else{
                             Toast.makeText(getActivity().getApplicationContext(), data.get("results").toString(), Toast.LENGTH_SHORT).show();
@@ -258,13 +292,16 @@ public class ProfileDialogFragment extends DialogFragment implements View.OnClic
     }
 
     public void network2(){
-
-        String str= getBirth.toString().replaceAll("년","");
+        String str= updateBirth.getText().toString().replaceAll("년","");
         str = str.replaceAll("월","");
         str = str.replaceAll("일", "");
         str = str.replaceAll(" ", "");
+
+        Log.e("network2",str);
         int birth = Integer.valueOf(str);
 
+//        int birth;
+//        birth = Integer.valueOf(updateBirth.getText().toString());
 
         Call<ResponseBody> postRate = apiService.editProfile(birth, selectGender);
         postRate.enqueue(new Callback<ResponseBody>() {

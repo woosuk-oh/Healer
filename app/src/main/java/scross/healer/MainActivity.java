@@ -3,16 +3,8 @@ package scross.healer;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.AttributeSet;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,22 +13,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 
-import java.sql.Time;
-
-import scross.healer.BaseActivity;
-import scross.healer.R;
 import scross.healer.home.HomeFragment;
 import scross.healer.media.MediaplayerActivity;
 import scross.healer.profile.ProfileDialogFragment;
-import scross.healer.setting.SettingFragment;
 import scross.healer.survay.SurvayFragment;
-import scross.healer.timeline.TimelineEmotionDialog;
+import scross.healer.emotion.EmotionDialog;
 import scross.healer.timeline.TimelineFragment;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Fragment fragment;
+    Fragment fragment = new HomeFragment();
 
 
     @Override
@@ -78,11 +65,18 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        BaseFragment fragment = new HomeFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_home, fragment);
         fragmentTransaction.commit();
+
+
+/*
+다이얼로그에서 완료해야만 타임라인으로 보내고 스테이트 변경하는거임.
+
+            fragment = new TimelineFragment();
+            ChangeFragment();*/
+
 
 
     }
@@ -143,12 +137,10 @@ public class MainActivity extends BaseActivity
             ChangeFragment();
 
 
-
-
             // Handle the camera action
         } else if (id == R.id.survay) {
 
-        fragment = new SurvayFragment();
+            fragment = new SurvayFragment();
             ChangeFragment();
 
 
