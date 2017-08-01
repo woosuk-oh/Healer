@@ -261,7 +261,7 @@ public class TakePictureActivity  extends AppCompatActivity implements
                 public void run() {
                     final File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                             "picture.jpg");
-                    Uri photoUri =  FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName()+".fileprovider", file);
+//                    Uri photoUri =  FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName()+".fileprovider", file);
                     OutputStream os = null;
                     try {
                         os = new FileOutputStream(file);
