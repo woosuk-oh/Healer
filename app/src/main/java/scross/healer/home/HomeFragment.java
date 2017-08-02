@@ -30,6 +30,7 @@ import retrofit2.Response;
 import scross.healer.BaseFragment;
 import scross.healer.HealerContext;
 import scross.healer.R;
+import scross.healer.SharedPreferenceUtil;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.timeline.TimelineFragment;
@@ -54,12 +55,15 @@ public class HomeFragment extends BaseFragment {
     String userName;
 
 
+
+
     private RelativeLayout programRate;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
         Log.e("AAA","onCreate");

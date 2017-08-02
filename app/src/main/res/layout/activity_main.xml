@@ -9,6 +9,16 @@
     tools:openDrawer="start">
 
 
+    <TextView
+
+        android:id="@+id/nav_head_name1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="테스트"
+        android:textColor="#FFFFFF"
+        />
+
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
@@ -28,6 +38,7 @@
         app:menu="@menu/activity_main_drawer"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main">
+
 
         <!--  app:menu="@menu/activity_main_drawer"-->
         <!--

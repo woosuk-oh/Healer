@@ -5,9 +5,16 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import scross.healer.BaseActivity;
+import scross.healer.HealerContext;
+import scross.healer.MainActivity;
 import scross.healer.R;
+import scross.healer.SharedPreferenceUtil;
+import scross.healer.camera.TakePictureActivity;
+import scross.healer.media.MediaplayerActivity;
 
 /**
  * Created by hanee on 2017-08-01.
@@ -17,37 +24,77 @@ public class EmotionActivity extends BaseActivity{
     public EmotionActivity() {
     }
 
+    int state;
+    int lastDay;
+
     Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
-        Intent intent = new Intent();
-
-        int state = intent.getExtras().getInt("state");
-
-        if (state == 2) {
-            EmotionDialog dialog = new EmotionDialog();
-            dialog.show(getFragmentManager(), "emotion dialog");
-
-
-        } else if (state == 5) {
-            EmotionDialog dialog = new EmotionDialog();
-            dialog.show(getFragmentManager(), "emotion dialog");
-        }
-
-        //TODO 받아온 state 다이얼로그에 전달하고, 다이얼로그에서 확인 버튼 누르면 네트워크 통신 후 state값 다음 화면으로 전달!.
-        //TODO 프래그먼트 잘 붙었는지 확인.
-
+        setContentView(R.layout.activity_emotion);
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //        fragmentTransaction.replace(R.id., fragment);
         fragmentTransaction.commit();
+
+
+
+
+        Intent intent = getIntent();
+        state = intent.getExtras().getInt("state");
+        Log.e("state emotion get",state+"");
+
+
+
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+        if (sharedPreferenceUtil.getProcess() != state) {
+
+            state = sharedPreferenceUtil.getProcess();
+            Log.e("sharedPreference!!!!: ", state+" EmotionActivity onCreate");
+
+        }
+
+        lastDay = sharedPreferenceUtil.getLastDay();
+        Log.e("sharedPreference!!!!: ", lastDay+" EmotionActivity onCreate LastDAY ?");
+
+
+        if (state == 2 || state == 5) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("state", state);
+            EmotionDialog dialog = new EmotionDialog();
+            dialog.setArguments(bundle);
+
+            dialog.newInstance(state);
+            dialog.show(getFragmentManager(), "emotion dialog");
+
+        }else if (state ==3){
+
+            Intent intent1 = new Intent(getApplication(), MediaplayerActivity.class);
+            intent1.putExtra("state", state);
+            startActivity(intent1);
+        }else if(state == 6 && lastDay < 8 ){
+            Intent intent1 = new Intent(getApplication(), MainActivity.class);
+            intent1.putExtra("state", state);
+            Toast.makeText(HealerContext.getContext(), "금일 과정은 모두 종료되었습니다. 내일 다시 진행해주세요",Toast.LENGTH_LONG);
+
+            startActivity(intent1);
+        }else{
+            Toast.makeText(HealerContext.getContext(), "에러",Toast.LENGTH_LONG);
+        }
 
     }
 

@@ -3,6 +3,7 @@ package scross.healer;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,11 +11,32 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+
+import org.joda.time.DateTime;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import scross.healer.home.HomeFragment;
 import scross.healer.media.MediaplayerActivity;
+import scross.healer.networkService.NetworkApi;
+import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
 import scross.healer.survay.SurvayFragment;
 import scross.healer.emotion.EmotionDialog;
@@ -24,14 +46,21 @@ public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Fragment fragment = new HomeFragment();
+//    BackPressCloseHandler backPressCloseHandler;
+
+    int state;
+    NetworkService apiService;
+
+
+    private TextView navHeadName;
+    private CircleImageView navHeadImage;
+    private TextView navHeadState;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
 
 
@@ -71,6 +100,19 @@ public class MainActivity extends BaseActivity
         fragmentTransaction.commit();
 
 
+
+        View header = navigationView.getHeaderView(0);
+
+
+        navHeadName = (TextView)header.findViewById(R.id.nav_head_name);
+        navHeadImage = (CircleImageView)header.findViewById(R.id.nav_head_image);
+        navHeadState = (TextView)header.findViewById(R.id.nav_head_state);
+
+
+
+        network();
+
+
 /*
 다이얼로그에서 완료해야만 타임라인으로 보내고 스테이트 변경하는거임.
 
@@ -82,16 +124,7 @@ public class MainActivity extends BaseActivity
     }
 
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-    //TODO 프레그먼트 붙여야됨.
+
 /*
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
@@ -201,5 +234,72 @@ public class MainActivity extends BaseActivity
         fragmentTransaction.replace(R.id.fragment_home, fragment);
         fragmentTransaction.commit();
     }
+    public void network(){
 
+
+        apiService = NetworkApi.getInstance(HealerContext.getContext()).getServce();
+        Call<ResponseBody> getTimeline = apiService.timeline();
+        getTimeline.enqueue(new Callback<ResponseBody>() {
+
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String imageUrl;
+
+
+                if(response.body()!= null){
+                    try{
+                        JSONObject data = new JSONObject(response.body().string());
+                        String code = data.get("code").toString();
+                        if(code.equals("1")){
+                            JSONObject results = data.getJSONObject("results");
+
+
+                            Log.e("main nav:",results.getString("name"));
+
+
+                            navHeadName.setText(results.getString("name"));
+
+                            imageUrl = results.getString("profile");
+
+                            if(!results.isNull("profile")){//프로필 이미지 널이 아닌 경우
+                                Glide.with(HealerContext.getContext()).load(imageUrl).into(navHeadImage);
+                            }
+
+
+                        }else{
+                            Toast.makeText(HealerContext.getContext().getApplicationContext(), "다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Toast.makeText(HealerContext.getContext().getApplicationContext(), "서버오류입니다", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
+//            super.onBackPressed();
+
+//            backPressCloseHandler.onBackPressed();
+        }
+    }
 }

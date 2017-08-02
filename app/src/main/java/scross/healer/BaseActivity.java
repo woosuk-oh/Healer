@@ -16,6 +16,7 @@ import com.tsengvn.typekit.TypekitContextWrapper;
 public class BaseActivity extends AppCompatActivity {
 
 
+//    BackPressCloseHandler backPressCloseHandler;
     int currentState; //현재까지 완료한 단계.
 
     @Override
@@ -62,12 +63,52 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+//        backPressCloseHandler.onBackPressed();
+
     }
 
+/*
 
 
+    public class BackPressCloseHandler {
+
+        public long backKeyPressedTime = 0;
+        public Toast toast;
+
+        public Activity activity;
+
+        public BackPressCloseHandler(Activity context) {
+            this.activity = context;
+        }
+
+        public void onBackPressed() {
+            if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+                backKeyPressedTime = System.currentTimeMillis();
+                showGuide();
+                return;
+            }
+            if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+                SystemExit();
+            }
+        }
+
+        public void SystemExit() {
+            activity.moveTaskToBack(true);
+            activity.finish();
+            toast.cancel();
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
+        }
+
+        public void showGuide() {
+            toast = Toast.makeText(activity, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }*/
 
 }

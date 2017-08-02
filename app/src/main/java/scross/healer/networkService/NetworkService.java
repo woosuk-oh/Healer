@@ -49,6 +49,7 @@ public interface NetworkService {
 
 
 
+
     @Multipart
     @POST("day/{day}/process1")
     Call<ResponseBody> process1(

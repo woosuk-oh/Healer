@@ -52,11 +52,13 @@ import retrofit2.Response;
 import scross.healer.HealerContext;
 import scross.healer.MainActivity;
 import scross.healer.R;
+import scross.healer.SharedPreferenceUtil;
 import scross.healer.emotion.EmotionActivity;
 import scross.healer.media.MediaplayerActivity;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
+import scross.healer.timeline.TimelineFragment;
 
 import static android.support.v4.content.FileProvider.getUriForFile;
 /*
@@ -70,6 +72,8 @@ import static android.support.v4.content.FileProvider.getUriForFile;
 public class TakePictureActivity  extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener {
+
+    int state;
 
     NetworkService apiService;
     private static final String TAG = "TakePictureActivity";
@@ -293,6 +297,10 @@ public class TakePictureActivity  extends AppCompatActivity implements
                     }
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/jpg"), file);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), reqFile);
+/*                    TimelineFragment tf = new TimelineFragment();
+                    tf.getArguments().g*/
+
+                    //TODO apiService.process1(day값 값전달받아와서 넣어줘야됨.);
                     Call<ResponseBody> process1 = apiService.process1("1", body);
                     process1.enqueue(new Callback<ResponseBody>() {
                         @Override
@@ -304,22 +312,36 @@ public class TakePictureActivity  extends AppCompatActivity implements
                                         Toast.makeText(TakePictureActivity.this, "성공", Toast.LENGTH_SHORT).show();
                                         //파일처리부분
 
-                                       /* Intent intent1 = getIntent();
-                                        int state1 = intent1.getExtras().getInt("state");
 
-                                        if(state1 == 1){
-                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                            intent.putExtra("state",state1+1);
-                                            startActivity(intent);
-                                        }*/
-
-
-                                        Intent intent = new Intent(getApplicationContext(), EmotionActivity.class);
-                                        int state = intent.getExtras().getInt("state");
+                                        /** get단계 **/
+                                        Intent intent1 = getIntent();
+                                        state = intent1.getExtras().getInt("state");
                                         TakePictureActivity.this.finish();
+                                        Log.e("state takepic get",state+"");
 
 
-                                        intent.putExtra("state",state+1);
+
+                                        state = state +1;
+
+
+
+                                        /** put단계 **/
+                                        Intent intent = new Intent(getApplicationContext(), EmotionActivity.class);
+
+
+                                        intent.putExtra("state",state);
+                                        Log.e("state takepic put",state+"");
+
+
+                                        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                                        if (sharedPreferenceUtil.getProcess() != state) {
+                                            sharedPreferenceUtil.setProcess(state);
+
+//            state = sharedPreferenceUtil.getProcess();
+                                        }
+                                        Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " TakePictureActivity.");
+
                                         startActivity(intent);
 
                                     } else {

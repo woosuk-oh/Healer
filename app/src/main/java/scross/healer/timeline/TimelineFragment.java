@@ -35,8 +35,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import scross.healer.BaseFragment;
+import scross.healer.HealerContext;
 import scross.healer.R;
+import scross.healer.SharedPreferenceUtil;
 import scross.healer.camera.CameraActivity;
+import scross.healer.emotion.EmotionActivity;
+import scross.healer.media.MediaplayerActivity;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
@@ -52,6 +56,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
     }
 
     int lastDay = 1;
+    int stateProcess;
     NetworkService apiService;
     TextView name;
     TextView birth;
@@ -60,6 +65,9 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
     LinearLayout contentsLayout;
     int completeColor;
 
+    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +75,9 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         JodaTimeAndroid.init(getActivity());
         network();
         Log.e("ddd", "onCreate");
+
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+        stateProcess = sharedPreferenceUtil.getProcess();
 
     }
 
@@ -160,6 +171,20 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             }
                             lastDay = results.getInt("lastday");
                             bindingData(results);
+
+
+                            /*    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());  */
+                            sharedPreferenceUtil.setLastDay(lastDay);
+/*
+                            if(sharedPreferenceUtil.getLastDay() != lastDay) {
+                                lastDay = sharedPreferenceUtil.getLastDay();
+                            }*/
+                            Log.e("SharedPreference!!!!: " , lastDay+ " 라스트데이.");
+
+
+
+
+
 
 
                             //TODO switch case문으로 finish_date 값 null 이면 "시작하지 않음"으로 처리
@@ -374,12 +399,50 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             @Override
                             public void onClick(View view) {
 
+                                switch (stateProcess){
+                                    case 1:
+                                        Intent intent = new Intent(getActivity(), CameraActivity.class);
+                                        intent.putExtra("day", day);
+                                        intent.putExtra("state", 1);
+                                        startActivity(intent);
+                                        break;
+
+                                    case 2:
+                                        Intent intent1 = new Intent(getActivity(), EmotionActivity.class);
+                                        intent1.putExtra("day", day);
+                                        intent1.putExtra("state", 2);
+                                        startActivity(intent1);
+                                        break;
+                                    case 3:
+                                        Intent intent2 = new Intent(getActivity(), MediaplayerActivity.class);
+                                        intent2.putExtra("day", day);
+                                        intent2.putExtra("state", 3);
+                                        startActivity(intent2);
+                                        break;
+                                    case 4:
+                                        Intent intent3 = new Intent(getActivity(), CameraActivity.class);
+                                        intent3.putExtra("day", day);
+                                        intent3.putExtra("state", 4);
+                                        startActivity(intent3);
+                                        break;
+                                    case 5:
+                                        Intent intent4 = new Intent(getActivity(), EmotionActivity.class);
+                                        intent4.putExtra("day", day);
+                                        intent4.putExtra("state", 5);
+                                        startActivity(intent4);
+                                        break;
+                                    case 6:
+                                        //TODO 마지막 단계 다 갔으면 오늘날짜 저장하고 날짜 비교해서 하루 안지났으면 낼 해달라고 토스트 띄우기. else 다른날짜면 state = 1 넣어두고(인텐트,쉐어드) 다시 cameraActivity부터 시작
+                                        Toast.makeText(HealerContext.getContext(), "테스트 수정필요!",Toast.LENGTH_LONG);
 
 
-                                Intent intent = new Intent(getActivity(), CameraActivity.class);
-                                intent.putExtra("day", day);
-                                intent.putExtra("state", 1);
-                                startActivity(intent);
+
+
+                                }
+
+
+
+
 
 
 

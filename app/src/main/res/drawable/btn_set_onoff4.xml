@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/sosomini" android:state_checked="false">
+        <size android:width="50dp" android:height="50dp" />
+    </item>
+    <item android:drawable="@drawable/selsoso" android:state_checked="true">
+    <size android:width="55dp" android:height="55dp" /></item>
+
+
+</selector>

@@ -22,7 +22,7 @@
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageView"
+                android:id="@+id/nav_head_image"
                 android:layout_width="62.5dp"
                 android:layout_height="62.5dp"
                 android:layout_marginLeft="29dp"
@@ -35,7 +35,7 @@
                 android:paddingLeft="23dp">
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/nav_head_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
@@ -58,7 +58,7 @@
                         />
 
                     <TextView
-                        android:id="@+id/state"
+                        android:id="@+id/nav_head_state"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="dddd"

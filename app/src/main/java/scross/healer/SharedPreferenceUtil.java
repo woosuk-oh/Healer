@@ -39,6 +39,8 @@ public class SharedPreferenceUtil {
     private static final String FIELD_FACEBOOK_TOKEN_KEY = "facebookToken";
     private static final String LOCALE_KEY = "localeAreaKey";
     private static final String SAVE_TIME = "saveTime";
+    private static final String SAVE_DAY = "saveDay";
+    private static final String PROCESS= "process";
 
 
     public void setSaveTime(int saveTime){
@@ -48,6 +50,30 @@ public class SharedPreferenceUtil {
     public int getSaveTime(){
         return mPrefs.getInt(SAVE_TIME, 0);
     }
+
+
+
+
+    public void setLastDay(int lastDay){
+        mEditor.putInt(SAVE_DAY, lastDay);
+        mEditor.commit();
+    }
+    public int getLastDay(){
+        return mPrefs.getInt(PROCESS, 1);
+    }
+
+
+
+    public void setProcess(int process){
+        mEditor.putInt(PROCESS, process);
+        mEditor.commit();
+    }
+    public int getProcess(){
+        return mPrefs.getInt(PROCESS, 1);
+    }
+
+
+
 
     public void setLocaleArea(String locationArea){
         mEditor.putString(LOCALE_KEY, locationArea);

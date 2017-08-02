@@ -12,13 +12,15 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import scross.healer.BaseActivity;
+import scross.healer.HealerContext;
 import scross.healer.R;
+import scross.healer.SharedPreferenceUtil;
 
 /**
  * Created by gta2v on 2017-07-23.
  */
 
-public class CameraActivity extends BaseActivity{
+public class CameraActivity extends BaseActivity {
 
 
     private Button cameraStart;
@@ -44,8 +46,10 @@ public class CameraActivity extends BaseActivity{
         Intent intent = getIntent();
         dayState = intent.getExtras().getInt("day");
 
-        Log.e("dayState",dayState+"");
+        Log.e("dayState", dayState + "");
         state = intent.getExtras().getInt("state");
+        Log.e("state Camera get", state + "");
+
 
         cameraStart = (Button) findViewById(R.id.camera_start);
         contentDay = (TextView) findViewById(R.id.content_day);
@@ -65,10 +69,20 @@ public class CameraActivity extends BaseActivity{
                 public void onClick(View view) {
 
 
-
-                    //TODO 카메라 촬영하는 액티비티로 이동
-                    //TODO 카메라 촬영 액티비티에서 촬영버튼, 닫기버튼해서 닫기버튼 누르면 state +1 되도록!
                     Intent intent = new Intent(getApplication(), TakePictureActivity.class);
+                    intent.putExtra("state", state);
+                    Log.e("state Camera put", state + "");
+
+                    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                    if (sharedPreferenceUtil.getProcess() != state) {
+                        sharedPreferenceUtil.setProcess(state);
+
+//            state = sharedPreferenceUtil.getProcess();
+                    }
+                    Log.e("SharedPreference!!!!: ", state + " 프로세스.");
+
+
                     startActivity(intent);
                 }
             });
@@ -135,7 +149,7 @@ public class CameraActivity extends BaseActivity{
 
             }
 
-        }  else if(state == 4){// ?일차 4단계. 컨텐츠 듣기후,
+        } else if (state == 4) {// ?일차 4단계. 컨텐츠 듣기후,
             cameraCheck.setVisibility(View.VISIBLE);
             contentExplain.setText("수고하셨습니다.\n웃는 얼굴을 다시 한 번 촬영 합니다.\n전과 같이 '치~즈'를 외쳐주세요.");
 
@@ -147,6 +161,17 @@ public class CameraActivity extends BaseActivity{
                     //TODO 카메라 촬영 액티비티에서 촬영버튼, 닫기버튼해서 닫기버튼 누르면 state +1 되도록!
                     Intent intent = new Intent(getApplication(), TakePictureActivity.class);
                     intent.putExtra("state", 4);
+
+
+                    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                    if (sharedPreferenceUtil.getProcess() != state) {
+                        sharedPreferenceUtil.setProcess(state);
+
+//            state = sharedPreferenceUtil.getProcess();
+                    }
+                    Log.e("SharedPreference!!!!: ", state + " 프로세스.");
+
 
                     startActivity(intent);
                 }

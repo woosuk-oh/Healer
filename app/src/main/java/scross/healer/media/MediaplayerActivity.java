@@ -2,6 +2,7 @@ package scross.healer.media;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -32,6 +34,8 @@ import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import scross.healer.HealerContext;
+import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.SharedPreferenceUtil;
 
@@ -55,6 +59,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     private TextView tv;
     private TextView tv2;
     int savetime=0;
+
 
     SimpleDateFormat mmss = new SimpleDateFormat("mm:ss");
 
@@ -345,18 +350,22 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
     @Override
     public void onBackPressed() {
-        //TODO 재생/일시정지 버튼 안누른 상태에서 백프레스하면 튕김. 겟커런트값이 없기때문인듯??
+        if(savetime != 0) {
+            savetime = mp.getCurrentPosition();
 
-        savetime = mp.getCurrentPosition();
+            SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
+            sharedPreferenceUtil.setSaveTime(savetime);
+        }
 
-        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
-        sharedPreferenceUtil.setSaveTime(savetime);
 
         if (mp != null) {
             mp.stop();
             mp.release();
         }
 
-        super.onBackPressed();
+        Intent intent1 = new Intent(getApplication(), MainActivity.class);
+        startActivity(intent1);
+
+//        super.onBackPressed();
     }
 }
