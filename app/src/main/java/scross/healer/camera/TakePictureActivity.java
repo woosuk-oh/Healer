@@ -314,12 +314,19 @@ public class TakePictureActivity  extends AppCompatActivity implements
                                         }*/
 
 
-                                        Intent intent = new Intent(getApplicationContext(), EmotionActivity.class);
-                                        int state = intent.getExtras().getInt("state");
+                                        Intent intent1 = getIntent();
+                                        int state = intent1.getExtras().getInt("state");
+
+                                        Log.e("TP",state+"");
                                         TakePictureActivity.this.finish();
 
 
+
+
+                                        Intent intent = new Intent(getApplicationContext(), EmotionActivity.class);
+
                                         intent.putExtra("state",state+1);
+
                                         startActivity(intent);
 
                                     } else {

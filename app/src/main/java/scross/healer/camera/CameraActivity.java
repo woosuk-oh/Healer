@@ -1,5 +1,6 @@
 package scross.healer.camera;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import scross.healer.BaseActivity;
+import scross.healer.HealerContext;
 import scross.healer.R;
 
 /**
@@ -27,6 +29,7 @@ public class CameraActivity extends BaseActivity{
     private TextView contentDay;
     private TextView contentBody;
     private TextView contentExplain;
+    private Context context;
 
 
     // TODO 네트워크로 부터 state받아와야함. daystate는 메인액티비티에서 받아오고 인텐트로 전달받기!
@@ -145,10 +148,10 @@ public class CameraActivity extends BaseActivity{
 
                     //TODO 카메라 촬영하는 액티비티로 이동
                     //TODO 카메라 촬영 액티비티에서 촬영버튼, 닫기버튼해서 닫기버튼 누르면 state +1 되도록!
-                    Intent intent = new Intent(getApplication(), TakePictureActivity.class);
+                    Intent intent = new Intent(HealerContext.getContext(), TakePictureActivity.class);
                     intent.putExtra("state", 4);
 
-                    startActivity(intent);
+                    getApplication().startActivity(intent);
                 }
             });
         }

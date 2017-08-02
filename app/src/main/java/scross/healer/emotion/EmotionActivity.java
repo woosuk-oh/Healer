@@ -23,12 +23,15 @@ public class EmotionActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_main);
+
+
 
 
 
         Intent intent = new Intent();
 
-        int state = intent.getExtras().getInt("state");
+        int state = intent.getIntExtra("state", 3);
 
         if (state == 2) {
             EmotionDialog dialog = new EmotionDialog();
