@@ -405,28 +405,28 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
                         arrowButton.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {                                Intent intent = null;
+                            public void onClick(View view) {
                                 Intent intent = null;
                                 switch (nowstate){
                                     case 1:
-                                        Intent intent = new Intent(getActivity(), CameraActivity.class);
+                                        intent = new Intent(getActivity(), CameraActivity.class);
 
                                         break;
 
                                     case 2:
-                                        Intent intent1 = new Intent(getActivity(), EmotionActivity.class);
+                                        intent = new Intent(getActivity(), EmotionActivity.class);
 
                                         break;
                                     case 3:
-                                        Intent intent2 = new Intent(getActivity(), MediaplayerActivity.class);
+                                        intent = new Intent(getActivity(), MediaplayerActivity.class);
 
                                         break;
                                     case 4:
-                                        Intent intent3 = new Intent(getActivity(), CameraActivity.class);
+                                        intent = new Intent(getActivity(), CameraActivity.class);
 
                                         break;
                                     case 5:
-                                        Intent intent4 = new Intent(getActivity(), EmotionActivity.class);
+                                        intent = new Intent(getActivity(), EmotionActivity.class);
 
                                         break;
                                     case 6:
