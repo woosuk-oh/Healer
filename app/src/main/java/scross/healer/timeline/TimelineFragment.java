@@ -41,6 +41,9 @@ import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
 
+import static android.support.v7.content.res.AppCompatResources.getDrawable;
+import static scross.healer.timeline.ContentNameHashMap.contentName;
+
 /**
  * Created by hanee on 2017-07-18.
  */
@@ -249,13 +252,19 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                         name.setText("초기 트라우마-감정 조절 배우기");
                         break;
                     case 5:
-                        name.setText("빅 트라우마-트라우마 정화1");
+                        name.setText("빅 트라우마-트라우마 정화I");
                         break;
                     case 6:
+                        name.setText("빅 트라우마-트라우마 정화II");
                         break;
                     case 7:
+                        name.setText("빅 트라우마-자아 대면하기");
                         break;
                     case 8:
+                        name.setText("빅 트라우마-자아 회복하기");
+                        break;
+                    default:
+                        name.setText("빅 트라우마-자아 회복하기");
                         break;
                 }
 
@@ -365,24 +374,39 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                     if (day == lastDay) {
                         arrowButton.setVisibility(View.VISIBLE);
                         icon.setImageDrawable(getDrawable(getActivity(), R.drawable.projectprogress));
-//                        detail.setVisibility(View.GONE);
+                        //detail.setVisibility(View.GONE);
                         state.setText("진행중");
-
-
-
+                        final int nowstate = data.getInt("state");
                         arrowButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
-
-
-                                Intent intent = new Intent(getActivity(), CameraActivity.class);
+                                Intent intent = null;
+                                switch (nowstate) {
+                                    case 1:
+                                        intent = new Intent(getActivity(), CameraActivity.class);
+                                        break;
+                                    case 2:
+                                        intent = new Intent(getActivity(), CameraActivity.class);
+                                        break;
+                                    case 3:
+                                        intent = new Intent(getActivity(), CameraActivity.class);
+                                        break;
+                                    case 4:
+                                        intent = new Intent(getActivity(), CameraActivity.class);
+                                        break;
+                                    case 5:
+                                        intent = new Intent(getActivity(), CameraActivity.class);
+                                        break;
+                                    case 6:
+                                        intent = new Intent(getActivity(), CameraActivity.class);
+                                        break;
+                                    default:
+                                        intent = new Intent(getActivity(), CameraActivity.class);
+                                        break;
+                                }
                                 intent.putExtra("day", day);
-                                intent.putExtra("state", 1);
+                                intent.putExtra("state", nowstate);
                                 startActivity(intent);
-
-
-
                             }
                         });
                     }
