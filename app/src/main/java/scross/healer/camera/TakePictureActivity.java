@@ -312,6 +312,8 @@ public class TakePictureActivity  extends AppCompatActivity implements
                                         Toast.makeText(TakePictureActivity.this, "성공", Toast.LENGTH_SHORT).show();
                                         //파일처리부분
 
+                                       /* Intent intent1 = getIntent();
+                                        int state1 = intent1.getExtras().getInt("state");
 
                                         /** get단계 **/
                                         Intent intent1 = getIntent();

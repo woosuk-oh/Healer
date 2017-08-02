@@ -45,6 +45,9 @@ import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
 
+import static android.support.v7.content.res.AppCompatResources.getDrawable;
+import static scross.healer.timeline.ContentNameHashMap.contentName;
+
 /**
  * Created by hanee on 2017-07-18.
  */
@@ -76,8 +79,6 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         network();
         Log.e("ddd", "onCreate");
 
-        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
-        stateProcess = sharedPreferenceUtil.getProcess();
 
     }
 
@@ -274,13 +275,19 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                         name.setText("초기 트라우마-감정 조절 배우기");
                         break;
                     case 5:
-                        name.setText("빅 트라우마-트라우마 정화1");
+                        name.setText("빅 트라우마-트라우마 정화I");
                         break;
                     case 6:
+                        name.setText("빅 트라우마-트라우마 정화II");
                         break;
                     case 7:
+                        name.setText("빅 트라우마-자아 대면하기");
                         break;
                     case 8:
+                        name.setText("빅 트라우마-자아 회복하기");
+                        break;
+                    default:
+                        name.setText("빅 트라우마-자아 회복하기");
                         break;
                 }
 
@@ -390,55 +397,57 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                     if (day == lastDay) {
                         arrowButton.setVisibility(View.VISIBLE);
                         icon.setImageDrawable(getDrawable(getActivity(), R.drawable.projectprogress));
-//                        detail.setVisibility(View.GONE);
+                        //detail.setVisibility(View.GONE);
                         state.setText("진행중");
+                        final int nowstate = data.getInt("state");
 
 
 
                         arrowButton.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {
-
-                                switch (stateProcess){
+                            public void onClick(View view) {                                Intent intent = null;
+                                Intent intent = null;
+                                switch (nowstate){
                                     case 1:
                                         Intent intent = new Intent(getActivity(), CameraActivity.class);
-                                        intent.putExtra("day", day);
-                                        intent.putExtra("state", 1);
-                                        startActivity(intent);
+
                                         break;
 
                                     case 2:
                                         Intent intent1 = new Intent(getActivity(), EmotionActivity.class);
-                                        intent1.putExtra("day", day);
-                                        intent1.putExtra("state", 2);
-                                        startActivity(intent1);
+
                                         break;
                                     case 3:
                                         Intent intent2 = new Intent(getActivity(), MediaplayerActivity.class);
-                                        intent2.putExtra("day", day);
-                                        intent2.putExtra("state", 3);
-                                        startActivity(intent2);
+
                                         break;
                                     case 4:
                                         Intent intent3 = new Intent(getActivity(), CameraActivity.class);
-                                        intent3.putExtra("day", day);
-                                        intent3.putExtra("state", 4);
-                                        startActivity(intent3);
+
                                         break;
                                     case 5:
                                         Intent intent4 = new Intent(getActivity(), EmotionActivity.class);
-                                        intent4.putExtra("day", day);
-                                        intent4.putExtra("state", 5);
-                                        startActivity(intent4);
+
                                         break;
                                     case 6:
                                         //TODO 마지막 단계 다 갔으면 오늘날짜 저장하고 날짜 비교해서 하루 안지났으면 낼 해달라고 토스트 띄우기. else 다른날짜면 state = 1 넣어두고(인텐트,쉐어드) 다시 cameraActivity부터 시작
                                         Toast.makeText(HealerContext.getContext(), "테스트 수정필요!",Toast.LENGTH_LONG);
-
+                                        break;
 
 
 
                                 }
+                                intent.putExtra("day", day);
+                                intent.putExtra("state", nowstate);
+                                startActivity(intent);
+
+
+                                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                                if(sharedPreferenceUtil.getProcess() != nowstate)
+                                    sharedPreferenceUtil.setProcess(nowstate);
+                                Log.e("shared Timeline: ", sharedPreferenceUtil.getProcess()+" , 449번줄");
+
 
 
 
