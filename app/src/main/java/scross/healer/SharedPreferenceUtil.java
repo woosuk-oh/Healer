@@ -21,7 +21,6 @@ public class SharedPreferenceUtil {
         mContext = context;
         mPrefs = mContext.getSharedPreferences("userInfo", MODE_PRIVATE);
         mEditor = mPrefs.edit();
-
     }
 
 

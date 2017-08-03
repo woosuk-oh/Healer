@@ -447,14 +447,6 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                                 if(sharedPreferenceUtil.getProcess() != nowstate)
                                     sharedPreferenceUtil.setProcess(nowstate);
                                 Log.e("shared Timeline: ", sharedPreferenceUtil.getProcess()+" , 449번줄");
-
-
-
-
-
-
-
-
                             }
                         });
                     }

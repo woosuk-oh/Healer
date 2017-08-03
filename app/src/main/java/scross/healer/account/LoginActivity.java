@@ -107,6 +107,7 @@ public class LoginActivity extends BaseActivity {
                                         Toast.makeText(LoginActivity.this, "성공", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
+                                        finish();
                                     } else {
                                         Toast.makeText(LoginActivity.this, "로그인에 실패했습니다", Toast.LENGTH_SHORT).show();
                                     }

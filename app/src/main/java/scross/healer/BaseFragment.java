@@ -34,7 +34,7 @@ public class BaseFragment extends Fragment {
 
         }
 
-        getActivity().getFragmentManager().beginTransaction().add(R.id.fragment_home, fragment).addToBackStack(null).commit();
+        getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_home, fragment).addToBackStack(null).commit();
 
     }
 
