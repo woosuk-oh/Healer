@@ -58,7 +58,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         super();
     }
 
-    int lastDay = 1;
+    int lastDay = 0;
     int stateProcess;
     NetworkService apiService;
     TextView name;
@@ -79,6 +79,8 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         network();
         Log.e("ddd", "onCreate");
 
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+        stateProcess = sharedPreferenceUtil.getProcess();
 
     }
 
@@ -170,17 +172,21 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             if (!results.isNull("emotion")) {
                                 emotion.setText(results.getInt("emotion") + "");
                             }
-                            lastDay = results.getInt("lastday");
+                            int lastDay1 = results.getInt("lastday");
+                            Log.e("Server!!!", "서버콜 라스트데이: "+lastDay1);
                             bindingData(results);
 
 
                             /*    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());  */
-                            sharedPreferenceUtil.setLastDay(lastDay);
+                            sharedPreferenceUtil.setLastDay(lastDay1);
+                            Log.e("Shared!!!", "타임라인 라스트데이: "+sharedPreferenceUtil.getLastDay());
 /*
+
                             if(sharedPreferenceUtil.getLastDay() != lastDay) {
                                 lastDay = sharedPreferenceUtil.getLastDay();
-                            }*/
+                            }
                             Log.e("SharedPreference!!!!: " , lastDay+ " 라스트데이.");
+*/
 
 
 
@@ -407,7 +413,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             @Override
                             public void onClick(View view) {
                                 Intent intent = null;
-                                switch (nowstate){
+                                switch (stateProcess){
                                     case 1:
                                         intent = new Intent(getActivity(), CameraActivity.class);
 
@@ -438,14 +444,14 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
                                 }
                                 intent.putExtra("day", day);
-                                intent.putExtra("state", nowstate);
+                                intent.putExtra("state", stateProcess);
                                 startActivity(intent);
 
 
                                 SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
-                                if(sharedPreferenceUtil.getProcess() != nowstate)
-                                    sharedPreferenceUtil.setProcess(nowstate);
+                                if(sharedPreferenceUtil.getProcess() != stateProcess)
+                                    sharedPreferenceUtil.setProcess(stateProcess);
                                 Log.e("shared Timeline: ", sharedPreferenceUtil.getProcess()+" , 449번줄");
 
 

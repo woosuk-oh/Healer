@@ -138,6 +138,8 @@ public class TakePictureActivity  extends AppCompatActivity implements
             actionBar.setDisplayShowTitleEnabled(false);
         }
         apiService = NetworkApi.getInstance(this).getServce();
+
+        //TODO 스테이트 인텐트로 받아와서 1이나 4인 경우에만 이모션 넘어가고, 아니면 메인액티비티로 보내기!! (예외처리)
     }
 
     @Override

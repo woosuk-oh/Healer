@@ -38,6 +38,9 @@ import scross.healer.HealerContext;
 import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.SharedPreferenceUtil;
+import scross.healer.camera.CameraActivity;
+import scross.healer.camera.TakePictureActivity;
+import scross.healer.emotion.EmotionActivity;
 
 import static android.view.View.GONE;
 import static scross.healer.HealerContext.getContext;
@@ -58,11 +61,16 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     private AudioManager audioManager;
     private TextView tv;
     private TextView tv2;
-    int savetime=0;
+    private TextView contentName;
+    private TextView contentBody;
+    private TextView contentDay;
+    String mediaEndCheck;
+    int savetime = 0;
+    int stateProcess;
+    int lastDay = 0;
 
 
     SimpleDateFormat mmss = new SimpleDateFormat("mm:ss");
-
 
 
     /**
@@ -73,22 +81,88 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
         setContentView(R.layout.activity_audioplayer);
 
-
         SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
 
 
-        if(sharedPreferenceUtil.getSaveTime() != 0) {
+//        if (sharedPreferenceUtil.getSaveTime() != 0) {
             savetime = sharedPreferenceUtil.getSaveTime();
-            Log.e("쉐어드프리페이런스: " + savetime, "세이브타임.");
-        }
+            stateProcess = sharedPreferenceUtil.getProcess();
+//        sharedPreferenceUtil.setLastDay(1);
+            lastDay = sharedPreferenceUtil.getLastDay();
+
+            Log.e("쉐어드프리페이런스: ",savetime+ "세이브타임.");
+            Log.e("쉐어드프리페이런스: ", stateProcess+ "Mediaplayer 프로세스 onCreate..");
+            Log.e("쉐어드프리페이런스: ",lastDay+ " Meiaplayer 라스트데이 onCreate.");
+
+//        }
 
         // Set up the play/pause/reset/stop buttons
-        mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-1.mp3";
         mPlay = (Button) findViewById(R.id.play);
         mPause = (Button) findViewById(R.id.pause);
         tv = (TextView) findViewById(R.id.current_time);
         tv2 = (TextView) findViewById(R.id.time_remaining);
+        contentDay = (TextView) findViewById(R.id.media_content_day);
+        contentName = (TextView) findViewById(R.id.media_content_name);
+        contentBody = (TextView) findViewById(R.id.media_content_body);
 
+
+        switch (lastDay) {
+            case 1:
+                contentDay.setText("1일차");
+                contentName.setText("도입");
+                contentBody.setText("자기 관찰하기");
+                mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-1.mp3";
+                break;
+            case 2:
+                contentDay.setText("2일차");
+                contentName.setText("초기 트라우마");
+                contentBody.setText("부정적 기억 내보내기");
+                mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-2.mp3";
+                break;
+            case 3:
+                contentDay.setText("3일차");
+                contentName.setText("초기 트라우마");
+                contentBody.setText("긍정적 정서 떠올리기");
+                mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-3.mp3";
+
+                break;
+            case 4:
+                contentDay.setText("4일차");
+                contentName.setText("초기 트라우마");
+                contentBody.setText("감정 조절 배우기");
+                mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-4.mp3";
+
+                break;
+            case 5:
+                contentDay.setText("5일차");
+                contentName.setText("빅 트라우마");
+                contentBody.setText("트라우마 정화 I");
+                mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-5.mp3";
+
+                break;
+            case 6:
+                contentDay.setText("6일차");
+                contentName.setText("빅 트라우마");
+                contentBody.setText("트라우마 정화 II");
+                mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-6.mp3";
+
+                break;
+            case 7:
+                contentDay.setText("7일차");
+                contentName.setText("빅 트라우마");
+                contentBody.setText("자아 대면하기");
+                mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-7.mp3";
+
+                break;
+            case 8:
+                contentDay.setText("8일차");
+                contentName.setText("마무리");
+                contentBody.setText("자아 회복하기");
+                mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-8.mp3";
+
+                break;
+
+        }
 
 
 //        mReset = (ImageButton) findViewById(R.id.reset);
@@ -97,27 +171,26 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         mPause.setVisibility(GONE);
 
 
-
-            mPlay.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    mPause.setVisibility(view.VISIBLE);
-                    mPlay.setVisibility(GONE);
-                    if(savetime == 0) {
-                        playVideo(0);
-                    }else{
-                        playVideo(savetime);
-                    }
+        mPlay.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                mPause.setVisibility(view.VISIBLE);
+                mPlay.setVisibility(GONE);
+                if (savetime == 0) {
+                    playVideo(0);
+                } else {
+                    playVideo(savetime);
                 }
-            });
-            mPause.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    if (mp != null) {
-                        mp.pause();
-                        mPlay.setVisibility(view.VISIBLE);
-                        mPause.setVisibility(GONE);
-                    }
+            }
+        });
+        mPause.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (mp != null) {
+                    mp.pause();
+                    mPlay.setVisibility(view.VISIBLE);
+                    mPause.setVisibility(GONE);
                 }
-            });
+            }
+        });
 
 
 
@@ -156,7 +229,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
             // If the path has not changed, just start the media player
             if (path.equals(current) && mp != null) {
-                Log.e("saveTime"+savetime, "테스트: ");
+                Log.e("saveTime" + savetime, "테스트: ");
 
                 mp.start();
 
@@ -177,8 +250,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
             mp.setAudioStreamType(audioManager.STREAM_MUSIC);
 
-            mp.setVolume(1,1);
-
+            mp.setVolume(1, 1);
 
 
             // Set the surface for the video output
@@ -189,6 +261,11 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
             Runnable r = new Runnable() {
                 public void run() {
                     try {
+
+
+
+
+
                         mp.setDataSource(getApplicationContext(), Uri.parse(path));
                     } catch (IOException e) {
                         Log.e(TAG, e.getMessage(), e);
@@ -199,9 +276,18 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                         e.printStackTrace();
                     }
                     Log.v(TAG, "Duration:  ===>" + mp.getDuration());
+
+                    /*mp.prepareAsync();
+                    mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mediaPlayer) {
+                            mp.seekTo(savetime);
+                            mp.start();
+                        }
+                    });*/
+
                     mp.seekTo(savetime);
                     mp.start();
-
 
                     Timer timer = new Timer();
                     timer.scheduleAtFixedRate(new TimerTask() {
@@ -216,6 +302,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                             public void run() {
 
                                                 tv.setText("재생시간: " + mmss.format(mp.getCurrentPosition()));
+                                                savetime = mp.getCurrentPosition();
 
 
                                             }
@@ -223,48 +310,60 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                         tv2.post(new Runnable() {
                                             @Override
                                             public void run() {
-
                                                 tv2.setText("남은시간: " + mmss.format(mp.getDuration() - mp.getCurrentPosition()));
 
 
+
+                                                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+
+                                                if(mp.getCurrentPosition() == mp.getDuration()){
+                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
+
+                                                    Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
+
+                                                    if(stateProcess == 3){
+
+                                                        stateProcess = stateProcess +1;
+                                                        if (sharedPreferenceUtil.getProcess() != stateProcess) {
+                                                            sharedPreferenceUtil.setProcess(stateProcess);
+
+//            state = sharedPreferenceUtil.getProcess();
+                                                        }
+
+                                                        Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                                                        intent.putExtra("state",stateProcess);
+                                                        startActivity(intent);
+
+                                                        //camera
+                                                    }else{
+                                                        Toast.makeText(MediaplayerActivity.this, "잘못된 경로입니다. 타임라인을 확인해주세요!", Toast.LENGTH_SHORT).show();
+
+                                                        Intent intent = new Intent(getApplication(), MainActivity.class);
+                                                        startActivity(intent);
+
+                                                    }
+
+
+                                                }
+/*
+                                                if(mp.getCurrentPosition() == mp.getDuration()){
+                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
+                                                }*/
                                             }
                                         });
                                     } else {
-                             /*       timer.cancel();
-                                    timer.purge();*/
+
                                     }
                                 }
                             });
                         }
                     }, 0, 1000);
-                 /*   Timer timer2 = new Timer();
-                    timer2.scheduleAtFixedRate(new TimerTask() {
-                        @Override
-                        public void run() {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (mp != null && mp.isPlaying()) {
-                                        tv2.post(new Runnable() {
-                                            @Override
-                                            public void run() {
 
-                                                tv2.setText("남은시간: " + mmss.format(mp.getDuration() - mp.getCurrentPosition()));
-
-
-                                            }
-                                        });
-                                    } else {
-                             *//*       timer.cancel();
-                                    timer.purge();*//*
-                                    }
-                                }
-                            });
-                        }
-                    }, 0, 1000);*/
                 }
             };
             new Thread(r).start();
+
 
         } catch (Exception e) {
             Log.e(TAG, "error: " + e.getMessage(), e);
@@ -308,8 +407,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
             mp.setDataSource(tempPath);
             try {
                 stream.close();
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 Log.e(TAG, "error: " + ex.getMessage(), ex);
             }
         }
@@ -350,22 +448,66 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
     @Override
     public void onBackPressed() {
-        if(savetime != 0) {
+        if (savetime != 0) {
             savetime = mp.getCurrentPosition();
 
             SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
             sharedPreferenceUtil.setSaveTime(savetime);
+            Log.e("savetime!!!!!",""+savetime);
         }
 
+//        onPause();
 
         if (mp != null) {
+            mp.pause();
             mp.stop();
-            mp.release();
+            mp.reset();
+
+            //TODO release() 해줘야됨
         }
+//        super.onBackPressed();
 
         Intent intent1 = new Intent(getApplication(), MainActivity.class);
         startActivity(intent1);
 
-//        super.onBackPressed();
     }
 }
+
+
+
+/*
+
+
+
+    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+
+                                        if(mp.getCurrentPosition() == mp.getDuration()){
+                                                Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
+
+                                                Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
+
+                                                if(stateProcess == 4){
+
+                                                stateProcess = stateProcess +1;
+                                                if (sharedPreferenceUtil.getProcess() != stateProcess) {
+                                                sharedPreferenceUtil.setProcess(stateProcess);
+
+//            state = sharedPreferenceUtil.getProcess();
+                                                }
+
+                                                Intent intent = new Intent(getApplicationContext(), EmotionActivity.class);
+        intent.putExtra("state",stateProcess);
+        startActivity(intent);
+
+        //camera
+        }else{
+        Toast.makeText(MediaplayerActivity.this, "잘못된 경로입니다. 타임라인을 확인해주세요!", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getApplication(), MainActivity.class);
+        startActivity(intent);
+
+        }
+
+
+        }*/
