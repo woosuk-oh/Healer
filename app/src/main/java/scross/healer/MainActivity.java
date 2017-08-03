@@ -45,6 +45,8 @@ import scross.healer.timeline.TimelineFragment;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private final long FINSH_INTERVAL_TIME = 2000;
+    private long backPressedTime = 0;
     Fragment fragment = new HomeFragment();
 //    BackPressCloseHandler backPressCloseHandler;
 
@@ -61,46 +63,15 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-/*
-
-
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-
-*/
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_home, fragment);
-        fragmentTransaction.commit();
-
-
-
         View header = navigationView.getHeaderView(0);
 
 
@@ -108,24 +79,16 @@ public class MainActivity extends BaseActivity
         navHeadImage = (CircleImageView)header.findViewById(R.id.nav_head_image);
         navHeadState = (TextView)header.findViewById(R.id.nav_head_state);
 
-
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_home, fragment);
+        fragmentTransaction.commit();
 
         network();
-
-
-/*
-다이얼로그에서 완료해야만 타임라인으로 보내고 스테이트 변경하는거임.
-
-            fragment = new TimelineFragment();
-            ChangeFragment();*/
-
-
-
     }
 
 
-
-/*
+    /*
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
         FragmentManager fragmentManager = getFragmentManager();
@@ -172,7 +135,6 @@ public class MainActivity extends BaseActivity
 
             // Handle the camera action
         } else if (id == R.id.survay) {
-
             fragment = new SurvayFragment();
             ChangeFragment();
 
@@ -195,43 +157,14 @@ public class MainActivity extends BaseActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-/*
 
-  NavigationView.MarginLayoutParams
-
-
-    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-
-        Menu menu = navigationView.getMenu();
-
-
-
-        menu.findItem(R.id.nav_profile).setTitle("My Account");
-        menu.findItem(R.id.nav_mng_task).setTitle("Control Task");
-        //menu.findItem(R.id.nav_pkg_manage).setVisible(false);//In case you want to remove menu item
-        navigationView.setNavigationItemSelectedListener(this);
-*/
 
 
     public void ChangeFragment() {
-
-
-   /*     switch( v.getId() ) {
-            default:
-            case R.id.button1: {
-                fragment = new FirstFragment();
-                break;
-            }
-            case R.id.button2: {
-                fragment = new SecondFragment();
-                break;
-            }
-        }*/
-
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_home, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
     public void network(){
@@ -241,12 +174,9 @@ public class MainActivity extends BaseActivity
         Call<ResponseBody> getTimeline = apiService.timeline();
         getTimeline.enqueue(new Callback<ResponseBody>() {
 
-
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String imageUrl;
-
-
                 if(response.body()!= null){
                     try{
                         JSONObject data = new JSONObject(response.body().string());
@@ -295,11 +225,24 @@ public class MainActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
-//            super.onBackPressed();
+            if(getFragmentManager().getBackStackEntryCount() > 0){
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_home, new HomeFragment());
+                fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentTransaction.commit();
+            }else{
+                long tempTime = System.currentTimeMillis();
+                long intervalTime = tempTime - backPressedTime;
+                if ( 0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime ) {
+                    finish();
+                }
+                else {
+                    backPressedTime = tempTime;
+                    Toast.makeText(getApplicationContext(),"뒤로가기를 한 번 더누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
+                }
+            }
 
-//            backPressCloseHandler.onBackPressed();
         }
     }
 }
