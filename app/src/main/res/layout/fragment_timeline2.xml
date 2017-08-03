@@ -22,6 +22,7 @@
                 android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/timeline_user_profile_image"
                     android:layout_width="76.75dp"
                     android:layout_height="76.75dp"
                     android:layout_marginStart="29.25dp"

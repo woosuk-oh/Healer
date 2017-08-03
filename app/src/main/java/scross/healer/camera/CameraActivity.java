@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -31,6 +32,7 @@ public class CameraActivity extends BaseActivity{
     private TextView contentBody;
     private TextView contentExplain;
     private Context context;
+    private LinearLayout cameraBackground;
 
 
     // TODO 네트워크로 부터 state받아와야함. daystate는 메인액티비티에서 받아오고 인텐트로 전달받기!
@@ -48,6 +50,9 @@ public class CameraActivity extends BaseActivity{
         Intent intent = getIntent();
         dayState = intent.getExtras().getInt("day");
 
+
+
+
         Log.e("dayState", dayState + "");
         state = intent.getExtras().getInt("state");
         Log.e("state Camera get", state + "");
@@ -58,6 +63,7 @@ public class CameraActivity extends BaseActivity{
         contentName = (TextView) findViewById(R.id.content_name);
         contentBody = (TextView) findViewById(R.id.content_body);
         contentExplain = (TextView) findViewById(R.id.content_explain);
+        cameraBackground = (LinearLayout) findViewById(R.id.camera_background);
 
         cameraCheck = (ImageView) findViewById(R.id.camera_check);
 
@@ -96,12 +102,14 @@ public class CameraActivity extends BaseActivity{
                     contentDay.setText("1일차");
                     contentName.setText("도입");
                     contentBody.setText("자기 관찰하기");
+                    cameraBackground.setBackgroundResource(R.drawable.day1);
                     break;
                 case 2:
                     cameraCheck.setVisibility(View.INVISIBLE);
                     contentDay.setText("2일차");
                     contentName.setText("초기 트라우마");
                     contentBody.setText("부정적 기억 내보내기");
+                    cameraBackground.setBackgroundResource(R.drawable.day2);
 
                     break;
                 case 3:
@@ -109,6 +117,8 @@ public class CameraActivity extends BaseActivity{
                     contentDay.setText("3일차");
                     contentName.setText("초기 트라우마");
                     contentBody.setText("긍정적 정서 떠올리기");
+                    cameraBackground.setBackgroundResource(R.drawable.day3);
+
 
                     break;
                 case 4:
@@ -116,6 +126,8 @@ public class CameraActivity extends BaseActivity{
                     contentDay.setText("4일차");
                     contentName.setText("초기 트라우마");
                     contentBody.setText("감정 조절 배우기");
+                    cameraBackground.setBackgroundResource(R.drawable.day4);
+
 
                     break;
                 case 5:
@@ -123,6 +135,7 @@ public class CameraActivity extends BaseActivity{
                     contentDay.setText("5일차");
                     contentName.setText("빅 트라우마");
                     contentBody.setText("트라우마 정화 I");
+                    cameraBackground.setBackgroundResource(R.drawable.day5);
 
                     break;
                 case 6:
@@ -130,6 +143,7 @@ public class CameraActivity extends BaseActivity{
                     contentDay.setText("6일차");
                     contentName.setText("빅 트라우마");
                     contentBody.setText("트라우마 정화 II");
+                    cameraBackground.setBackgroundResource(R.drawable.day6);
 
                     break;
                 case 7:
@@ -137,6 +151,7 @@ public class CameraActivity extends BaseActivity{
                     contentDay.setText("7일차");
                     contentName.setText("빅 트라우마");
                     contentBody.setText("자아 대면하기");
+                    cameraBackground.setBackgroundResource(R.drawable.day7);
 
                     break;
                 case 8:
@@ -144,10 +159,10 @@ public class CameraActivity extends BaseActivity{
                     contentDay.setText("8일차");
                     contentName.setText("마무리");
                     contentBody.setText("자아 회복하기");
+                    cameraBackground.setBackgroundResource(R.drawable.day8);
 
                     break;
 
-                //TODO 인텐트로 5단계 액티비티, 6단계 액티비티로 값 넘기기
 
             }
 
@@ -155,12 +170,75 @@ public class CameraActivity extends BaseActivity{
             cameraCheck.setVisibility(View.VISIBLE);
             contentExplain.setText("수고하셨습니다.\n웃는 얼굴을 다시 한 번 촬영 합니다.\n전과 같이 '치~즈'를 외쳐주세요.");
 
+
+
+            switch (dayState) {
+
+                case 1:
+                    contentDay.setText("1일차");
+                    contentName.setText("도입");
+                    contentBody.setText("자기 관찰하기");
+                    cameraBackground.setBackgroundResource(R.drawable.day1);
+
+                    break;
+                case 2:
+                    contentDay.setText("2일차");
+                    contentName.setText("초기 트라우마");
+                    contentBody.setText("부정적 기억 내보내기");
+                    cameraBackground.setBackgroundResource(R.drawable.day2);
+
+                    break;
+                case 3:
+                    contentDay.setText("3일차");
+                    contentName.setText("초기 트라우마");
+                    contentBody.setText("긍정적 정서 떠올리기");
+                    cameraBackground.setBackgroundResource(R.drawable.day3);
+
+                    break;
+                case 4:
+                    contentDay.setText("4일차");
+                    contentName.setText("초기 트라우마");
+                    contentBody.setText("감정 조절 배우기");
+                    cameraBackground.setBackgroundResource(R.drawable.day4);
+
+                    break;
+                case 5:
+                    contentDay.setText("5일차");
+                    contentName.setText("빅 트라우마");
+                    contentBody.setText("트라우마 정화 I");
+                    cameraBackground.setBackgroundResource(R.drawable.day5);
+
+                    break;
+                case 6:
+                    contentDay.setText("6일차");
+                    contentName.setText("빅 트라우마");
+                    contentBody.setText("트라우마 정화 II");
+                    cameraBackground.setBackgroundResource(R.drawable.day6);
+
+                    break;
+                case 7:
+                    contentDay.setText("7일차");
+                    contentName.setText("빅 트라우마");
+                    contentBody.setText("자아 대면하기");
+                    cameraBackground.setBackgroundResource(R.drawable.day7);
+
+                    break;
+                case 8:
+                    contentDay.setText("8일차");
+                    contentName.setText("마무리");
+                    contentBody.setText("자아 회복하기");
+                    cameraBackground.setBackgroundResource(R.drawable.day8);
+
+                    break;
+
+
+            }
+
             cameraStart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    //TODO 카메라 촬영하는 액티비티로 이동
-                    //TODO 카메라 촬영 액티비티에서 촬영버튼, 닫기버튼해서 닫기버튼 누르면 state +1 되도록!
+
                     Intent intent = new Intent(HealerContext.getContext(), TakePictureActivity.class);
                     intent.putExtra("state", 4);
 

@@ -58,7 +58,7 @@ public class SharedPreferenceUtil {
         mEditor.commit();
     }
     public int getLastDay(){
-        return mPrefs.getInt(PROCESS, 1);
+        return mPrefs.getInt(SAVE_DAY, 1);
     }
 
 

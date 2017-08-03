@@ -95,14 +95,44 @@ public class HomeFragment extends BaseFragment {
                             imageUrl = results.getString("profile");
 
 
+                            if (!results.isNull("emotion")) {
+                                switch (results.getInt("emotion")){
+                                    case 1:
+                                        homeUserState.setText("활기참");
 
+                                        break;
+                                    case 2:
+                                        homeUserState.setText("평온함");
+
+                                        break;
+                                    case 3:
+                                        homeUserState.setText("행복함");
+
+                                        break;
+                                    case 4:
+                                        homeUserState.setText("보통");
+
+                                        break;
+                                    case 5:
+                                        homeUserState.setText("우울함");
+
+                                        break;
+                                    case 6:
+                                        homeUserState.setText("화가남");
+
+                                        break;
+                                    case 7:
+                                        homeUserState.setText("불안함");
+
+                                        break;
+                                }
+
+                            }
                             homeUserName.setText("현재 "+userName+"님의 상태는");
 
 
                             if(userEmotion == "null" || userEmotion == null){
                                 homeUserState.setText("알 수 없음");
-                            }else{
-                                homeUserState.setText(userEmotion);
                             }
                             if(imageUrl != "null"){
                                 Glide.with(HealerContext.getContext()).load(imageUrl).into(homeUserImage);

@@ -64,12 +64,12 @@ public class EmotionActivity extends BaseActivity{
         if (sharedPreferenceUtil.getProcess() != state) {
 
             state = sharedPreferenceUtil.getProcess();
-            Log.e("sharedPreference!!!!: ", state+" EmotionActivity onCreate");
+            Log.e("sharedPreference!!!!: ", state+" EmotionActivity onResume");
 
         }
 
         lastDay = sharedPreferenceUtil.getLastDay();
-        Log.e("sharedPreference!!!!: ", lastDay+" EmotionActivity onCreate LastDAY ?");
+        Log.e("sharedPreference!!!!: ", lastDay+" EmotionActivity onResume LastDAY ?");
 
 
         if (state == 2 || state == 5) {

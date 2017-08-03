@@ -69,7 +69,7 @@ public interface NetworkService {
             @Field("time") int time
     );
     @Multipart
-    @POST("day/{day}/process5")
+    @POST("day/{day}/process4")
     Call<ResponseBody> process4(
             @Path("day") String day,
             @Part MultipartBody.Part picture

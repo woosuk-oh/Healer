@@ -57,6 +57,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
     int emotionValue =0;
     int state;
+    String lastDay;
 
 
     NetworkService apiService;
@@ -153,6 +154,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
         rd = (RadioGroup) view.findViewById(R.id.emotion_radio_btn);
         rd.setOnCheckedChangeListener(this); // 라디오버튼을 눌렸을때의 반응*/
 
+        lastDay = String.valueOf(sharedPreferenceUtil.getLastDay());
 
 
         return view;
@@ -389,12 +391,75 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
             Toast.makeText(HealerContext.getContext(), "감정 선택을 해주세요!", Toast.LENGTH_SHORT).show();
 
-        }else {
+        }else if(state == 2 ) {
 
             apiService = NetworkApi.getInstance(getActivity()).getServce();
 
-            Call<ResponseBody> process2 = apiService.process2("1", emotionValue);
+                Call<ResponseBody> process2 = apiService.process2(lastDay, emotionValue);
             process2.enqueue(new Callback<ResponseBody>() {
+
+
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                                String code = new JSONObject(response.body().string()).get("code").toString();
+                                if (code.equals("1")) {
+
+                                    Toast.makeText(HealerContext.getContext(), "감정 선택이 완료되었습니다!", Toast.LENGTH_SHORT).show();
+
+
+
+
+                                        state = state + 1;
+
+                                        if (sharedPreferenceUtil.getProcess() != state) {
+                                            sharedPreferenceUtil.setProcess(state);
+
+//            state = sharedPreferenceUtil.getProcess();
+                                        }
+                                        Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " EmotionDialog. 감정선택 완료.");
+
+
+                                        Intent intent1 = new Intent(HealerContext.getContext(), MediaplayerActivity.class);
+                                        intent1.putExtra("state", state);
+                                        startActivity(intent1);
+
+                                        dismiss();
+
+
+
+
+
+                                } else {
+                                    Toast.makeText(HealerContext.getContext(), "감정 선택에 실패했습니다", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } else {
+                                Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                    Log.d("value", t.getMessage());
+
+                }
+            });
+        }
+        else if(state == 5){
+
+
+            apiService = NetworkApi.getInstance(getActivity()).getServce();
+
+            Call<ResponseBody> process5 = apiService.process5(lastDay, emotionValue);
+            process5.enqueue(new Callback<ResponseBody>() {
 
 
                 @Override
@@ -408,32 +473,16 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
 
 
-                                if(state == 2 ) {
-
-                                    state = state + 1;
-
-                                    if (sharedPreferenceUtil.getProcess() != state) {
-                                        sharedPreferenceUtil.setProcess(state);
-
-//            state = sharedPreferenceUtil.getProcess();
-                                    }
-                                    Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " EmotionDialog. 감정선택 완료.");
 
 
-                                    Intent intent1 = new Intent(HealerContext.getContext(), MediaplayerActivity.class);
-                                    intent1.putExtra("state", state);
-                                    startActivity(intent1);
-
-                                    dismiss();
-
-                                }if(state == 5 ){
+                                    state = state +1;
                                     Intent intent1 = new Intent(HealerContext.getContext(), MainActivity.class);
                                     intent1.putExtra("state", state);
                                     Toast.makeText(HealerContext.getContext(), "금일 과정은 모두 종료되었습니다. 내일 다시 진행해주세요",Toast.LENGTH_LONG);
 
                                     startActivity(intent1);
                                     dismiss();
-                                }
+
 
 
 
