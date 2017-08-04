@@ -315,7 +315,9 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                         }
                     });*/
 
-                    mp.seekTo(savetime);
+                    if(savetime != 0) {
+                        mp.seekTo(savetime);
+                    }
                     mp.start();
 
                     Timer timer = new Timer();
@@ -331,7 +333,9 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                             public void run() {
 
                                                 tv.setText("재생시간: " + mmss.format(mp.getCurrentPosition()));
-                                                tempTime = mp.getDuration();
+                                                if(mp.getCurrentPosition() != 0){
+                                                    savetime = mp.getCurrentPosition();
+                                                }
 
 
                                             }
@@ -346,7 +350,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                 SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
 
-                                                if(mp.getCurrentPosition() >= savetime){ //TODO 테스트용. 수정필요
+//                                                if(mp.getCurrentPosition() >= savetime){ //TODO 테스트용. 수정필요
+                                                    if(mp.getCurrentPosition() == mp.getDuration()){
 //                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
 
                                                     Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
@@ -538,6 +543,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
             //TODO release() 해줘야됨
         }
         super.onBackPressed();
+        finish();
+
     }
 }
 

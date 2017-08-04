@@ -187,6 +187,40 @@ public class MainActivity extends BaseActivity
 
                             navHeadName.setText(results.getString("name"));
 
+                            if (!results.isNull("emotion")) {
+                                switch (results.getInt("emotion")){
+                                    case 1:
+                                        navHeadState.setText("활기참");
+
+                                        break;
+                                    case 2:
+                                        navHeadState.setText("평온함");
+
+                                        break;
+                                    case 3:
+                                        navHeadState.setText("행복함");
+
+                                        break;
+                                    case 4:
+                                        navHeadState.setText("보통");
+
+                                        break;
+                                    case 5:
+                                        navHeadState.setText("우울함");
+
+                                        break;
+                                    case 6:
+                                        navHeadState.setText("화가남");
+
+                                        break;
+                                    case 7:
+                                        navHeadState.setText("불안함");
+
+                                        break;
+                                }
+
+                            }
+
                             imageUrl = results.getString("profile");
 
                             if(!results.isNull("profile")){//프로필 이미지 널이 아닌 경우

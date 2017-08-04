@@ -43,6 +43,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     NetworkService apiService;
     Button beforeSurvayBtn;
     Button afterSurvayBtn;
+    Button emailSend;
     int phone;
 
     @Override
@@ -56,6 +57,8 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         // Inflate the menu items for use in the action bar
 
         inflater.inflate(R.menu.actionbar_menu_survay, menu);
+
+        //TODO 네트워크 통신해서 이메일로 사진 전송해야됨!
         super.onCreateOptionsMenu(menu, inflater);
     }
 
