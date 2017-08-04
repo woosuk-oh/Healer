@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 
 import net.danlew.android.joda.JodaTimeAndroid;
@@ -29,7 +30,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +47,7 @@ import scross.healer.media.MediaplayerActivity;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
+import scross.healer.survay.SurvayFragment;
 
 import static android.support.v7.content.res.AppCompatResources.getDrawable;
 import static scross.healer.timeline.ContentNameHashMap.contentName;
@@ -58,7 +62,16 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         super();
     }
 
-    int lastDay = 0;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
     int stateProcess;
     NetworkService apiService;
     TextView name;
@@ -66,6 +79,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
     TextView gender;
     TextView emotion;
     LinearLayout contentsLayout;
+    CircleImageView profileImage;
     int completeColor;
 
     SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
@@ -118,6 +132,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         gender = view.findViewById(R.id.timeline_user_sex);
         emotion = view.findViewById(R.id.timeline_user_emotion);
         contentsLayout = view.findViewById(R.id.layout_contents);
+        profileImage = view.findViewById(R.id.timeline_user_profile_image);
         completeColor = getColor(getActivity(), R.color.color5);
         return view;
     }
@@ -169,8 +184,47 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             name.setText(results.getString("name"));
                             birth.setText(results.getString("birth"));
                             gender.setText(" / " + results.getString("gender") + "자");
+
+
+
+
+                            if(!results.isNull("profile")){//프로필 이미지 널이 아닌 경우
+                                Glide.with(HealerContext.getContext()).load(results.getString("profile")).into(profileImage);
+                            }
+
+
                             if (!results.isNull("emotion")) {
-                                emotion.setText(results.getInt("emotion") + "");
+                                switch (results.getInt("emotion")){
+                                    case 1:
+                                        emotion.setText("활기참");
+
+                                        break;
+                                    case 2:
+                                        emotion.setText("평온함");
+
+                                        break;
+                                    case 3:
+                                        emotion.setText("행복함");
+
+                                        break;
+                                    case 4:
+                                        emotion.setText("보통");
+
+                                        break;
+                                    case 5:
+                                        emotion.setText("우울함");
+
+                                        break;
+                                    case 6:
+                                        emotion.setText("화가남");
+
+                                        break;
+                                    case 7:
+                                        emotion.setText("불안함");
+
+                                        break;
+                                }
+
                             }
                             int lastDay1 = results.getInt("lastday");
                             Log.e("Server!!!", "서버콜 라스트데이: "+lastDay1);
@@ -250,9 +304,10 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
             }
             contentsLayout.addView(beforeSurveyItem);
             for (int i = 0; i < 8; i++) {
-                final int day = i + 1;
+                final int day = i;
                 final LinearLayout contentItem = (LinearLayout) inflater.inflate(R.layout.item_timeline_content, null);
                 ImageView icon = contentItem.findViewById(R.id.timeline_icon);
+
                 final TextView name = contentItem.findViewById(R.id.timeline_content_name);
                 TextView state = contentItem.findViewById(R.id.timeline_content_state);
                 TextView date = contentItem.findViewById(R.id.timeline_content_date);
@@ -414,6 +469,12 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             public void onClick(View view) {
                                 Intent intent = null;
                                 switch (stateProcess){
+
+                                    case 0:
+                                        startFragment(getFragmentManager(), SurvayFragment.class);
+
+                                        break;
+
                                     case 1:
                                         intent = new Intent(getActivity(), CameraActivity.class);
 

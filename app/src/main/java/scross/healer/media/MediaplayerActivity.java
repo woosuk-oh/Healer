@@ -19,9 +19,12 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.File;
@@ -34,6 +37,10 @@ import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import scross.healer.HealerContext;
 import scross.healer.MainActivity;
 import scross.healer.R;
@@ -41,6 +48,8 @@ import scross.healer.SharedPreferenceUtil;
 import scross.healer.camera.CameraActivity;
 import scross.healer.camera.TakePictureActivity;
 import scross.healer.emotion.EmotionActivity;
+import scross.healer.networkService.NetworkApi;
+import scross.healer.networkService.NetworkService;
 
 import static android.view.View.GONE;
 import static scross.healer.HealerContext.getContext;
@@ -64,11 +73,14 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     private TextView contentName;
     private TextView contentBody;
     private TextView contentDay;
+    private LinearLayout mediaBackground;
     String mediaEndCheck;
     int savetime = 0;
+    int tempTime =0;
     int stateProcess;
     int lastDay = 0;
 
+    NetworkService apiService;
 
     SimpleDateFormat mmss = new SimpleDateFormat("mm:ss");
 
@@ -81,6 +93,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
         setContentView(R.layout.activity_audioplayer);
 
+        apiService = NetworkApi.getInstance(this).getServce();
         SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
 
 
@@ -104,6 +117,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         contentDay = (TextView) findViewById(R.id.media_content_day);
         contentName = (TextView) findViewById(R.id.media_content_name);
         contentBody = (TextView) findViewById(R.id.media_content_body);
+        mediaBackground = (LinearLayout) findViewById(R.id.media_background);
 
 
         switch (lastDay) {
@@ -111,18 +125,23 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 contentDay.setText("1일차");
                 contentName.setText("도입");
                 contentBody.setText("자기 관찰하기");
+                mediaBackground.setBackgroundResource(R.drawable.day1);
                 mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-1.mp3";
                 break;
             case 2:
                 contentDay.setText("2일차");
                 contentName.setText("초기 트라우마");
                 contentBody.setText("부정적 기억 내보내기");
+                mediaBackground.setBackgroundResource(R.drawable.day2);
+
                 mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-2.mp3";
                 break;
             case 3:
                 contentDay.setText("3일차");
                 contentName.setText("초기 트라우마");
                 contentBody.setText("긍정적 정서 떠올리기");
+                mediaBackground.setBackgroundResource(R.drawable.day3);
+
                 mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-3.mp3";
 
                 break;
@@ -130,6 +149,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 contentDay.setText("4일차");
                 contentName.setText("초기 트라우마");
                 contentBody.setText("감정 조절 배우기");
+                mediaBackground.setBackgroundResource(R.drawable.day4);
+
                 mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-4.mp3";
 
                 break;
@@ -137,6 +158,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 contentDay.setText("5일차");
                 contentName.setText("빅 트라우마");
                 contentBody.setText("트라우마 정화 I");
+                mediaBackground.setBackgroundResource(R.drawable.day5);
+
                 mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-5.mp3";
 
                 break;
@@ -144,6 +167,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 contentDay.setText("6일차");
                 contentName.setText("빅 트라우마");
                 contentBody.setText("트라우마 정화 II");
+                mediaBackground.setBackgroundResource(R.drawable.day6);
+
                 mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-6.mp3";
 
                 break;
@@ -151,6 +176,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 contentDay.setText("7일차");
                 contentName.setText("빅 트라우마");
                 contentBody.setText("자아 대면하기");
+                mediaBackground.setBackgroundResource(R.drawable.day7);
+
                 mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-7.mp3";
 
                 break;
@@ -158,6 +185,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 contentDay.setText("8일차");
                 contentName.setText("마무리");
                 contentBody.setText("자아 회복하기");
+                mediaBackground.setBackgroundResource(R.drawable.day8);
+
                 mPath = "https://s3.ap-northeast-2.amazonaws.com/healerc/med-8.mp3";
 
                 break;
@@ -302,7 +331,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                             public void run() {
 
                                                 tv.setText("재생시간: " + mmss.format(mp.getCurrentPosition()));
-                                                savetime = mp.getCurrentPosition();
+                                                tempTime = mp.getDuration();
 
 
                                             }
@@ -317,26 +346,71 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                 SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
 
-                                                if(mp.getCurrentPosition() == mp.getDuration()){
-                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
+                                                if(mp.getCurrentPosition() >= savetime){ //TODO 테스트용. 수정필요
+//                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
 
                                                     Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
 
-                                                    if(stateProcess == 3){
+                                                    if(stateProcess == 3) {
 
-                                                        stateProcess = stateProcess +1;
-                                                        if (sharedPreferenceUtil.getProcess() != stateProcess) {
-                                                            sharedPreferenceUtil.setProcess(stateProcess);
+                                                        String dayString = String.valueOf(lastDay);
+                                                        apiService = NetworkApi.getInstance(HealerContext.getContext()).getServce();
+
+                                                        Call<ResponseBody> process3 = apiService.process3(dayString, 200);
+                                                        process3.enqueue(new Callback<ResponseBody>() {
+
+
+                                                            @Override
+                                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                                try {
+                                                                    if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                                                                        String code = new JSONObject(response.body().string()).get("code").toString();
+                                                                        if (code.equals("1")) {
+
+                                                                            Toast.makeText(HealerContext.getContext(), "금일 컨텐츠 듣기가 완료되었습니다!", Toast.LENGTH_SHORT).show();
+
+
+                                                                            SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+
+                                                                            stateProcess = stateProcess + 1;
+                                                                            if (sharedPreferenceUtil.getProcess() != stateProcess) {
+                                                                                sharedPreferenceUtil.setProcess(stateProcess);
 
 //            state = sharedPreferenceUtil.getProcess();
-                                                        }
+                                                                            }
 
-                                                        Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-                                                        intent.putExtra("state",stateProcess);
-                                                        startActivity(intent);
+                                                                            Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                                                                            intent.putExtra("state", stateProcess);
+                                                                            intent.putExtra("day", lastDay);
+                                                                            startActivity(intent);
 
-                                                        //camera
-                                                    }else{
+
+                                                                            //camera
+
+                                                                        } else {
+                                                                            Toast.makeText(HealerContext.getContext(), "컨텐츠 재생시간 저장에 실패했습니다", Toast.LENGTH_SHORT).show();
+                                                                        }
+
+                                                                    } else {
+                                                                        Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                } catch (IOException e) {
+                                                                    e.printStackTrace();
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                                                Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                                                Log.d("value", t.getMessage());
+
+                                                            }
+                                                        });
+                                                    }
+                                                    else {
                                                         Toast.makeText(MediaplayerActivity.this, "잘못된 경로입니다. 타임라인을 확인해주세요!", Toast.LENGTH_SHORT).show();
 
                                                         Intent intent = new Intent(getApplication(), MainActivity.class);
@@ -352,8 +426,6 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                 }*/
                                             }
                                         });
-                                    } else {
-
                                     }
                                 }
                             });
@@ -449,7 +521,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     @Override
     public void onBackPressed() {
         if (savetime != 0) {
-            savetime = mp.getCurrentPosition();
+//            savetime = mp.getCurrentPosition();
 
             SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
             sharedPreferenceUtil.setSaveTime(savetime);
@@ -467,7 +539,9 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         }
         super.onBackPressed();
 
-
+        MediaplayerActivity.this.finish();
+        Intent intent1 = new Intent(getApplication(), MainActivity.class);
+        startActivity(intent1);
     }
 }
 

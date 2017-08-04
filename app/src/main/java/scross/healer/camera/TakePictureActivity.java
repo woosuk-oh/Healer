@@ -74,6 +74,11 @@ public class TakePictureActivity  extends AppCompatActivity implements
         AspectRatioFragment.Listener {
 
     int state;
+    String lastDay;
+    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+
+
 
     NetworkService apiService;
     private static final String TAG = "TakePictureActivity";
@@ -138,6 +143,8 @@ public class TakePictureActivity  extends AppCompatActivity implements
             actionBar.setDisplayShowTitleEnabled(false);
         }
         apiService = NetworkApi.getInstance(this).getServce();
+        state = sharedPreferenceUtil.getProcess();
+        lastDay = String.valueOf(sharedPreferenceUtil.getLastDay());
 
         //TODO 스테이트 인텐트로 받아와서 1이나 4인 경우에만 이모션 넘어가고, 아니면 메인액티비티로 보내기!! (예외처리)
     }
@@ -302,76 +309,143 @@ public class TakePictureActivity  extends AppCompatActivity implements
 /*                    TimelineFragment tf = new TimelineFragment();
                     tf.getArguments().g*/
 
-                    //TODO apiService.process1(day값 값전달받아와서 넣어줘야됨.);
-                    Call<ResponseBody> process1 = apiService.process1("1", body);
-                    process1.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            try {
-                                if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
-                                    String code = new JSONObject(response.body().string()).get("code").toString();
-                                    if (code.equals("1")) {
-                                        Toast.makeText(TakePictureActivity.this, "성공", Toast.LENGTH_SHORT).show();
-                                        //파일처리부분
+                    if (state == 1) {
+
+                        Call<ResponseBody> process1 = apiService.process1(lastDay, body);
+                        process1.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+                                    if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                                        String code = new JSONObject(response.body().string()).get("code").toString();
+                                        if (code.equals("1")) {
+                                            Toast.makeText(TakePictureActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                                            //파일처리부분
 
                                        /* Intent intent1 = getIntent();
                                         int state1 = intent1.getExtras().getInt("state");
 
                                         /** get단계 **/
-                                        Intent intent1 = getIntent();
-                                        state = intent1.getExtras().getInt("state");
-                                        TakePictureActivity.this.finish();
-                                        Log.e("state takepic get",state+"");
+                                            Intent intent1 = getIntent();
+                                            state = intent1.getExtras().getInt("state");
+                                            TakePictureActivity.this.finish();
+                                            Log.e("state takepic get", state + "");
 
 
-
-                                        state = state +1;
-
+                                            state = state + 1;
 
 
-                                        /** put단계 **/
-                                        Intent intent = new Intent(getApplicationContext(), EmotionActivity.class);
+                                            /** put단계 **/
+                                            Intent intent = new Intent(getApplicationContext(), EmotionActivity.class);
 
 
-                                        intent.putExtra("state",state);
-                                        Log.e("state takepic put",state+"");
+                                            intent.putExtra("state", state);
+                                            Log.e("state takepic put", state + "");
 
 
-                                        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+                                            SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
-                                        if (sharedPreferenceUtil.getProcess() != state) {
-                                            sharedPreferenceUtil.setProcess(state);
+                                            if (sharedPreferenceUtil.getProcess() != state) {
+                                                sharedPreferenceUtil.setProcess(state);
 
 //            state = sharedPreferenceUtil.getProcess();
-                                        }
-                                        Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " TakePictureActivity.");
+                                            }
+                                            Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " TakePictureActivity.");
 
-                                        startActivity(intent);
+                                            startActivity(intent);
+
+
+                                        } else {
+                                            Toast.makeText(TakePictureActivity.this, "앱을 끄고 다시 시작해주세요.", Toast.LENGTH_SHORT).show();
+                                        }
 
                                     } else {
-                                        Toast.makeText(TakePictureActivity.this, "앱을 끄고 다시 시작해주세요.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(TakePictureActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
                                     }
-
-                                } else {
-                                    Toast.makeText(TakePictureActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    Toast.makeText(TakePictureActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    Toast.makeText(TakePictureActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                            } catch (IOException e) {
-                                Toast.makeText(TakePictureActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            } catch (JSONException e) {
-                                Toast.makeText(TakePictureActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
                             }
 
-                        }
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Toast.makeText(TakePictureActivity.this, "서버 오류입니다. 잠시후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            Toast.makeText(TakePictureActivity.this, "서버 오류입니다. 잠시후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        //이미지 처리 부분
 
-                    //이미지 처리 부분
+                    } else if(state == 4){
+                        Call<ResponseBody> process4 = apiService.process4(lastDay, body);
+                        process4.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+                                    if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                                        String code = new JSONObject(response.body().string()).get("code").toString();
+                                        if (code.equals("1")) {
+                                            Toast.makeText(TakePictureActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                                            //파일처리부분
 
+                                       /* Intent intent1 = getIntent();
+                                        int state1 = intent1.getExtras().getInt("state");
+
+                                        /** get단계 **/
+                                            Intent intent1 = getIntent();
+                                            state = intent1.getExtras().getInt("state");
+                                            TakePictureActivity.this.finish();
+                                            Log.e("state takepic get", state + "");
+
+
+                                            state = state + 1;
+
+
+                                            /** put단계 **/
+                                            Intent intent = new Intent(getApplicationContext(), EmotionActivity.class);
+
+
+                                            intent.putExtra("state", state);
+                                            Log.e("state takepic put", state + "");
+
+
+                                            SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                                            if (sharedPreferenceUtil.getProcess() != state) {
+                                                sharedPreferenceUtil.setProcess(state);
+
+//            state = sharedPreferenceUtil.getProcess();
+                                            }
+                                            Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " TakePictureActivity.");
+
+                                            startActivity(intent);
+
+
+                                        } else {
+                                            Toast.makeText(TakePictureActivity.this, "앱을 끄고 다시 시작해주세요.", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    } else {
+                                        Toast.makeText(TakePictureActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (IOException e) {
+                                    Toast.makeText(TakePictureActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    Toast.makeText(TakePictureActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Toast.makeText(TakePictureActivity.this, "서버 오류입니다. 잠시후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
+
             });
         }
 

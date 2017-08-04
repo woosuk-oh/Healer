@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/action_search"
-        android:icon="@drawable/nophoto"
+        android:icon="@drawable/profileeidt"
         android:title="action_profile_update"
         app:showAsAction="ifRoom"  />
 
