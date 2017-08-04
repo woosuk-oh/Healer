@@ -76,6 +76,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     private LinearLayout mediaBackground;
     String mediaEndCheck;
     int savetime = 0;
+    int tempTime =0;
     int stateProcess;
     int lastDay = 0;
 
@@ -330,7 +331,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                             public void run() {
 
                                                 tv.setText("재생시간: " + mmss.format(mp.getCurrentPosition()));
-                                                savetime = mp.getDuration();
+                                                tempTime = mp.getDuration();
 
 
                                             }
@@ -345,16 +346,17 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                 SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
 
-                                                if(mp.getCurrentPosition() == mp.getDuration()){
+                                                if(mp.getCurrentPosition() >= savetime){ //TODO 테스트용. 수정필요
 //                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
 
                                                     Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
 
                                                     if(stateProcess == 3) {
 
+                                                        String dayString = String.valueOf(lastDay);
                                                         apiService = NetworkApi.getInstance(HealerContext.getContext()).getServce();
 
-                                                        Call<ResponseBody> process3 = apiService.process3(String.valueOf(lastDay), savetime);
+                                                        Call<ResponseBody> process3 = apiService.process3(dayString, 200);
                                                         process3.enqueue(new Callback<ResponseBody>() {
 
 
@@ -535,11 +537,11 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
             //TODO release() 해줘야됨
         }
-        super.onBackPressed();
+//        super.onBackPressed();
 
-  /*      Intent intent1 = new Intent(getApplication(), MainActivity.class);
+        MediaplayerActivity.this.finish();
+        Intent intent1 = new Intent(getApplication(), MainActivity.class);
         startActivity(intent1);
-*/
     }
 }
 

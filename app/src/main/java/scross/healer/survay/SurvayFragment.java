@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import scross.healer.BaseActivity;
+import scross.healer.BaseFragment;
 import scross.healer.R;
 import scross.healer.profile.ProfileDialogFragment;
 
@@ -18,7 +19,7 @@ import scross.healer.profile.ProfileDialogFragment;
  * Created by hanee on 2017-07-18.
  */
 
-public class SurvayFragment extends Fragment{
+public class SurvayFragment extends BaseFragment{
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

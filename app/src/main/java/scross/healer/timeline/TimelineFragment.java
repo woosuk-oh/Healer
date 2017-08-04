@@ -47,6 +47,7 @@ import scross.healer.media.MediaplayerActivity;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
+import scross.healer.survay.SurvayFragment;
 
 import static android.support.v7.content.res.AppCompatResources.getDrawable;
 import static scross.healer.timeline.ContentNameHashMap.contentName;
@@ -59,6 +60,16 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
     public TimelineFragment() {
         super();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 
     int stateProcess;
@@ -293,7 +304,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
             }
             contentsLayout.addView(beforeSurveyItem);
             for (int i = 0; i < 8; i++) {
-                final int day = i + 1;
+                final int day = i;
                 final LinearLayout contentItem = (LinearLayout) inflater.inflate(R.layout.item_timeline_content, null);
                 ImageView icon = contentItem.findViewById(R.id.timeline_icon);
 
@@ -458,6 +469,12 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             public void onClick(View view) {
                                 Intent intent = null;
                                 switch (stateProcess){
+
+                                    case 0:
+                                        startFragment(getFragmentManager(), SurvayFragment.class);
+
+                                        break;
+
                                     case 1:
                                         intent = new Intent(getActivity(), CameraActivity.class);
 
