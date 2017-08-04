@@ -35,7 +35,7 @@
                 android:hint="휴대전화 번호"
                 android:inputType="number"
                 android:paddingLeft="20dp"
-                android:text="01056080200" />
+                android:text="" />
 
             <LinearLayout
                 android:layout_width="320dp"
@@ -50,7 +50,7 @@
                 android:hint="비밀번호"
                 android:inputType="textPassword"
                 android:paddingLeft="20dp"
-                android:text="1234" />
+                android:text="" />
 
         </LinearLayout>
 

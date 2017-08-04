@@ -431,6 +431,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
 
 
+
                                 } else {
                                     Toast.makeText(HealerContext.getContext(), "감정 선택에 실패했습니다", Toast.LENGTH_SHORT).show();
                                 }
