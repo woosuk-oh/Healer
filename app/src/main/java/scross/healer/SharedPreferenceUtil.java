@@ -41,6 +41,17 @@ public class SharedPreferenceUtil {
     private static final String SAVE_DAY = "saveDay";
     private static final String PROCESS= "process";
     private static final String PHONE= "phoneNum";
+    private static final String SAVE_NETWORK_TYPE= "saveNetwork";
+
+
+
+    public void setSaveNetworkType(int saveNetworkType){
+        mEditor.putInt(SAVE_NETWORK_TYPE, saveNetworkType);
+        mEditor.commit();
+    }
+    public int getSaveNetworkType(){
+        return mPrefs.getInt(SAVE_NETWORK_TYPE, 0);
+    }
 
 
 

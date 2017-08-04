@@ -1,14 +1,18 @@
 package scross.healer.media;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnErrorListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +54,7 @@ import scross.healer.camera.TakePictureActivity;
 import scross.healer.emotion.EmotionActivity;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
+import scross.healer.media.MediaplayerNetworkCheckHelper;
 
 import static android.view.View.GONE;
 import static scross.healer.HealerContext.getContext;
@@ -76,7 +81,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     private LinearLayout mediaBackground;
     String mediaEndCheck;
     int savetime = 0;
-    int tempTime =0;
+    int tempTime = 0;
     int stateProcess;
     int lastDay = 0;
 
@@ -98,14 +103,14 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
 
 //        if (sharedPreferenceUtil.getSaveTime() != 0) {
-            savetime = sharedPreferenceUtil.getSaveTime();
-            stateProcess = sharedPreferenceUtil.getProcess();
+        savetime = sharedPreferenceUtil.getSaveTime();
+        stateProcess = sharedPreferenceUtil.getProcess();
 //        sharedPreferenceUtil.setLastDay(1);
-            lastDay = sharedPreferenceUtil.getLastDay();
+        lastDay = sharedPreferenceUtil.getLastDay();
 
-            Log.e("쉐어드프리페이런스: ",savetime+ "세이브타임.");
-            Log.e("쉐어드프리페이런스: ", stateProcess+ "Mediaplayer 프로세스 onCreate..");
-            Log.e("쉐어드프리페이런스: ",lastDay+ " Meiaplayer 라스트데이 onCreate.");
+        Log.e("쉐어드프리페이런스: ", savetime + "세이브타임.");
+        Log.e("쉐어드프리페이런스: ", stateProcess + "Mediaplayer 프로세스 onCreate..");
+        Log.e("쉐어드프리페이런스: ", lastDay + " Meiaplayer 라스트데이 onCreate.");
 
 //        }
 
@@ -204,11 +209,45 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
             public void onClick(View view) {
                 mPause.setVisibility(view.VISIBLE);
                 mPlay.setVisibility(GONE);
-                if (savetime == 0) {
-                    playVideo(0);
-                } else {
-                    playVideo(savetime);
+
+
+                ConnectivityManager manager =
+                        (ConnectivityManager) MediaplayerActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo ni = manager.getActiveNetworkInfo();
+                String networkTypeName = ni.getTypeName();
+
+
+                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                int networkCheck = sharedPreferenceUtil.getSaveNetworkType();
+
+                if (networkCheck == 1) {
+                    if (networkTypeName.equals("MOBILE")) {
+                        Log.d("network type", "Network - > (모바일)" + networkTypeName);
+                        Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d("network type", "Network - > (와이파이)" + networkTypeName);
+
+                        //재생
+                        if (savetime == 0) {
+                            playVideo(0);
+                        } else {
+                            playVideo(savetime);
+                        }
+
+                    }
+                } else { //네트워크 연결 관련 설정안한 경우 체크하지 않고 바로 재생
+                    //재생
+                    if (savetime == 0) {
+                        playVideo(0);
+                    } else {
+                        playVideo(savetime);
+                    }
+
                 }
+
+
             }
         });
         mPause.setOnClickListener(new View.OnClickListener() {
@@ -220,8 +259,6 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 }
             }
         });
-
-
 
 
     }
@@ -263,7 +300,6 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 mp.start();
 
 
-
                 return;
             }
             current = path;
@@ -292,9 +328,6 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                     try {
 
 
-
-
-
                         mp.setDataSource(getApplicationContext(), Uri.parse(path));
                     } catch (IOException e) {
                         Log.e(TAG, e.getMessage(), e);
@@ -315,7 +348,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                         }
                     });*/
 
-                    if(savetime != 0) {
+                    if (savetime != 0) {
                         mp.seekTo(savetime);
                     }
                     mp.start();
@@ -333,7 +366,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                             public void run() {
 
                                                 tv.setText("재생시간: " + mmss.format(mp.getCurrentPosition()));
-                                                if(mp.getCurrentPosition() != 0){
+                                                if (mp.getCurrentPosition() != 0) {
                                                     savetime = mp.getCurrentPosition();
                                                 }
 
@@ -346,17 +379,16 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                 tv2.setText("남은시간: " + mmss.format(mp.getDuration() - mp.getCurrentPosition()));
 
 
-
                                                 SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
 
 //                                                if(mp.getCurrentPosition() >= savetime){ //TODO 테스트용. 수정필요
-                                                    if(mp.getCurrentPosition() == mp.getDuration()){
+                                                if (mp.getCurrentPosition() == mp.getDuration()) {
 //                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
 
                                                     Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
 
-                                                    if(stateProcess == 3) {
+                                                    if (stateProcess == 3) {
 
                                                         String dayString = String.valueOf(lastDay);
                                                         apiService = NetworkApi.getInstance(HealerContext.getContext()).getServce();
@@ -533,7 +565,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
             SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
             sharedPreferenceUtil.setSaveTime(savetime);
-            Log.e("savetime!!!!!",""+savetime);
+            Log.e("savetime!!!!!", "" + savetime);
         }
 
 //        onPause();
@@ -549,6 +581,68 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         finish();
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        try {
+            registerReceiver(MediaplayerNetworkCheckHelper, filter);
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            if (MediaplayerNetworkCheckHelper != null) unregisterReceiver(MediaplayerNetworkCheckHelper);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+    }
+/*
+    BroadcastReceiver mNetworkStateReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 네트워크 체크
+
+
+            String action = intent.getAction();
+
+            // 네트웍에 변경이 일어났을때 발생하는 부분
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                ConnectivityManager connectivityManager =
+                        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+                NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+                Toast.makeText(context, "Active Network Type : " + activeNetInfo.getTypeName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Mobile Network Type : " + mobNetInfo.getTypeName(), Toast.LENGTH_SHORT).show();
+
+
+                NetworkInfo ni = connectivityManager.getActiveNetworkInfo();
+                String networkTypeName = ni.getTypeName();
+
+                if (networkTypeName.equals("MOBILE")) {
+                    Log.d("network type", "Network - > (모바일)" + networkTypeName);
+//                Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d("network type", "Network - > (와이파이)" + networkTypeName);
+
+                }
+            }
+
+        }
+    };*/
+
+
 }
 
 

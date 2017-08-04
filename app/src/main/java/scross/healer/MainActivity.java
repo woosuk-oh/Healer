@@ -5,6 +5,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -33,6 +35,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import scross.healer.camera.TakePictureActivity;
 import scross.healer.home.HomeFragment;
 import scross.healer.media.MediaplayerActivity;
 import scross.healer.networkService.NetworkApi;
@@ -45,6 +48,9 @@ import scross.healer.timeline.TimelineFragment;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+
 
     private final long FINSH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
@@ -86,6 +92,8 @@ public class MainActivity extends BaseActivity
         fragmentTransaction.commit();
 
         network();
+
+
     }
 
 

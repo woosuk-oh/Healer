@@ -478,6 +478,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                                 switch (stateProcess){
 
                                     case 0:
+                                        /** 프래그먼트에서 프래그먼트로 . (extends BaseFragment 필수)**/
                                         startFragment(getFragmentManager(), SurvayFragment.class);
 
                                         break;
