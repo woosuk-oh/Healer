@@ -40,6 +40,19 @@ public class SharedPreferenceUtil {
     private static final String SAVE_TIME = "saveTime";
     private static final String SAVE_DAY = "saveDay";
     private static final String PROCESS= "process";
+    private static final String PHONE= "phoneNum";
+
+
+
+    public void setPhoneNum(int phoneNum){
+        mEditor.putInt(PHONE, phoneNum);
+        mEditor.commit();
+    }
+    public int getPhoneNum(){
+        return mPrefs.getInt(PHONE, 0);
+    }
+
+
 
 
     public void setSaveTime(int saveTime){

@@ -353,7 +353,7 @@ public class TakePictureActivity  extends AppCompatActivity implements
                                             Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " TakePictureActivity.");
 
                                             startActivity(intent);
-
+                                            finish();
 
                                         } else {
                                             Toast.makeText(TakePictureActivity.this, "앱을 끄고 다시 시작해주세요.", Toast.LENGTH_SHORT).show();

@@ -38,7 +38,6 @@ import scross.healer.media.MediaplayerActivity;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
-import scross.healer.setting.SettingFragment;
 import scross.healer.survay.SurvayFragment;
 import scross.healer.emotion.EmotionDialog;
 import scross.healer.timeline.TimelineFragment;
@@ -48,7 +47,7 @@ public class MainActivity extends BaseActivity
 
     private final long FINSH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
-    Fragment fragment = new HomeFragment();
+    public Fragment fragment = new HomeFragment();
 //    BackPressCloseHandler backPressCloseHandler;
 
     int state;
@@ -146,11 +145,8 @@ public class MainActivity extends BaseActivity
 
         } else if (id == R.id.setting) {
 
-   /*         Intent intent = new Intent(getApplicationContext(), MediaplayerActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MediaplayerActivity.class);
             startActivity(intent);
-*/
-            fragment = new SettingFragment();
-            ChangeFragment();
 
         }
 

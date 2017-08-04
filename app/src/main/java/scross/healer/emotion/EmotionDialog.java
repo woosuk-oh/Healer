@@ -475,7 +475,10 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
 
 
-                                    state = state +1;
+                                    state = 1;
+
+                                sharedPreferenceUtil.setProcess(state);
+
                                     Intent intent1 = new Intent(HealerContext.getContext(), MainActivity.class);
                                     intent1.putExtra("state", state);
                                     Toast.makeText(HealerContext.getContext(), "금일 과정은 모두 종료되었습니다. 내일 다시 진행해주세요",Toast.LENGTH_LONG);

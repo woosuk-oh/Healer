@@ -1,25 +1,49 @@
 package scross.healer.survay;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import scross.healer.BaseActivity;
 import scross.healer.BaseFragment;
+import scross.healer.HealerContext;
+import scross.healer.MainActivity;
 import scross.healer.R;
+import scross.healer.SharedPreferenceUtil;
+import scross.healer.networkService.NetworkApi;
+import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
 
 /**
  * Created by hanee on 2017-07-18.
  */
 
-public class SurvayFragment extends BaseFragment{
+public class SurvayFragment extends BaseFragment implements View.OnClickListener{
+
+
+    NetworkService apiService;
+    Button beforeSurvayBtn;
+    Button afterSurvayBtn;
+    int phone;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +77,14 @@ public class SurvayFragment extends BaseFragment{
         View view = inflater.inflate(R.layout.fragment_survay, container, false);
 
 
+
+        beforeSurvayBtn = (Button) view.findViewById(R.id.before_survay_btn);
+        afterSurvayBtn = (Button) view.findViewById(R.id.after_survay_btn);
+
+        beforeSurvayBtn.setOnClickListener(this);
+        afterSurvayBtn.setOnClickListener(this);
+
+
         return view;
     }
 
@@ -61,4 +93,106 @@ public class SurvayFragment extends BaseFragment{
     }
 
 
+    public void Network(){
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+        phone = sharedPreferenceUtil.getPhoneNum();
+
+        apiService = NetworkApi.getInstance(getActivity()).getServce();
+
+        Call<ResponseBody> surveyBefore = apiService.surveyBefore(phone);
+        surveyBefore.enqueue(new Callback<ResponseBody>() {
+
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                        String code = new JSONObject(response.body().string()).get("code").toString();
+                        if (code.equals("1")) {
+
+                            Toast.makeText(HealerContext.getContext(), "설문에 참여해주셔서 감사합니다!", Toast.LENGTH_SHORT).show();
+
+
+
+                        } else {
+                            Toast.makeText(HealerContext.getContext(), "설문 내용 저장에 실패하였습니다. 다시 시도 해주세요", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                Log.d("value", t.getMessage());
+
+            }
+        });
+
+    }
+    public void Network2(){
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+        phone = sharedPreferenceUtil.getPhoneNum();
+
+        apiService = NetworkApi.getInstance(getActivity()).getServce();
+
+        Call<ResponseBody> surveyAfter = apiService.surveyAfter(phone);
+        surveyAfter.enqueue(new Callback<ResponseBody>() {
+
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                        String code = new JSONObject(response.body().string()).get("code").toString();
+                        if (code.equals("1")) {
+
+                            Toast.makeText(HealerContext.getContext(), "설문에 참여해주셔서 감사합니다!", Toast.LENGTH_SHORT).show();
+
+
+
+                        } else {
+                            Toast.makeText(HealerContext.getContext(), "설문 내용 저장에 실패하였습니다. 다시 시도 해주세요", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                Log.d("value", t.getMessage());
+
+            }
+        });
+
+    }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.before_survay_btn:
+                Network();
+                break;
+
+            case R.id.after_survay_btn:
+                Network2();
+                break;
+        }
+
+    }
 }

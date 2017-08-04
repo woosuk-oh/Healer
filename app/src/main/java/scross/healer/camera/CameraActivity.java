@@ -92,6 +92,7 @@ public class CameraActivity extends BaseActivity{
 
 
                     startActivity(intent);
+                    finish();
                 }
             });
             // 몇일차인지에 따라 컨텐츠 제목이랑 일자 수정!

@@ -36,5 +36,13 @@
             android:text="시작하지않음"
             android:textColor="@color/grayFont"
             android:textSize="15sp" />
+        <ImageView
+            android:id="@+id/timeline_survey_arrow"
+            android:layout_width="11.75dp"
+            android:layout_height="18dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/projectstartbtn"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

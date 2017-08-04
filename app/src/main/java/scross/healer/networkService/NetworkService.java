@@ -48,7 +48,17 @@ public interface NetworkService {
     Call<ResponseBody> timeline();
 
 
+    @FormUrlEncoded
+    @POST("survey_before")
+    Call<ResponseBody> surveyBefore(
+            @Field("phone") int phone
+    );
 
+    @FormUrlEncoded
+    @POST("survey_after")
+    Call<ResponseBody> surveyAfter(
+            @Field("phone") int phone
+    );
 
     @Multipart
     @POST("day/{day}/process1")

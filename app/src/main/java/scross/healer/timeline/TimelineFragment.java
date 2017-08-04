@@ -1,6 +1,8 @@
 package scross.healer.timeline;
 
 import android.annotation.TargetApi;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -20,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.JsonObject;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -30,7 +31,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
@@ -39,6 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import scross.healer.BaseFragment;
 import scross.healer.HealerContext;
+import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.SharedPreferenceUtil;
 import scross.healer.camera.CameraActivity;
@@ -48,9 +49,6 @@ import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
 import scross.healer.survay.SurvayFragment;
-
-import static android.support.v7.content.res.AppCompatResources.getDrawable;
-import static scross.healer.timeline.ContentNameHashMap.contentName;
 
 /**
  * Created by hanee on 2017-07-18.
@@ -295,19 +293,28 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
             TextView beforeName = beforeSurveyItem.findViewById(R.id.timeline_survey_t);
             ImageView beforeIcon = beforeSurveyItem.findViewById(R.id.timeline_icon);
             TextView beforeDate = beforeSurveyItem.findViewById(R.id.timeline_survey_date);
+            ImageView beforeArrowButton = beforeSurveyItem.findViewById(R.id.timeline_survey_arrow);
             if (surveyBefore == 1) {
                 beforeIcon.setBackground(getDrawable(getActivity(), R.drawable.projectcomplete));
                 beforeName.setTextColor(completeColor);
                 beforeDate.setTextColor(completeColor);
                 DateTime time = DateTime.parse(results.getString("survey_before_date"));
                 beforeDate.setText(time.plusHours(9).toString("yyyy.MM.dd"));
+            }else{
+                beforeArrowButton.setVisibility(View.VISIBLE);
+                beforeArrowButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((MainActivity)getActivity()).fragment = new SurvayFragment();
+                        ((MainActivity)getActivity()).ChangeFragment();
+                    }
+                });
             }
             contentsLayout.addView(beforeSurveyItem);
             for (int i = 0; i < 8; i++) {
-                final int day = i;
+                final int day = i + 1;
                 final LinearLayout contentItem = (LinearLayout) inflater.inflate(R.layout.item_timeline_content, null);
                 ImageView icon = contentItem.findViewById(R.id.timeline_icon);
-
                 final TextView name = contentItem.findViewById(R.id.timeline_content_name);
                 TextView state = contentItem.findViewById(R.id.timeline_content_state);
                 TextView date = contentItem.findViewById(R.id.timeline_content_date);
@@ -524,12 +531,22 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
             ImageView afterIcon = beforeSurveyItem.findViewById(R.id.timeline_icon);
             TextView afterDate = beforeSurveyItem.findViewById(R.id.timeline_survey_date);
             TextView afterName = beforeSurveyItem.findViewById(R.id.timeline_survey_t);
+            ImageView afterArrowButton = afterSurveyItem.findViewById(R.id.timeline_survey_arrow);
             if (surveyAfter == 1) {
                 afterIcon.setBackground(getDrawable(getActivity(), R.drawable.projectcomplete));
                 afterName.setTextColor(completeColor);
                 afterDate.setTextColor(completeColor);
                 DateTime time = DateTime.parse(results.getString("survey_after_date"));
                 afterDate.setText(time.plusHours(9).toString("yyyy.MM.dd"));
+            }else if(lastDay == 9 && surveyAfter == 0){
+                afterArrowButton.setVisibility(View.VISIBLE);
+                afterArrowButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((MainActivity)getActivity()).fragment = new SurvayFragment();
+                        ((MainActivity)getActivity()).ChangeFragment();
+                    }
+                });
             }
 
             contentsLayout.addView(afterSurveyItem);

@@ -182,8 +182,11 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
                                     if (code.equals("1")) {
                                         Toast.makeText(SignupActivity.this, "성공", Toast.LENGTH_SHORT).show();
 
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+
+
                                         startActivity(intent);
+                                        SignupActivity.this.finish();
                                     } else {
                                         Toast.makeText(SignupActivity.this, "회원가입에 실패했습니다", Toast.LENGTH_SHORT).show();
                                     }

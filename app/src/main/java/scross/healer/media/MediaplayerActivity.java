@@ -410,13 +410,13 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                             }
                                                         });
                                                     }
-                                                    else {
-                                                        Toast.makeText(MediaplayerActivity.this, "잘못된 경로입니다. 타임라인을 확인해주세요!", Toast.LENGTH_SHORT).show();
-
-                                                        Intent intent = new Intent(getApplication(), MainActivity.class);
-                                                        startActivity(intent);
-
-                                                    }
+//                                                    else {
+//                                                        Toast.makeText(MediaplayerActivity.this, "잘못된 경로입니다. 타임라인을 확인해주세요!", Toast.LENGTH_SHORT).show();
+//
+//                                                        Intent intent = new Intent(getApplication(), MainActivity.class);
+//                                                        startActivity(intent);
+//
+//                                                    }
 
 
                                                 }
@@ -537,11 +537,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
             //TODO release() 해줘야됨
         }
-//        super.onBackPressed();
-
-        MediaplayerActivity.this.finish();
-        Intent intent1 = new Intent(getApplication(), MainActivity.class);
-        startActivity(intent1);
+        super.onBackPressed();
     }
 }
 

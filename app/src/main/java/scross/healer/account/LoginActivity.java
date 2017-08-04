@@ -28,8 +28,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import scross.healer.BaseActivity;
+import scross.healer.HealerContext;
 import scross.healer.MainActivity;
 import scross.healer.R;
+import scross.healer.SharedPreferenceUtil;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 
@@ -92,45 +94,59 @@ public class LoginActivity extends BaseActivity {
                 }else {
 
 
-                    int phone  = Integer.valueOf(phoneInput.getText().toString().replaceAll("-",""));
+                    final int phone = Integer.valueOf(phoneInput.getText().toString().replaceAll("-", ""));
                     String password = passwordInput.getText().toString();
 
+                    int length = (int) Math.floor(Math.log10(phone) + 1);
+                    Log.e("phone num", " "+length);
 
-                    Call<ResponseBody> postRate = apiService.login(phone, password);
-                    postRate.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            try {
-                                if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
-                                    String code = new JSONObject(response.body().string()).get("code").toString();
-                                    if (code.equals("1")) {
-                                        Toast.makeText(LoginActivity.this, "성공", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                   if(length == 10 || length == 11){
+
+
+                        Call<ResponseBody> postRate = apiService.login(phone, password);
+                        postRate.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+                                    if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                                        String code = new JSONObject(response.body().string()).get("code").toString();
+                                        if (code.equals("1")) {
+                                            Toast.makeText(LoginActivity.this, "성공", Toast.LENGTH_SHORT).show();
+
+
+                                            SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                                            sharedPreferenceUtil.setPhoneNum(phone);
+
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            Toast.makeText(LoginActivity.this, "로그인에 실패했습니다", Toast.LENGTH_SHORT).show();
+                                        }
+
                                     } else {
-                                        Toast.makeText(LoginActivity.this, "로그인에 실패했습니다", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
                                     }
-
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            Toast.makeText(LoginActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
-                            Log.d("value", t.getMessage());
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Toast.makeText(LoginActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                Log.d("value", t.getMessage());
 
-                        }
-                    });;
+                            }
+                        });
+                        ;
+                    }else {
+                       Toast.makeText(LoginActivity.this, "핸드폰번호를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                   }
                 }
-
 
                 /*
 
