@@ -7,13 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import scross.healer.BaseFragment;
 import scross.healer.R;
 
 /**
  * Created by hanee on 2017-07-18.
  */
 
-public class SettingFragment extends Fragment {
+public class SettingFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
