@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity
 
     private final long FINSH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
-    Fragment fragment = new HomeFragment();
+    public Fragment fragment = new HomeFragment();
 //    BackPressCloseHandler backPressCloseHandler;
 
     int state;

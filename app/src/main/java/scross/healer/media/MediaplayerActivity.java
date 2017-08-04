@@ -538,10 +538,6 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
             //TODO release() 해줘야됨
         }
         super.onBackPressed();
-
-        MediaplayerActivity.this.finish();
-        Intent intent1 = new Intent(getApplication(), MainActivity.class);
-        startActivity(intent1);
     }
 }
 
