@@ -385,10 +385,13 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 //            state = sharedPreferenceUtil.getProcess();
                                                                             }
 
+                                                                            sharedPreferenceUtil.setSaveTime(0);
+
                                                                             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
                                                                             intent.putExtra("state", stateProcess);
                                                                             intent.putExtra("day", lastDay);
                                                                             startActivity(intent);
+                                                                            finish();
 
 
                                                                             //camera

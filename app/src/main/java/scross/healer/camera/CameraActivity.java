@@ -255,6 +255,7 @@ public class CameraActivity extends BaseActivity{
 
 
                     startActivity(intent);
+                    finish();
                 }
             });
         }

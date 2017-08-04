@@ -179,18 +179,15 @@
                 android:text="비밀번호 확인"
                 android:textSize="15sp" />
 
-            <android.support.design.widget.TextInputEditText
+            <EditText
                 android:id="@+id/password2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="비밀번호는 4자리 숫자로 입력"
-                android:inputType="textPassword"
                 android:textSize="15sp"
                 android:textColor="#574b4a"
-                app:passwordToggleTintMode="src_atop"
-                app:passwordToggleTint="#574b4a"
-                app:passwordToggleEnabled="true"
-                android:backgroundTint="@android:color/transparent"
+                android:background="@null"
+
                 />
 
 
@@ -220,7 +217,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:hint="19900101"
+                android:hint="터치해주세요!"
                 android:inputType="date"
                 android:onClick="onClick"
                 android:textColor="#574b4a"
