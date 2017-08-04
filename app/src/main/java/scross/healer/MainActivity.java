@@ -148,9 +148,6 @@ public class MainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), MediaplayerActivity.class);
             startActivity(intent);
 
-          /*  fragment = new SettingFragment();
-            ChangeFragment();*/
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
