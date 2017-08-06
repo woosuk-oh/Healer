@@ -88,11 +88,24 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         JodaTimeAndroid.init(getActivity());
-        network();
-        Log.e("ddd", "onCreate");
+     /*   network();
 
         SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
         stateProcess = sharedPreferenceUtil.getProcess();
+*/
+
+        network();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.e("ddd", "타임라인 onResume");
+
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+        stateProcess = sharedPreferenceUtil.getProcess();
+
 
     }
 
@@ -137,8 +150,6 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
 
     //TODO 텍스트가 25자 이상이면 ...으로 표시
-    //TODO 진행 완료한 컨텐츠는 content_name 옆에 +' 완료' 추가하기.
-    //TODO 상세보기 누르면 왼쪽 아이콘이랑 오른쪽 리니어레이아웃 탑마진 주기
 
 
     @Override

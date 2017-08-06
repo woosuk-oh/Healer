@@ -1,3 +1,4 @@
+/*
 package scross.healer.media;
 
 import android.content.BroadcastReceiver;
@@ -10,11 +11,16 @@ import android.widget.Toast;
 
 import scross.healer.HealerContext;
 
+*/
 /**
  * Created by hanee on 2017-08-04.
- */
+ *//*
+
 
 public class MediaplayerNetworkCheckHelper extends BroadcastReceiver {
+
+    Boolean wifiConnect = false;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
@@ -30,27 +36,29 @@ public class MediaplayerNetworkCheckHelper extends BroadcastReceiver {
             Toast.makeText(context, "Mobile Network Type : " + mobNetInfo.getTypeName(), Toast.LENGTH_SHORT).show();
 
 
-            NetworkInfo ni = connectivityManager.getActiveNetworkInfo();
-            String networkTypeName = ni.getTypeName();
 
-            if (networkTypeName.equals("MOBILE")) {
-                Log.d("network type", "Network - > (모바일)" + networkTypeName);
-//                Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-            } else {
-                Log.d("network type", "Network - > (와이파이)" + networkTypeName);
-
-            }
         }
     }
 
     boolean checkInternet(Context context) {
-        ServiceManager serviceManager = new ServiceManager(context);
-        if (serviceManager.isNetworkAvailable()) {
-            return true;
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo ni = connectivityManager.getActiveNetworkInfo();
+        String networkTypeName = ni.getTypeName();
+
+        if (networkTypeName.equals("MOBILE")) {
+            Log.d("network type", "Network - > (모바일)" + networkTypeName);
+//                Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+           return wifiConnect = false;
+
         } else {
-            return false;
+            Log.d("network type", "Network - > (와이파이)" + networkTypeName);
+           return wifiConnect = true;
+
         }
     }
 
 
 }
+*/

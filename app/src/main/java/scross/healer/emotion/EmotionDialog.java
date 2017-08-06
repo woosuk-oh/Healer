@@ -240,7 +240,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
             case R.id.emotion_img4:
                 if(iv4.isChecked() == true || iv4.isChecked()){
-                    Toast.makeText(HealerContext.getContext(), "버튼4 눌림1.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(HealerContext.getContext(), "버튼4 눌림1.", Toast.LENGTH_SHORT).show();
 
                     iv1.setChecked(false);
                     iv2.setChecked(false);
@@ -252,7 +252,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                     emotionValue = 4;
 
                 }else if(iv4.isChecked() == false){
-                    Toast.makeText(HealerContext.getContext(), "버튼4 눌림2.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(HealerContext.getContext(), "버튼4 눌림2.", Toast.LENGTH_SHORT).show();
 
                     iv1.setChecked(false);
                     iv2.setChecked(false);

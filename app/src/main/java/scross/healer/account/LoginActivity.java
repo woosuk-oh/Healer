@@ -1,6 +1,8 @@
 package scross.healer.account;
 
 import android.Manifest;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ import scross.healer.HealerContext;
 import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.SharedPreferenceUtil;
+import scross.healer.home.HomeFragment;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 
@@ -41,7 +44,8 @@ import scross.healer.networkService.NetworkService;
 
 public class LoginActivity extends BaseActivity {
     Handler mHandler = new Handler(Looper.getMainLooper());
-
+    private final long FINSH_INTERVAL_TIME = 2000;
+    private long backPressedTime = 0;
     Button loginBtn;
     TextView signupBtn;
     EditText phoneInput;
@@ -148,28 +152,6 @@ public class LoginActivity extends BaseActivity {
                    }
                 }
 
-                /*
-
-                인텐트에 값 넣어 넘기기
-
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Intent intent = new Intent(context, ShoppingListDetailActivity.class); //찜리스트 디테일페이지로이동
-                    intent.putExtra("listCode", shopList.listCode); //쇼핑리스트 listCode 넘겨줌
-                    intent.putExtra("countryName", shopList.countryNameKor.toString());
-                    intent.putExtra("targetUserCode",targetUserCode);
-                    intent.putExtra("goodsCount",shopList.goodsCount);
-                    intent.putExtra("type",1);
-
-                    Log.e("shopListCode", shopList.listCode.toString());
-                    Log.e("shopLisCount", shopList.goodsCount.toString());
-                    context.startActivity(intent);
-
-                }
-            });
-        }*/
 
 
 
@@ -234,52 +216,33 @@ public class LoginActivity extends BaseActivity {
 
 
 
-
-
-    /** 백 버튼 핸들러 **/
-/*
-
-
     @Override
     public void onBackPressed() {
-        backPressCloseHandler.onBackPressed();
-    }
 
-    public class BackPressCloseHandler {
 
-        private long backKeyPressedTime = 0;
-        private Toast toast;
+        if(getFragmentManager().getBackStackEntryCount() > 0){
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_home, new HomeFragment());
+            fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentTransaction.commit();
+        }else{
+            long tempTime = System.currentTimeMillis();
+            long intervalTime = tempTime - backPressedTime;
+            if ( 0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime ) {
 
-        private Activity activity;
 
-        public BackPressCloseHandler(Activity context) {
-            this.activity = context;
-        }
-
-        public void onBackPressed() {
-            if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
-                backKeyPressedTime = System.currentTimeMillis();
-                showGuide();
-                return;
+                /** 루트 액티비티가 안꺼져있는 경우. 프로세스까지 죽이는 방법! **/
+                ActivityCompat.finishAffinity(this);
+                System.runFinalizersOnExit(true);
+                finish();
+                System.exit(0);
             }
-            if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-                SystemExit();
+            else {
+                backPressedTime = tempTime;
+                Toast.makeText(getApplicationContext(),"뒤로가기를 한 번 더누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
             }
         }
 
-        public void SystemExit() {
-            activity.moveTaskToBack(true);
-            activity.finish();
-            toast.cancel();
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
-        }
-
-        public void showGuide() {
-            toast = Toast.makeText(activity, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
-            toast.show();
-        }
     }
-*/
-
 }

@@ -54,9 +54,9 @@ import scross.healer.camera.TakePictureActivity;
 import scross.healer.emotion.EmotionActivity;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
-import scross.healer.media.MediaplayerNetworkCheckHelper;
 
 import static android.view.View.GONE;
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 import static scross.healer.HealerContext.getContext;
 
 public class MediaplayerActivity extends Activity implements OnErrorListener,
@@ -79,6 +79,9 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     private TextView contentBody;
     private TextView contentDay;
     private LinearLayout mediaBackground;
+    private Button mediaSkipBtn;
+
+
     String mediaEndCheck;
     int savetime = 0;
     int tempTime = 0;
@@ -87,14 +90,32 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
     NetworkService apiService;
 
-    SimpleDateFormat mmss = new SimpleDateFormat("mm:ss");
 
+    int networkChangereceive;
+
+    public static String BROADCAST_ACTION =
+            "android.net.conn.CONNECTIVITY_CHANGE";
+
+
+    SimpleDateFormat mmss = new SimpleDateFormat("mm:ss");
+//    MediaplayerNetworkCheckHelper mNetworkStateReceiver = new MediaplayerNetworkCheckHelper();
+
+
+    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+    int networkCheck = sharedPreferenceUtil.getSaveNetworkType();
 
     /**
      * Called when the activity is first created.
      */
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+
+    /*    IntentFilter filter = new IntentFilter();
+        filter.addAction(BROADCAST_ACTION);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(br, filter);*/
+
 
         setContentView(R.layout.activity_audioplayer);
 
@@ -124,6 +145,30 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         contentBody = (TextView) findViewById(R.id.media_content_body);
         mediaBackground = (LinearLayout) findViewById(R.id.media_background);
 
+        mediaSkipBtn = (Button) findViewById(R.id.media_skip_btn);
+
+        mediaSkipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                stateProcess = sharedPreferenceUtil.getProcess();
+                stateProcess = stateProcess +1;
+                sharedPreferenceUtil.setProcess(stateProcess);
+                Log.e("쉐어드프리페어런스","Mediaplayer Skip getProcess: "+sharedPreferenceUtil.getProcess());
+
+                savetime = 0;
+                sharedPreferenceUtil.setSaveTime(savetime);
+                Log.e("쉐어드프리페어런스","Mediaplayer Skip getSaveTime: "+sharedPreferenceUtil.getSaveTime());
+
+                Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                intent.putExtra("state", stateProcess);
+                intent.putExtra("day", lastDay);
+                startActivity(intent);
+                finish();
+
+            }
+        });
 
         switch (lastDay) {
             case 1:
@@ -199,6 +244,22 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         }
 
 
+
+        ConnectivityManager manager =
+                (ConnectivityManager) MediaplayerActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo ni = manager.getActiveNetworkInfo();
+        String networkTypeName = ni.getTypeName();
+
+
+        if (networkCheck == 1) { // 환경설정에서 wifi환경에서만 실행 체크한 경우.
+            if (networkTypeName.equals("MOBILE")) {
+
+                Toast.makeText(this, "WIFI에 연결된 상태에서만 재생 가능하도록 설정되어 있습니다.", Toast.LENGTH_LONG).show();
+                onBackPressed();
+            }
+        }
+
 //        mReset = (ImageButton) findViewById(R.id.reset);
 //        mStop = (ImageButton) findViewById(R.id.stop);
 
@@ -207,8 +268,6 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
         mPlay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                mPause.setVisibility(view.VISIBLE);
-                mPlay.setVisibility(GONE);
 
 
                 ConnectivityManager manager =
@@ -218,19 +277,18 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 String networkTypeName = ni.getTypeName();
 
 
-                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
-
-                int networkCheck = sharedPreferenceUtil.getSaveNetworkType();
-
-                if (networkCheck == 1) {
+                if (networkCheck == 1) { // 환경설정에서 wifi환경에서만 실행 체크한 경우.
                     if (networkTypeName.equals("MOBILE")) {
                         Log.d("network type", "Network - > (모바일)" + networkTypeName);
                         Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d("network type", "Network - > (와이파이)" + networkTypeName);
+                        mPause.setVisibility(view.VISIBLE);
+                        mPlay.setVisibility(GONE);
 
                         //재생
                         if (savetime == 0) {
+
                             playVideo(0);
                         } else {
                             playVideo(savetime);
@@ -238,6 +296,10 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
                     }
                 } else { //네트워크 연결 관련 설정안한 경우 체크하지 않고 바로 재생
+
+                    mPause.setVisibility(view.VISIBLE);
+                    mPlay.setVisibility(GONE);
+
                     //재생
                     if (savetime == 0) {
                         playVideo(0);
@@ -558,6 +620,10 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         Log.d(TAG, "surfaceDestroyed called");
     }
 
+
+
+
+
     @Override
     public void onBackPressed() {
         if (savetime != 0) {
@@ -575,111 +641,110 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
             mp.stop();
             mp.reset();
 
-            //TODO release() 해줘야됨
+            //리셋은 다시 재생 가능하도록 대기상태 완전 끝낼때는 release() 해줘야됨. 현재는 문제 없는듯
         }
         super.onBackPressed();
         finish();
 
     }
 
+
+    //TODO 브로드캐스트로 할 경우 밑에 완성시키기. 이상태로하면 퍼미션 디나이드 뜸
+
+   /* public void sendBroadcast() {
+        Intent broadcast = new Intent();
+        broadcast.setAction(BROADCAST_ACTION);
+        broadcast.addCategory(Intent.CATEGORY_DEFAULT);
+        sendBroadcast(broadcast);
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
 
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+      *//*  IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         try {
-            registerReceiver(MediaplayerNetworkCheckHelper, filter);
+            registerReceiver(mNetworkStateReceiver, filter);
         } catch (Exception e) {
            e.printStackTrace();
+        }*//*
+
+
+        ConnectivityManager manager =
+                (ConnectivityManager) MediaplayerActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo ni = manager.getActiveNetworkInfo();
+        String networkTypeName = ni.getTypeName();
+
+
+        if (networkCheck == 1 && networkTypeName.equals("MOBILE")) {// 환경설정에서 와이파이만 연결로 체크한경우.
+            // + 네트워크 상태가 모바일인 경우
+            Log.d("network type", "Network - > (모바일)" + networkTypeName);
+            Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            onBackPressed();
         }
+
+        sendBroadcast();
 
 
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        try {
-            if (MediaplayerNetworkCheckHelper != null) unregisterReceiver(MediaplayerNetworkCheckHelper);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
 
-    }
-/*
-    BroadcastReceiver mNetworkStateReceiver = new BroadcastReceiver() {
+    BroadcastReceiver br = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            // 네트워크 체크
-
-
+            Log.w("Check", "Inside On Receiver");
             String action = intent.getAction();
 
-            // 네트웍에 변경이 일어났을때 발생하는 부분
             if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
                 ConnectivityManager connectivityManager =
                         (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
                 NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
                 NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-                Toast.makeText(context, "Active Network Type : " + activeNetInfo.getTypeName(), Toast.LENGTH_SHORT).show();
+
+              *//*  Toast.makeText(context, "Active Network Type : " + activeNetInfo.getTypeName(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(context, "Mobile Network Type : " + mobNetInfo.getTypeName(), Toast.LENGTH_SHORT).show();
-
-
+*//*
                 NetworkInfo ni = connectivityManager.getActiveNetworkInfo();
                 String networkTypeName = ni.getTypeName();
 
-                if (networkTypeName.equals("MOBILE")) {
+                if (networkTypeName.equals("MOBILE") && networkCheck == 1) {
                     Log.d("network type", "Network - > (모바일)" + networkTypeName);
-//                Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+
+                    mPlay.setEnabled(false);
+                    mp.pause();
+
+
+
                 } else {
                     Log.d("network type", "Network - > (와이파이)" + networkTypeName);
+                    mPlay.setEnabled(true); //와이파이로 변경된 경우 버튼 작동 가능.
 
                 }
             }
 
+            Toast.makeText(getApplicationContext(), "메시지 받음",
+                    Toast.LENGTH_SHORT).show();
         }
-    };*/
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+      *//*  try {
+            if (mNetworkStateReceiver != null) unregisterReceiver(mNetworkStateReceiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }*//*
+        unregisterReceiver(br);
+
+    }*/
 
 
 }
 
 
-
-/*
-
-
-
-    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
-
-
-                                        if(mp.getCurrentPosition() == mp.getDuration()){
-                                                Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
-
-                                                Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
-
-                                                if(stateProcess == 4){
-
-                                                stateProcess = stateProcess +1;
-                                                if (sharedPreferenceUtil.getProcess() != stateProcess) {
-                                                sharedPreferenceUtil.setProcess(stateProcess);
-
-//            state = sharedPreferenceUtil.getProcess();
-                                                }
-
-                                                Intent intent = new Intent(getApplicationContext(), EmotionActivity.class);
-        intent.putExtra("state",stateProcess);
-        startActivity(intent);
-
-        //camera
-        }else{
-        Toast.makeText(MediaplayerActivity.this, "잘못된 경로입니다. 타임라인을 확인해주세요!", Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(getApplication(), MainActivity.class);
-        startActivity(intent);
-
-        }
-
-
-        }*/

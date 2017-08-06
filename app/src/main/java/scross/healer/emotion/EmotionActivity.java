@@ -80,7 +80,7 @@ public class EmotionActivity extends BaseActivity{
 
             dialog.newInstance(state);
             dialog.show(getFragmentManager(), "emotion dialog");
-            finish();
+//            finish();
 
         }else if (state ==3){
 
@@ -88,14 +88,14 @@ public class EmotionActivity extends BaseActivity{
             intent1.putExtra("state", state);
             startActivity(intent1);
             finish();
-        }else if(state == 6 && lastDay < 8 ){
+        }/*else if(state == 6 && lastDay < 8 ){
             Intent intent1 = new Intent(getApplication(), MainActivity.class);
             intent1.putExtra("state", state);
             Toast.makeText(HealerContext.getContext(), "금일 과정은 모두 종료되었습니다. 내일 다시 진행해주세요",Toast.LENGTH_LONG);
 
             startActivity(intent1);
             finish();
-        }else{
+        }*/else{
             Toast.makeText(HealerContext.getContext(), "에러. 뒤로가기를 눌러주세요!",Toast.LENGTH_LONG);
 
         }

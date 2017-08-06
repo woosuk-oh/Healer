@@ -39,6 +39,7 @@
         />
 
 
+
     <Button
         android:id="@+id/play"
         android:layout_width="wrap_content"
@@ -71,6 +72,12 @@
         android:text="남은시간: 00:00"
         android:textColor="#FFFFFF"
 
+        />
+    <Button
+        android:id="@+id/media_skip_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="skip"
         />
 
 
