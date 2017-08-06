@@ -60,4 +60,11 @@
 android:text="Powered by. Google Docs, Seoul National University Hospital"
         android:textSize="10sp"
         />
+
+  <WebView
+      android:id="@+id/webview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+  </WebView>
 </LinearLayout>

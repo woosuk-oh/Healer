@@ -11,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     Button beforeSurvayBtn;
     Button afterSurvayBtn;
     Button emailSend;
+    private WebView mWebView;
     int phone;
 
     @Override
@@ -57,6 +60,8 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         // Inflate the menu items for use in the action bar
 
         inflater.inflate(R.menu.actionbar_menu_survay, menu);
+
+
 
         //TODO 네트워크 통신해서 이메일로 사진 전송해야됨!
         super.onCreateOptionsMenu(menu, inflater);
@@ -79,7 +84,9 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_survay, container, false);
 
+        mWebView = (WebView)view.findViewById(R.id.webview);
 
+        mWebView.setVisibility(View.GONE);
 
         beforeSurvayBtn = (Button) view.findViewById(R.id.before_survay_btn);
         afterSurvayBtn = (Button) view.findViewById(R.id.after_survay_btn);
@@ -189,7 +196,17 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         switch (view.getId())
         {
             case R.id.before_survay_btn:
-                Network();
+
+                mWebView.setVisibility(View.VISIBLE);
+                mWebView.getSettings().setJavaScriptEnabled(true);
+                mWebView.loadUrl("http://google.com");
+                mWebView.setWebViewClient(new WebViewClientClass());
+                mWebView.setVerticalScrollBarEnabled(true);
+
+
+
+
+//                Network();
                 break;
 
             case R.id.after_survay_btn:
@@ -198,4 +215,16 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         }
 
     }
+
+    private class WebViewClientClass extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+
+
+            return true;
+        }
+    }
+
+
 }

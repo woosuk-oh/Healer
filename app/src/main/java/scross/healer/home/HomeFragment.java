@@ -88,11 +88,11 @@ public class HomeFragment extends BaseFragment {
 
 
 //
-                            progressView.setText(results.get("progressRate")+"%");
 
                             userName = (results.getString("name"));
                             userEmotion = results.getString("emotion");
                             imageUrl = results.getString("profile");
+                            progressView.setText(results.get("progressRate")+"%");
 
 
                             if (!results.isNull("emotion")) {
