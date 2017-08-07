@@ -42,6 +42,17 @@ public class SharedPreferenceUtil {
     private static final String PROCESS= "process";
     private static final String PHONE= "phoneNum";
     private static final String SAVE_NETWORK_TYPE= "saveNetwork";
+    private static final String SURVEY_LINK= "link";
+
+
+    public void setSurveyLink(String link){
+        mEditor.putString(SURVEY_LINK, link);
+        mEditor.commit();
+    }
+    public String getSurveyLink(){
+        return mPrefs.getString(SURVEY_LINK, "www.naver.com");
+    }
+
 
 
 

@@ -11,8 +11,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import scross.healer.BaseFragment;
+import scross.healer.HealerContext;
 import scross.healer.R;
+import scross.healer.SharedPreferenceUtil;
 import scross.healer.emotion.EmotionDialog;
+
+import static android.R.attr.fragment;
 
 /**
  * Created by gta2v on 2017-08-04.
@@ -20,20 +24,21 @@ import scross.healer.emotion.EmotionDialog;
 
 public class SurveyWebView extends BaseFragment {
 
+    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
     private static final String SETURL = "setUrl";
     WebView webView;
 
-
+    String getUrl1;
     String url;
-
+/*
     public static SurveyWebView newInstance(String param1) {
         SurveyWebView fragment = new SurveyWebView();
         Bundle args = new Bundle();
-        args.putString(SETURL, param1);
+        args.putString("setUrl", param1);
         fragment.setArguments(args);
         return fragment;
-    }
-
+    }*/
 
 
     @Override
@@ -41,6 +46,9 @@ public class SurveyWebView extends BaseFragment {
         super.onCreate(savedInstanceState);
 
 
+
+//        Bundle bundle = getArguments();
+//        getUrl1 = bundle.getString("getUrl1");
 
 
     }
@@ -57,17 +65,23 @@ public class SurveyWebView extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_webview, container, false);
         webView = (WebView) rootView.findViewById(R.id.webview);
 
+        getUrl1 = sharedPreferenceUtil.getSurveyLink();
 
-        Bundle bundle = getArguments();
-        url = bundle.getString(SETURL);
-        Log.e("url1: ",url+"");
+
+//        Bundle bundle = getArguments();
+//        url = bundle.getString("getUrl1");
+        Log.e("getUrl1: ", getUrl1 + "");
+/*
+        SurvayFragment sf = new SurvayFragment();
+
+        getUrl1 = sf.getLink();*/
 
 
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(this.url);
+        webView.loadUrl(getUrl1);
 
-        Log.e("url2: ",url+"");
-        Log.e("onCreate this url: ",this.url+"");
+        Log.e("url2: ", url + "");
+        Log.e("onCreate this url: ", this.url + "");
 
 
         webView.setWebViewClient(new WebViewClientClass());
@@ -113,8 +127,7 @@ public class SurveyWebView extends BaseFragment {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
 
-            Log.e("url3: ",url+"");
-
+            Log.e("url3: ", url + "");
 
 
             return true;

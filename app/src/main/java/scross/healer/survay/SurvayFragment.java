@@ -31,6 +31,7 @@ import scross.healer.HealerContext;
 import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.SharedPreferenceUtil;
+import scross.healer.emotion.EmotionDialog;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
@@ -39,15 +40,29 @@ import scross.healer.profile.ProfileDialogFragment;
  * Created by hanee on 2017-07-18.
  */
 
-public class SurvayFragment extends BaseFragment implements View.OnClickListener{
+public class SurvayFragment extends BaseFragment implements View.OnClickListener {
+    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+
+    private final static String LINK1 = "https://goo.gl/forms/AFrF3wbgOI3qrUgK2";
+    private final static String LINK2 = "https://goo.gl/forms/XoVCQLiYsBV8JWi23";
 
 
     NetworkService apiService;
     Button beforeSurvayBtn;
     Button afterSurvayBtn;
     Button emailSend;
-//    private WebView mWebView;
+    //    private WebView mWebView;
     int phone;
+    String link;
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,12 +70,12 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         setHasOptionsMenu(true);
 
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu items for use in the action bar
 
         inflater.inflate(R.menu.actionbar_menu_survay, menu);
-
 
 
         //TODO 네트워크 통신해서 이메일로 사진 전송해야됨!
@@ -79,6 +94,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                 return true;
         }
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -103,8 +119,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     }
 
 
-    public void Network(){
-        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+    public void Network() {
         phone = sharedPreferenceUtil.getPhoneNum();
 
         apiService = NetworkApi.getInstance(getActivity()).getServce();
@@ -121,7 +136,6 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                         if (code.equals("1")) {
 
                             Toast.makeText(HealerContext.getContext(), "설문에 참여해주셔서 감사합니다!", Toast.LENGTH_SHORT).show();
-
 
 
                         } else {
@@ -147,7 +161,8 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         });
 
     }
-    public void Network2(){
+
+    public void Network2() {
         SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
         phone = sharedPreferenceUtil.getPhoneNum();
 
@@ -167,7 +182,6 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                             Toast.makeText(HealerContext.getContext(), "설문에 참여해주셔서 감사합니다!", Toast.LENGTH_SHORT).show();
 
 
-
                         } else {
                             Toast.makeText(HealerContext.getContext(), "설문 내용 저장에 실패하였습니다. 다시 시도 해주세요", Toast.LENGTH_SHORT).show();
                         }
@@ -191,10 +205,10 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         });
 
     }
+
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.before_survay_btn:
 /*
 
@@ -204,18 +218,29 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                 mWebView.setWebViewClient(new WebViewClientClass());
                 mWebView.setVerticalScrollBarEnabled(true);
 
+*//*
+
+                String getUrl1 = "https://goo.gl/forms/AFrF3wbgOI3qrUgK2";
+
+                setLink("https://goo.gl/forms/AFrF3wbgOI3qrUgK2");
 */
 
-                SurveyWebView.newInstance("https://goo.gl/forms/AFrF3wbgOI3qrUgK2");
+                sharedPreferenceUtil.setSurveyLink(LINK1);
+/*
+                Bundle bundle = new Bundle();
+                bundle.putString("getUrl1", "https://goo.gl/forms/AFrF3wbgOI3qrUgK2");
+                SurveyWebView webView = new SurveyWebView();
+                webView.setArguments(bundle);*/
+/*
+                webView.newInstance(getUrl1);
+                SurveyWebView.newInstance("https://goo.gl/forms/AFrF3wbgOI3qrUgK2");*/
                 /*
                 Bundle bundle = new Bundle();
                 bundle.putString("setUrl", "https://goo.gl/forms/AFrF3wbgOI3qrUgK2");
                 SurveyWebView sw1= new SurveyWebView();
                 sw1.setArguments(bundle);*/
 
-
                 startFragment(getFragmentManager(), SurveyWebView.class);
-
 
 
 //                Network();
@@ -223,11 +248,14 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
 
             case R.id.after_survay_btn:
 
-                SurveyWebView sw2= new SurveyWebView();
+/*
+                SurveyWebView sw2 = new SurveyWebView();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("setUrl", "https://goo.gl/forms/XoVCQLiYsBV8JWi23");
                 sw2.setArguments(bundle1);
+*/
 
+                sharedPreferenceUtil.setSurveyLink(LINK2);
 
                 startFragment(getFragmentManager(), SurveyWebView.class);
 //                Network2();
