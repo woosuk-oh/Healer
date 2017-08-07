@@ -46,7 +46,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     Button beforeSurvayBtn;
     Button afterSurvayBtn;
     Button emailSend;
-    private WebView mWebView;
+//    private WebView mWebView;
     int phone;
 
     @Override
@@ -84,10 +84,10 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_survay, container, false);
 
-        mWebView = (WebView)view.findViewById(R.id.webview);
+    /*    mWebView = (WebView)view.findViewById(R.id.webview);
 
         mWebView.setVisibility(View.GONE);
-
+*/
         beforeSurvayBtn = (Button) view.findViewById(R.id.before_survay_btn);
         afterSurvayBtn = (Button) view.findViewById(R.id.after_survay_btn);
 
@@ -196,6 +196,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         switch (view.getId())
         {
             case R.id.before_survay_btn:
+/*
 
                 mWebView.setVisibility(View.VISIBLE);
                 mWebView.getSettings().setJavaScriptEnabled(true);
@@ -203,6 +204,17 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                 mWebView.setWebViewClient(new WebViewClientClass());
                 mWebView.setVerticalScrollBarEnabled(true);
 
+*/
+
+                SurveyWebView.newInstance("https://goo.gl/forms/AFrF3wbgOI3qrUgK2");
+                /*
+                Bundle bundle = new Bundle();
+                bundle.putString("setUrl", "https://goo.gl/forms/AFrF3wbgOI3qrUgK2");
+                SurveyWebView sw1= new SurveyWebView();
+                sw1.setArguments(bundle);*/
+
+
+                startFragment(getFragmentManager(), SurveyWebView.class);
 
 
 
@@ -210,7 +222,15 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                 break;
 
             case R.id.after_survay_btn:
-                Network2();
+
+                SurveyWebView sw2= new SurveyWebView();
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("setUrl", "https://goo.gl/forms/XoVCQLiYsBV8JWi23");
+                sw2.setArguments(bundle1);
+
+
+                startFragment(getFragmentManager(), SurveyWebView.class);
+//                Network2();
                 break;
         }
 
