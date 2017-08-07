@@ -319,6 +319,7 @@ public class TakePictureActivity  extends AppCompatActivity implements
                                     if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
                                         String code = new JSONObject(response.body().string()).get("code").toString();
                                         if (code.equals("1")) {
+                                            Toast.makeText(TakePictureActivity.this, "업로드 중입니다..", Toast.LENGTH_SHORT).show();
                                             Toast.makeText(TakePictureActivity.this, "성공", Toast.LENGTH_SHORT).show();
                                             //파일처리부분
 

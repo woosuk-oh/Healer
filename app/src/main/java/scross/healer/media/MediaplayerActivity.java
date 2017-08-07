@@ -415,7 +415,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                     if (savetime != 0) {
                         mp.seekTo(savetime);
                     }
-//                    mp.seekTo(599900);
+//                    mp.seekTo(990000);
                     mp.start();
 
                     Timer timer = new Timer();
@@ -447,9 +447,9 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                 SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
 
-                                                Log.e("남은시간: ", mp.getDuration() - mp.getCurrentPosition()+" 초");
+                                                Log.e("남은시간: ", mp.getDuration() - mp.getCurrentPosition()+" ms");
 //                                                if(mp.getCurrentPosition() >= savetime){ //TODO 테스트용. 수정필요
-                                                if (mp.getDuration() - mp.getCurrentPosition() < 100) {
+                                                if (mp.getDuration() - mp.getCurrentPosition() < 1000) {
 //                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
 
                                                     Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
