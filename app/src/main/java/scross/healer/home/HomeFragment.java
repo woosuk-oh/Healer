@@ -89,13 +89,16 @@ public class HomeFragment extends BaseFragment {
 
 //
 
-                            userName = (results.getString("name"));
-                            userEmotion = results.getString("emotion");
-                            imageUrl = results.getString("profile");
-                            progressView.setText(results.get("progressRate")+"%");
 
 
                             if (!results.isNull("emotion")) {
+                                userName = (results.getString("name"));
+                                userEmotion = results.getString("emotion");
+                                imageUrl = results.getString("profile");
+
+                                progressView.setText(results.get("progressRate")+"%");
+
+
                                 switch (results.getInt("emotion")){
                                     case 1:
                                         homeUserState.setText("활기참");

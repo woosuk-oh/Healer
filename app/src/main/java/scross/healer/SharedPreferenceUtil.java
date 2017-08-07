@@ -43,6 +43,20 @@ public class SharedPreferenceUtil {
     private static final String PHONE= "phoneNum";
     private static final String SAVE_NETWORK_TYPE= "saveNetwork";
     private static final String SURVEY_LINK= "link";
+    private static final String SURVEY_STATE= "surveyState";
+
+
+
+    public void setSurveyState(int surveyState){
+        mEditor.putInt(SURVEY_STATE, surveyState);
+        mEditor.commit();
+    }
+    public int getSurveyState(){
+        return mPrefs.getInt(SURVEY_STATE, 0);
+    }
+
+
+
 
 
     public void setSurveyLink(String link){

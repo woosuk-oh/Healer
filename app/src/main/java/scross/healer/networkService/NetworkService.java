@@ -60,6 +60,9 @@ public interface NetworkService {
             @Field("phone") int phone
     );
 
+    @GET("survey")
+    Call<ResponseBody> surveyState();
+
     @Multipart
     @POST("day/{day}/process1")
     Call<ResponseBody> process1(

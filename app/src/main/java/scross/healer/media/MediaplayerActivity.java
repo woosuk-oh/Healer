@@ -147,6 +147,9 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
         mediaSkipBtn = (Button) findViewById(R.id.media_skip_btn);
 
+        //skip 버튼!!
+        mediaSkipBtn.setVisibility(GONE);
+
         mediaSkipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,6 +163,13 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 savetime = 0;
                 sharedPreferenceUtil.setSaveTime(savetime);
                 Log.e("쉐어드프리페어런스","Mediaplayer Skip getSaveTime: "+sharedPreferenceUtil.getSaveTime());
+                if (mp != null) {
+                    mp.pause();
+                    mp.stop();
+                    mp.reset();
+
+                    //리셋은 다시 재생 가능하도록 대기상태 완전 끝낼때는 release() 해줘야됨. 현재는 문제 없는듯
+                }
 
                 Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
                 intent.putExtra("state", stateProcess);
@@ -401,18 +411,11 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                     }
                     Log.v(TAG, "Duration:  ===>" + mp.getDuration());
 
-                    /*mp.prepareAsync();
-                    mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mediaPlayer) {
-                            mp.seekTo(savetime);
-                            mp.start();
-                        }
-                    });*/
 
                     if (savetime != 0) {
                         mp.seekTo(savetime);
                     }
+//                    mp.seekTo(599900);
                     mp.start();
 
                     Timer timer = new Timer();
@@ -444,8 +447,9 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                 SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
 
+                                                Log.e("남은시간: ", mp.getDuration() - mp.getCurrentPosition()+" 초");
 //                                                if(mp.getCurrentPosition() >= savetime){ //TODO 테스트용. 수정필요
-                                                if (mp.getCurrentPosition() == mp.getDuration()) {
+                                                if (mp.getDuration() - mp.getCurrentPosition() < 100) {
 //                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
 
                                                     Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
@@ -476,7 +480,6 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                                             if (sharedPreferenceUtil.getProcess() != stateProcess) {
                                                                                 sharedPreferenceUtil.setProcess(stateProcess);
 
-//            state = sharedPreferenceUtil.getProcess();
                                                                             }
 
                                                                             sharedPreferenceUtil.setSaveTime(0);
@@ -512,13 +515,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                             }
                                                         });
                                                     }
-//                                                    else {
-//                                                        Toast.makeText(MediaplayerActivity.this, "잘못된 경로입니다. 타임라인을 확인해주세요!", Toast.LENGTH_SHORT).show();
-//
-//                                                        Intent intent = new Intent(getApplication(), MainActivity.class);
-//                                                        startActivity(intent);
-//
-//                                                    }
+
 
 
                                                 }

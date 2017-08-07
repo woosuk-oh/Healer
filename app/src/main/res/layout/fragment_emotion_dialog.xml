@@ -113,7 +113,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:gravity="center"
-                        android:onClick="onClick"
                         android:orientation="vertical">
 
 
@@ -140,7 +139,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:gravity="center"
-                        android:onClick="onClick"
                         android:orientation="vertical">
 
                         <ToggleButton
@@ -167,7 +165,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:gravity="center"
-                        android:onClick="onClick"
                         android:orientation="vertical">
 
                         <ToggleButton
@@ -193,7 +190,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:onClick="onClick"
                         android:orientation="vertical">
 
                         <ToggleButton
@@ -233,7 +229,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:gravity="center"
-                        android:onClick="onClick"
                         android:orientation="vertical">
 
                         <ToggleButton
@@ -262,7 +257,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:gravity="center"
-                        android:onClick="onClick"
                         android:orientation="vertical">
 
                         <ToggleButton
@@ -287,7 +281,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:onClick="onClick"
                         android:orientation="vertical">
 
                         <ToggleButton

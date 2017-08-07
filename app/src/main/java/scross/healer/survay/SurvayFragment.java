@@ -47,6 +47,8 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     private final static String LINK1 = "https://goo.gl/forms/AFrF3wbgOI3qrUgK2";
     private final static String LINK2 = "https://goo.gl/forms/XoVCQLiYsBV8JWi23";
 
+    Boolean beforeSuveySuc = false;
+    Boolean afterSuveySuc = false;
 
     NetworkService apiService;
     Button beforeSurvayBtn;
@@ -68,6 +70,8 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        Network();
 
     }
 
@@ -111,6 +115,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         afterSurvayBtn.setOnClickListener(this);
 
 
+
         return view;
     }
 
@@ -119,23 +124,58 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        int surveyState = sharedPreferenceUtil.getSurveyState();
+
+        if(surveyState == 1 || surveyState == 2){
+
+            beforeSurvayBtn.setBackgroundResource(R.drawable.before_survey_suc);
+            beforeSurvayBtn.setEnabled(false);
+        }
+        if(surveyState == 2){
+            afterSurvayBtn.setBackgroundResource(R.drawable.after_survey_suc);
+            afterSurvayBtn.setEnabled(false);
+
+        }
+
+
+    }
+
     public void Network() {
-        phone = sharedPreferenceUtil.getPhoneNum();
 
         apiService = NetworkApi.getInstance(getActivity()).getServce();
 
-        Call<ResponseBody> surveyBefore = apiService.surveyBefore(phone);
-        surveyBefore.enqueue(new Callback<ResponseBody>() {
+        Call<ResponseBody> surveyState = apiService.surveyState();
+        surveyState.enqueue(new Callback<ResponseBody>() {
 
 
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
-                        String code = new JSONObject(response.body().string()).get("code").toString();
+
+                        JSONObject data = new JSONObject(response.body().string());
+
+                        String code = data.get("code").toString();
                         if (code.equals("1")) {
 
-                            Toast.makeText(HealerContext.getContext(), "설문에 참여해주셔서 감사합니다!", Toast.LENGTH_SHORT).show();
+                            JSONObject results = data.getJSONObject("results");
+
+                            beforeSuveySuc = results.getBoolean("survey_before");
+                            Log.e("before survey: ",""+results.getBoolean("survey_before"));
+                            afterSuveySuc = results.getBoolean("survey_after");
+
+                            if(beforeSuveySuc == true ){
+                                sharedPreferenceUtil.setSurveyState(1);
+
+                            }
+                            if(afterSuveySuc == true){
+                                sharedPreferenceUtil.setSurveyState(2);
+                            }
+
 
 
                         } else {
@@ -179,7 +219,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                         String code = new JSONObject(response.body().string()).get("code").toString();
                         if (code.equals("1")) {
 
-                            Toast.makeText(HealerContext.getContext(), "설문에 참여해주셔서 감사합니다!", Toast.LENGTH_SHORT).show();
+
 
 
                         } else {
