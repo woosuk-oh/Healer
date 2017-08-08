@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    >
+    android:gravity="center">
 
     <TextView
         android:id="@+id/home_today"
@@ -19,7 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="27.25dp"
-        android:src="@drawable/nophoto" />
+        android:src="@drawable/nophoto"
+        app:civ_border_color="@color/color5"
+        app:civ_border_width="5dp"/>
 
     <TextView
         android:id="@+id/home_user_name"
@@ -36,7 +39,10 @@
         android:layout_marginBottom="38.5dp"
         android:text="상태값"
         android:textColor="@color/color5"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        app:font="custom1"
+
+        />
 
     <RelativeLayout
         android:id="@+id/program_in"
@@ -63,13 +69,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="14.5dp"
-            android:text="00%"
+            android:text="0%"
             android:textColor="@color/white"
             android:textSize="45sp"
             android:id="@+id/tv_progress"
             android:layout_marginEnd="42dp"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/imageView3" />
+            android:layout_toStartOf="@+id/imageView3"
+            app:font="custom1"
+            />
 
         <ImageView
 

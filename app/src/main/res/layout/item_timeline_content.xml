@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="21.5dp"
+
         android:orientation="vertical">
 
         <RelativeLayout
@@ -16,9 +19,9 @@
 
             <ImageView
                 android:id="@+id/timeline_icon"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginRight="30dp"
+                android:layout_width="14.5dp"
+                android:layout_height="14.5dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/projectnull" />
 
@@ -27,11 +30,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="7.75dp"
                 android:layout_toEndOf="@+id/timeline_icon"
                 android:text="도입-자기 관찰하기"
                 android:textColor="@color/grayFont"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:textStyle="bold"
+
+
+                />
 
             <TextView
                 android:id="@+id/timeline_content_state"
@@ -51,16 +58,18 @@
                 android:layout_below="@+id/timeline_content_name"
                 android:text="시작하지않음"
                 android:textColor="@color/grayFont"
-                android:textSize="15sp" />
+                android:textSize="12.5sp" />
 
             <TextView
                 android:id="@+id/timeline_content_detail_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/timeline_content_name"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="11.5dp"
                 android:layout_toEndOf="@+id/timeline_content_date"
                 android:text="@string/detail"
+                android:textSize="12.5sp"
+                android:textStyle="bold"
                 android:textColor="@color/color5"
                 android:visibility="invisible"/>
 
@@ -79,21 +88,23 @@
             android:id="@+id/timeline_content_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:orientation="vertical"
             android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:textColor="@color/color5"
-                    android:text="컨텐츠 완료 여부 : " />
+                    android:text="컨텐츠 완료 여부 : "
+                    />
 
                 <TextView
                     android:id="@+id/content_detail_state1"
@@ -106,9 +117,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -128,9 +140,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -141,8 +154,8 @@
 
                 <ImageView
                     android:id="@+id/content_detail_icon3"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="12.75dp"
+                    android:layout_height="12.75dp"
                     android:background="@drawable/activitymini" />
 
                 <TextView
@@ -157,7 +170,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -170,8 +183,8 @@
 
                 <ImageView
                     android:id="@+id/content_detail_icon4"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="12.75dp"
+                    android:layout_height="12.75dp"
                     android:background="@drawable/activitymini" />
 
                 <TextView

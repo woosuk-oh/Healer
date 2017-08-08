@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+
     android:background="@color/color1"
-    >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +26,10 @@
             android:layout_centerVertical="true"
             android:text="Wi-fi로만 연결"
             android:textColor="@color/color5"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+
+            />
 
         <CheckBox
             android:id="@+id/network_type_check"
@@ -48,28 +53,29 @@
         android:id="@+id/setting_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="30.25dp"
-        android:paddingRight="30.25dp"
         android:layout_marginTop="38dp"
         android:onClick="onClick"
-        >
+        android:paddingLeft="30.25dp"
+        android:paddingRight="30.25dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/color5"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:text="로그아웃"
+            android:textColor="@color/color5"
             android:textSize="20sp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:textStyle="bold" />
 
         <ImageButton
             android:layout_width="18.75dp"
             android:layout_height="18.75dp"
-            android:src="@drawable/projectstartbtn"
-            android:background="@color/color1"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="7dp" />
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="7dp"
+            android:background="@color/color1"
+            android:src="@drawable/projectstartbtn" />
 
     </RelativeLayout>
 

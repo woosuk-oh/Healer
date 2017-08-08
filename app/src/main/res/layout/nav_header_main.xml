@@ -41,7 +41,12 @@
                     android:layout_marginTop="7dp"
                     android:text="홍길동"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    app:font="custom1"
+                    android:textColor="#ccc5bd"
+
+
+                    />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -54,6 +59,8 @@
                         android:layout_height="wrap_content"
                         android:text="상태:"
                         android:textSize="15sp"
+                        android:textColor="#ccc5bd"
+
 
                         />
 
@@ -63,6 +70,7 @@
                         android:layout_height="wrap_content"
                         android:text="dddd"
                         android:textSize="15sp"
+                        android:textColor="#ccc5bd"
 
                         />
                 </LinearLayout>

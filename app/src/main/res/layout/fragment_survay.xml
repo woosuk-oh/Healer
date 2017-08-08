@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:gravity="center"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -24,7 +26,9 @@
         android:text="서베이를 진행 합니다."
         android:textSize="25sp"
         android:layout_marginBottom="36.5dp"
-       />
+        app:font="custom1"
+
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

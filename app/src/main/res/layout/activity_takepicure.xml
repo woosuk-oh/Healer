@@ -37,20 +37,39 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/contents_photo"
         android:scaleType="centerCrop"
         />
+        <TextView
+            android:layout_marginTop="67dp"
+
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="center"
+                android:text="원 안에 얼굴이 가득차게\n'치~즈' 라고 말하며 촬영을\n진행 해 주세요!"
+            />
+
+    </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/take_picture"
+        android:layout_marginBottom="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/ic_camera"
+        app:srcCompat="@drawable/camerabtn"
         app:useCompatPadding="true"/>
 
 </RelativeLayout>
