@@ -48,6 +48,17 @@
         android:layout_marginBottom="8dp"
         android:textColor="@color/white"
         />
+
+  <ImageView
+      android:id="@+id/first_survay_check"
+      android:layout_width="280dp"
+      android:layout_height="wrap_content"
+      android:src="@drawable/first_survay_check"
+      android:scaleType="fitXY"
+      android:layout_marginBottom="8dp"
+
+      android:visibility="gone"
+      />
     <Button
         android:id="@+id/after_survay_btn"
         android:layout_width="280dp"
@@ -57,6 +68,16 @@
         android:textColor="@color/white"
         android:layout_marginBottom="8.75dp"
         />
+  <ImageView
+      android:id="@+id/last_survay_check"
+      android:layout_width="280dp"
+      android:layout_height="wrap_content"
+      android:src="@drawable/last_survay_check"
+      android:scaleType="fitXY"
+      android:visibility="gone"
+      android:layout_marginBottom="8.75dp"
+
+      />
 
     <TextView
         android:layout_width="wrap_content"

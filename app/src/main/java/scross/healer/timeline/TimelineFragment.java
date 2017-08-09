@@ -192,7 +192,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             JSONObject results = data.getJSONObject("results");
                             name.setText(results.getString("name"));
                             birth.setText(results.getString("birth"));
-                            gender.setText(" / " + results.getString("gender") + "자");
+                            gender.setText(" / " + results.getString("gender"));
 
 
 
@@ -546,11 +546,15 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
             ImageView afterArrowButton = afterSurveyItem.findViewById(R.id.timeline_survey_arrow);
             if (surveyAfter == 1) {
                 afterIcon.setBackground(getDrawable(getActivity(), R.drawable.projectcomplete));
+
+                afterName.setText("사후 서베이 등록");
                 afterName.setTextColor(completeColor);
                 afterDate.setTextColor(completeColor);
                 DateTime time = DateTime.parse(results.getString("survey_after_date"));
                 afterDate.setText(time.plusHours(9).toString("yyyy.MM.dd"));
             }else if(lastDay == 9 && surveyAfter == 0){
+
+                afterName.setText("사후 서베이 등록");
                 afterArrowButton.setVisibility(View.VISIBLE);
                 afterArrowButton.setOnClickListener(new View.OnClickListener() {
                     @Override

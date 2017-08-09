@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -54,6 +55,9 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     Button beforeSurvayBtn;
     Button afterSurvayBtn;
     Button emailSend;
+    ImageView firstSurveyCheck;
+    ImageView lastSurveyCheck;
+
     //    private WebView mWebView;
     int phone;
     String link;
@@ -108,13 +112,30 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
 
         mWebView.setVisibility(View.GONE);
 */
+
+        firstSurveyCheck = (ImageView) view.findViewById(R.id.first_survay_check);
+        lastSurveyCheck = (ImageView)view.findViewById(R.id.last_survay_check);
         beforeSurvayBtn = (Button) view.findViewById(R.id.before_survay_btn);
         afterSurvayBtn = (Button) view.findViewById(R.id.after_survay_btn);
 
         beforeSurvayBtn.setOnClickListener(this);
         afterSurvayBtn.setOnClickListener(this);
 
+/*        int surveyState = sharedPreferenceUtil.getSurveyState();
 
+        if(surveyState == 1 || surveyState == 2){
+
+            beforeSurvayBtn.setVisibility(View.GONE);
+
+            beforeSurvayBtn.setEnabled(false);
+            firstSurveyCheck.setVisibility(View.VISIBLE);
+        }
+        if(surveyState == 2){
+            afterSurvayBtn.setVisibility(View.GONE);
+            afterSurvayBtn.setEnabled(false);
+            lastSurveyCheck.setVisibility(View.VISIBLE);
+
+        }*/
 
         return view;
     }
@@ -129,18 +150,38 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         super.onResume();
 
         int surveyState = sharedPreferenceUtil.getSurveyState();
-
+/*
         if(surveyState == 1 || surveyState == 2){
 
-            beforeSurvayBtn.setBackgroundResource(R.drawable.before_survey_suc);
+            beforeSurvayBtn.setVisibility(View.GONE);
+
             beforeSurvayBtn.setEnabled(false);
         }
         if(surveyState == 2){
             afterSurvayBtn.setBackgroundResource(R.drawable.after_survey_suc);
             afterSurvayBtn.setEnabled(false);
 
-        }
+        }*/
 
+
+        beforeSurvayBtn.setEnabled(false);
+        afterSurvayBtn.setEnabled(false);
+
+/*
+
+        if(surveyState == 1 || surveyState == 2){
+
+            beforeSurvayBtn.setVisibility(View.GONE);
+
+            beforeSurvayBtn.setEnabled(false);
+            firstSurveyCheck.setVisibility(View.VISIBLE);
+        }
+        if(surveyState == 2){
+            afterSurvayBtn.setVisibility(View.GONE);
+            afterSurvayBtn.setEnabled(false);
+            lastSurveyCheck.setVisibility(View.VISIBLE);
+
+        }*/
 
     }
 
@@ -169,11 +210,23 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                             afterSuveySuc = results.getBoolean("survey_after");
 
                             if(beforeSuveySuc == true ){
-                                sharedPreferenceUtil.setSurveyState(1);
+//                                sharedPreferenceUtil.setSurveyState(1);
 
+
+
+                                beforeSurvayBtn.setVisibility(View.GONE);
+
+                                firstSurveyCheck.setVisibility(View.VISIBLE);
+                            }else{
+                                beforeSurvayBtn.setEnabled(true);
                             }
                             if(afterSuveySuc == true){
-                                sharedPreferenceUtil.setSurveyState(2);
+//                                sharedPreferenceUtil.setSurveyState(2);
+                                afterSurvayBtn.setVisibility(View.GONE);
+                                afterSurvayBtn.setEnabled(false);
+                                lastSurveyCheck.setVisibility(View.VISIBLE);
+                            }else{
+                                afterSurvayBtn.setEnabled(true);
                             }
 
 
@@ -200,7 +253,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
             }
         });
 
-    }
+    }/*
 
     public void Network2() {
         SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
@@ -244,7 +297,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
             }
         });
 
-    }
+    }*/
 
     @Override
     public void onClick(View view) {

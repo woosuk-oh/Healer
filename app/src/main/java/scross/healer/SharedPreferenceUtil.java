@@ -40,10 +40,36 @@ public class SharedPreferenceUtil {
     private static final String SAVE_TIME = "saveTime";
     private static final String SAVE_DAY = "saveDay";
     private static final String PROCESS= "process";
+    private static final String LOGIN_STATE= "loginState";
     private static final String PHONE= "phoneNum";
+    private static final String PASS_WORD= "passWord";
     private static final String SAVE_NETWORK_TYPE= "saveNetwork";
     private static final String SURVEY_LINK= "link";
     private static final String SURVEY_STATE= "surveyState";
+
+
+
+    public void setLoginState(int loginState){
+        mEditor.putInt(LOGIN_STATE, loginState);
+        mEditor.commit();
+    }
+    public int getLoginState(){
+        return mPrefs.getInt(LOGIN_STATE, 0);
+    }
+
+
+
+    public void setPassWord(String passWord){
+        mEditor.putString(PASS_WORD, passWord);
+        mEditor.commit();
+    }
+    public String getPassWord(){
+        return mPrefs.getString(PASS_WORD, "");
+    }
+
+
+
+
 
 
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +58,7 @@ public class HomeFragment extends BaseFragment {
 
 
 
-    private RelativeLayout programRate;
+    private LinearLayout programRate;
 
 
     @Override
@@ -89,14 +90,15 @@ public class HomeFragment extends BaseFragment {
 
 //
 
+                            userName = (results.getString("name"));
+                            imageUrl = results.getString("profile");
+                            homeUserName.setText("현재 "+userName+"님의 상태는");
+                            progressView.setText(results.get("progressRate")+"%");
 
 
                             if (!results.isNull("emotion")) {
-                                userName = (results.getString("name"));
                                 userEmotion = results.getString("emotion");
-                                imageUrl = results.getString("profile");
 
-                                progressView.setText(results.get("progressRate")+"%");
 
 
                                 switch (results.getInt("emotion")){
@@ -131,7 +133,6 @@ public class HomeFragment extends BaseFragment {
                                 }
 
                             }
-                            homeUserName.setText("현재 "+userName+"님의 상태는");
 
 
                             if(userEmotion == "null" || userEmotion == null){
@@ -175,7 +176,7 @@ public class HomeFragment extends BaseFragment {
         homeUserState = (TextView) view.findViewById(R.id.home_user_state);
         homeUserName = (TextView) view.findViewById(R.id.home_user_name);
 
-        programRate =  (RelativeLayout) view.findViewById(R.id.program_in);
+        programRate =  (LinearLayout) view.findViewById(R.id.program_in);
 
         programRate.setOnClickListener(new View.OnClickListener() {
             @Override

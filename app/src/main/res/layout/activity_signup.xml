@@ -84,8 +84,7 @@
                     android:inputType="phone"
                     android:textColor="#574b4a"
                     android:textSize="15sp"
-                    app:font="custom1"
-                    />
+                    app:font="custom1" />
 
 
             </LinearLayout>

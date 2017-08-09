@@ -44,53 +44,45 @@
 
         />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/program_in"
         android:layout_width="300dp"
         android:layout_height="75dp"
         android:background="@color/color4"
-        android:orientation="horizontal"
         android:onClick="onClick"
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="14.5dp"
-            android:text="프로그램 진행률"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:gravity="center"
-
-            android:layout_alignTop="@+id/imageView3"
-            android:layout_toStartOf="@+id/tv_progress" />
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="14.5dp"
+            android:gravity="center"
+            android:text="프로그램 진행률"
+
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
             android:text="0%"
             android:textColor="@color/white"
             android:textSize="45sp"
-            android:id="@+id/tv_progress"
-            android:layout_marginEnd="42dp"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/imageView3"
-            app:font="custom1"
-            />
+            app:font="custom1" />
 
         <ImageView
 
+            android:id="@+id/imageView3"
             android:layout_width="11.75dp"
             android:layout_height="18dp"
-            android:src="@drawable/mainbtn"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
             android:layout_marginEnd="22dp"
-            android:id="@+id/imageView3" />
+            android:src="@drawable/mainbtn" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

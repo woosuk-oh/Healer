@@ -5,13 +5,16 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
@@ -51,13 +54,21 @@ public class LoginActivity extends BaseActivity {
     EditText phoneInput;
     EditText passwordInput;
 
+    int phone;
+    String password;
+
     NetworkService apiService;
+
     // private BackPressCloseHandler backPressCloseHandler;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
 
         //권한획득
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -82,12 +93,71 @@ public class LoginActivity extends BaseActivity {
         phoneInput.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); // 폰번호에 하이픈 붙이기
 
-        passwordInput.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD); //TODO 패스워드 *** 형식으로 바꿔야되는데 안먹음..
-        passwordInput.addTextChangedListener(new PasswordTransformationMethod());
+
+
+        TextWatcher tw = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+                if (i1 == 13) {
+                    phoneInput.clearFocus();
+                    passwordInput.requestFocus();
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
+        phoneInput.addTextChangedListener(tw);
+
+/*
+
+
+
+        TextWatcher tw1 = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                Log.e("onTextChanged 1", i+"");
+                Log.e("onTextChanged 2", i1+"");
+                Log.e("onTextChanged 3", i2+"");
+
+                if(i == 3){
+                    passwordInput.setFocusable(false);
+                    loginBtn.setClickable(true);
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
+        passwordInput.addTextChangedListener(tw1);*/
+
+
+//        passwordInput.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD); //TODO 패스워드 *** 형식으로 바꿔야되는데 안먹음..
+//        passwordInput.addTextChangedListener(new PasswordTransformationMethod());
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 //                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 //                startActivity(intent);
 
@@ -98,13 +168,17 @@ public class LoginActivity extends BaseActivity {
                 }else {
 
 
-                    final int phone = Integer.valueOf(phoneInput.getText().toString().replaceAll("-", ""));
-                    String password = passwordInput.getText().toString();
+                    phone = Integer.valueOf(phoneInput.getText().toString().replaceAll("-", ""));
+                    password = passwordInput.getText().toString();
+                    Log.e("password: ",""+ password);
+
 
                     int length = (int) Math.floor(Math.log10(phone) + 1);
                     Log.e("phone num", " "+length);
 
-                   if(length == 10 || length == 11){
+                    if(length == 10 || length == 11){
+
+                        Log.e("phone: ",""+ phone);
 
 
                         Call<ResponseBody> postRate = apiService.login(phone, password);
@@ -119,8 +193,10 @@ public class LoginActivity extends BaseActivity {
 
 
                                             SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+                                            sharedPreferenceUtil.setLoginState(1);
 
                                             sharedPreferenceUtil.setPhoneNum(phone);
+                                            sharedPreferenceUtil.setPassWord(password);
 
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(intent);
@@ -146,12 +222,11 @@ public class LoginActivity extends BaseActivity {
 
                             }
                         });
-                        ;
-                    }else {
-                       Toast.makeText(LoginActivity.this, "핸드폰번호를 확인해주세요!", Toast.LENGTH_SHORT).show();
-                   }
-                }
 
+                    }else {
+                        Toast.makeText(LoginActivity.this, "핸드폰번호를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
 
 
@@ -160,7 +235,7 @@ public class LoginActivity extends BaseActivity {
         });
 
         /** 회원가입 페이지로 이동 **/
-        signupBtn = (TextView)  findViewById(R.id.signup_button);
+        signupBtn = (TextView) findViewById(R.id.signup_button);
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,13 +245,82 @@ public class LoginActivity extends BaseActivity {
         });
 
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+        if(sharedPreferenceUtil.getLoginState() == 1){
+            Log.e("shared state", ""+sharedPreferenceUtil.getLoginState());
+            phone = sharedPreferenceUtil.getPhoneNum();
+            password = sharedPreferenceUtil.getPassWord();
+            Log.e("shared phone", ""+sharedPreferenceUtil.getPhoneNum());
+            Log.e("shared password", ""+sharedPreferenceUtil.getPassWord());
+
+
+
+
+            Call<ResponseBody> postRate = apiService.login(phone, password);
+            postRate.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                            String code = new JSONObject(response.body().string()).get("code").toString();
+                            if (code.equals("1")) {
+                                Toast.makeText(LoginActivity.this, "자동로그인 되었습니다.", Toast.LENGTH_SHORT).show();
+
+
+                                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                                sharedPreferenceUtil.setPhoneNum(phone);
+                                sharedPreferenceUtil.setPassWord(password);
+
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "로그인에 실패했습니다", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(LoginActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(LoginActivity.this, "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                    Log.d("value", t.getMessage());
+
+                }
+            });
+
+        }
+
+
+    }
+
+    public void network(){
+
 
     }
 
 
 /*
 
-        *//**
+        */
+
+    /**
      * 자동로그인 기능
      **//*
         private void goLoginActivity() {
@@ -213,23 +357,20 @@ public class LoginActivity extends BaseActivity {
 
                 }
             }, 2000);*/
-
-
-
     @Override
     public void onBackPressed() {
 
 
-        if(getFragmentManager().getBackStackEntryCount() > 0){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_home, new HomeFragment());
-            fragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentTransaction.commit();
-        }else{
+        } else {
             long tempTime = System.currentTimeMillis();
             long intervalTime = tempTime - backPressedTime;
-            if ( 0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime ) {
+            if (0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime) {
 
 
                 /** 루트 액티비티가 안꺼져있는 경우. 프로세스까지 죽이는 방법! **/
@@ -237,10 +378,9 @@ public class LoginActivity extends BaseActivity {
                 System.runFinalizersOnExit(true);
                 finish();
                 System.exit(0);
-            }
-            else {
+            } else {
                 backPressedTime = tempTime;
-                Toast.makeText(getApplicationContext(),"뒤로가기를 한 번 더누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "뒤로가기를 한 번 더누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
             }
         }
 
