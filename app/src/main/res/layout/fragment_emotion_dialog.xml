@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="290dp"
@@ -32,6 +32,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10.75dp"
                 android:text="상태선택"
+                android:textColor="@color/color5"
+
                 android:textSize="20sp"
                 app:font="custom1"
 
@@ -42,6 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="27.5dp"
                 android:text="본인의 현재 상태를 입력해주세요."
+                android:textColor="@color/color5"
+
                 android:textSize="15sp" />
 
 
@@ -102,209 +106,213 @@
 -->
 
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/emotion_btn1"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/emotion_btn1"
 
+                    <ToggleButton
+                        android:id="@+id/emotion_img1"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginBottom="9.5dp"
+                        android:background="@null"
+                        android:button="@drawable/btn_set_onoff1"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <ToggleButton
-                            android:id="@+id/emotion_img1"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:layout_marginBottom="9.5dp"
-                            android:background="@null"
-                            android:button="@drawable/btn_set_onoff1"
-                            android:textOff=""
-                            android:textOn=""/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="활기참" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/emotion_btn2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ToggleButton
-                            android:id="@+id/emotion_img2"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:layout_marginBottom="9.5dp"
-                            android:background="@null"
-                            android:button="@drawable/btn_set_onoff2"
-                            android:textOff=""
-                            android:textOn=""/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="평온함" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/emotion_btn3"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ToggleButton
-                            android:id="@+id/emotion_img3"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:layout_marginBottom="9.5dp"
-                            android:background="@null"
-                            android:button="@drawable/btn_set_onoff3"
-                            android:textOff=""
-                            android:textOn=""/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="행복함" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/emotion_btn4"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ToggleButton
-                            android:id="@+id/emotion_img4"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:layout_marginBottom="9.5dp"
-                            android:background="@null"
-                            android:button="@drawable/btn_set_onoff4"
-                            android:textOff=""
-                            android:textOn=""
-
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="보통" />
-
-                    </LinearLayout>
-
+                        android:text="활기참"
+                        android:textColor="@color/color5" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/emotion_layout2"
+                    android:id="@+id/emotion_btn2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="15.5dp"
-                    android:orientation="horizontal">
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/emotion_btn5"
+                    <ToggleButton
+                        android:id="@+id/emotion_img2"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginBottom="9.5dp"
+                        android:background="@null"
+                        android:button="@drawable/btn_set_onoff2"
+                        android:textOff=""
+                        android:textOn="" />
 
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ToggleButton
-                            android:id="@+id/emotion_img5"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:layout_marginBottom="9.5dp"
-                            android:background="@null"
-                            android:button="@drawable/btn_set_onoff5"
-                            android:textOff=""
-                            android:textOn=""/>
-
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="우울함" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/emotion_btn6"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ToggleButton
-                            android:id="@+id/emotion_img6"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:layout_marginBottom="9.5dp"
-                            android:background="@null"
-                            android:button="@drawable/btn_set_onoff6"
-                            android:textOff=""
-                            android:textOn=""/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="화가남" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/emotion_btn7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ToggleButton
-                            android:id="@+id/emotion_img7"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:layout_marginBottom="9.5dp"
-                            android:background="@null"
-                            android:button="@drawable/btn_set_onoff7"
-                            android:textOff=""
-                            android:textOn=""/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="불안함" />
-
-                    </LinearLayout>
-
+                        android:text="평온함"
+                        android:textColor="@color/color5" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/emotion_btn3"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ToggleButton
+                        android:id="@+id/emotion_img3"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginBottom="9.5dp"
+                        android:background="@null"
+                        android:button="@drawable/btn_set_onoff3"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="행복함"
+                        android:textColor="@color/color5" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/emotion_btn4"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ToggleButton
+                        android:id="@+id/emotion_img4"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginBottom="9.5dp"
+                        android:background="@null"
+                        android:button="@drawable/btn_set_onoff4"
+                        android:textOff=""
+                        android:textOn=""
+
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="보통"
+                        android:textColor="@color/color5" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/emotion_layout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15.5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/emotion_btn5"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ToggleButton
+                        android:id="@+id/emotion_img5"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginBottom="9.5dp"
+                        android:background="@null"
+                        android:button="@drawable/btn_set_onoff5"
+                        android:textOff=""
+                        android:textOn="" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="우울함"
+                        android:textColor="@color/color5" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/emotion_btn6"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ToggleButton
+                        android:id="@+id/emotion_img6"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginBottom="9.5dp"
+                        android:background="@null"
+                        android:button="@drawable/btn_set_onoff6"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="화가남"
+                        android:textColor="@color/color5" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/emotion_btn7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ToggleButton
+                        android:id="@+id/emotion_img7"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginBottom="9.5dp"
+                        android:background="@null"
+                        android:button="@drawable/btn_set_onoff7"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="불안함"
+                        android:textColor="@color/color5" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -337,6 +345,7 @@
                     android:layout_weight="0.5"
                     android:background="@null"
                     android:text="적용"
+                    android:textColor="@color/color5"
                     app:font="custom1"
 
 
@@ -356,8 +365,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:background="@null"
-
                     android:text="취소"
+
+                    android:textColor="@color/color5"
                     app:font="custom1"
 
                     />

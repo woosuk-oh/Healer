@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.telephony.PhoneNumberUtils;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
 import android.view.View;
@@ -128,6 +130,31 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
         });
 
 
+
+        TextWatcher tw = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+                if (i1 == 13) {
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
+        phoneInput.addTextChangedListener(tw);
+
+
+
         phoneInput.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); // 폰번호에 하이픈 붙이기
 
@@ -188,7 +215,8 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
                                         startActivity(intent);
                                         SignupActivity.this.finish();
                                     } else {
-                                        Toast.makeText(SignupActivity.this, "회원가입에 실패했습니다", Toast.LENGTH_SHORT).show();
+                                        String msg = new JSONObject(response.body().string()).get("results").toString();
+                                        Toast.makeText(SignupActivity.this, msg, Toast.LENGTH_SHORT).show();
                                     }
 
                                 } else {

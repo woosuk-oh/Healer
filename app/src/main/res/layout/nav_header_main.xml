@@ -67,7 +67,7 @@
                         android:id="@+id/nav_head_state"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="dddd"
+                        android:text=" 알 수 없음"
                         android:textColor="#ccc5bd"
                         android:textSize="15sp"
 

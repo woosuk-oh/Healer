@@ -100,4 +100,10 @@ public interface NetworkService {
             @Field("id") String id,
             @Field("rate") String rate
     );
+
+    @FormUrlEncoded
+    @POST("sendEmail")
+    Call<ResponseBody> SendEmail(
+            @Field("id") String id
+    );
 }

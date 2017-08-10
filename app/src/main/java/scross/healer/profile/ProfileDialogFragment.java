@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -72,6 +73,10 @@ public class ProfileDialogFragment extends DialogFragment implements View.OnClic
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String str = (String) adapterView.getSelectedItem();
                 selectGender = str;
+        ((TextView)adapterView.getChildAt(0)).setTextColor(view.getResources().getColor(R.color.color5));
+
+
+
     }
 
     @Override
