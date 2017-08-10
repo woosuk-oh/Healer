@@ -106,4 +106,10 @@ public interface NetworkService {
     Call<ResponseBody> SendEmail(
             @Field("id") String id
     );
+
+    @FormUrlEncoded
+    @POST("check_phone")
+    Call<ResponseBody> checkPhone(
+            @Field("phone") int phone
+    );
 }

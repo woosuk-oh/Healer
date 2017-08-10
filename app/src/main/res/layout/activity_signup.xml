@@ -92,14 +92,24 @@
             <include layout="@layout/line_bar_util" />
 
             <TextView
-                android:id="@+id/signup_phone_check"
+                android:id="@+id/signup_phone_check1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="6dp"
                 android:text="* 이미 가입된 번호 입니다."
                 android:textColor="#c3473d"
-                android:visibility="invisible" />
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/signup_phone_check2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="6dp"
+                android:text="* 사용 가능한 번호입니다. 이번호로 로그인 해 주세요."
+                android:textColor="#5ba15b"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"

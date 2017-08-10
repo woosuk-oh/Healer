@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import com.google.android.cameraview.CameraView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -283,6 +285,16 @@ public class TakePictureActivity  extends AppCompatActivity implements
             Log.d(TAG, "onPictureTaken " + data.length);
             Toast.makeText(cameraView.getContext(), R.string.picture_taken, Toast.LENGTH_SHORT)
                     .show();
+/*
+
+            Bitmap photo = (Bitmap) new data(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                    "picture.jpg");
+            photo = Bitmap.createScaledBitmap(photo, 100, 100, false);
+            ByteArrayOutputStream data= new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.JPEG, 40, data);
+
+*/
+
             getBackgroundHandler().post(new Runnable() {
                 @Override
                 public void run() {
