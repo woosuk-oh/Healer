@@ -240,7 +240,8 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <TextView
                     android:id="@+id/textView4"
@@ -253,18 +254,21 @@
                 <Spinner
                     android:id="@+id/signup_user_sex"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="left"
+                    android:textAlignment="textStart"
+
 
                     />
 
-                <EditText
-                    android:id="@+id/user_sex"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:hint="남성"
-                    android:textColor="#574b4a"
-                    android:textSize="15sp" />
+                <!--     <EditText
+                         android:id="@+id/user_sex"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:background="@null"
+                         android:hint="남성"
+                         android:textColor="#574b4a"
+                         android:textSize="15sp" />-->
 
 
             </LinearLayout>
