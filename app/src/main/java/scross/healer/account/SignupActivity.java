@@ -143,22 +143,25 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
 
                     networkCall();
 
-                    signupPhoneCheck1.postDelayed(new Runnable() {
+                  /*  signupPhoneCheck1.postDelayed(new Runnable() {
                         public void run() {
                             if(check == 2){
-                                signupPhoneCheck1.setVisibility(View.VISIBLE);
-                                signupPhoneCheck2.setVisibility(View.GONE);
-                            }else if(check == 1){
                                 signupPhoneCheck2.setVisibility(View.VISIBLE);
                                 signupPhoneCheck1.setVisibility(View.GONE);
+                            }else if(check == 1){
+                                signupPhoneCheck1.setVisibility(View.VISIBLE);
+                                signupPhoneCheck2.setVisibility(View.GONE);
                             }
 
-                    /*        signupPhoneCheck1.setVisibility(View.VISIBLE);
-                            signupPhoneCheck2.setVisibility(View.GONE);*/
+                    *//*        signupPhoneCheck1.setVisibility(View.VISIBLE);
+                            signupPhoneCheck2.setVisibility(View.GONE);*//*
 
                         }
                     }, 2000);
-
+*/
+                }else{
+                    signupPhoneCheck1.setVisibility(View.GONE);
+                    signupPhoneCheck2.setVisibility(View.GONE);
                 }
             }
 
@@ -281,28 +284,18 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
                         String code = new JSONObject(response.body().string()).get("code").toString();
                         if (code.equals("1")) {
 
-                            check = 1;
-                            signupPhoneCheck1.setVisibility(View.VISIBLE);
-                            signupPhoneCheck2.setVisibility(View.GONE);
-                            /*
-                            signupPhoneCheck1.postDelayed(new Runnable() {
-                                public void run() {
-                                    signupPhoneCheck1.setVisibility(View.VISIBLE);
-                                    signupPhoneCheck2.setVisibility(View.GONE);
+                            signupPhoneCheck2.setVisibility(View.VISIBLE);
+                            signupPhoneCheck1.setVisibility(View.GONE);
 
-                                }
-                            }, 3000);*/
-                            Toast.makeText(SignupActivity.this, "사용가능.", Toast.LENGTH_SHORT).show();
-
-//                            signupPhoneCheck1.setVisibility(View.VISIBLE);
-//                            signupPhoneCheck2.setVisibility(View.GONE);
+//                            Toast.makeText(SignupActivity.this, "사용가능.", Toast.LENGTH_SHORT).show();
 
 
                         } else {
-                            check = 2;
-                            signupPhoneCheck2.setVisibility(View.VISIBLE);
-                            signupPhoneCheck1.setVisibility(View.GONE);
-                            Toast.makeText(SignupActivity.this, "이미 가입된 연락처.", Toast.LENGTH_SHORT).show();
+                            signupPhoneCheck1.setVisibility(View.VISIBLE);
+                            signupPhoneCheck2.setVisibility(View.GONE);
+
+
+//                            Toast.makeText(SignupActivity.this, "이미 가입된 연락처.", Toast.LENGTH_SHORT).show();
                         }
 
                     } else {
