@@ -1,70 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/camera_background"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color3"
-    android:id="@+id/camera_background"
-    android:gravity="center">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/camera_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/checkpictogram"
-        android:layout_marginBottom="25.75dp"
-        android:visibility="gone"
-        />
-    <TextView
-        android:id="@+id/content_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0일차"
-        android:textSize="20sp"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="20dp"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="172dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/content_name"
+        <ImageView
+            android:id="@+id/camera_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25.75dp"
+            android:src="@drawable/checkpictogram"
+            android:visibility="gone" />
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="초기 트라우마"
-        android:textSize="25sp"
-        android:textColor="#ffffff"
+        <TextView
+            android:id="@+id/content_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="0일차"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
 
-        />
-    <TextView
-        android:id="@+id/content_body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="부정적 기억 내보내기"
-        android:textSize="25sp"
-        android:textColor="@color/white"
-        android:layout_marginBottom="29dp"
+        <TextView
+            android:id="@+id/content_name"
 
-        />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="초기 트라우마"
+            android:textColor="#ffffff"
+            android:textSize="25sp"
+
+            />
+
+        <TextView
+            android:id="@+id/content_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="29dp"
+            android:text="부정적 기억 내보내기"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+
+            />
 
 
-    <TextView
-        android:gravity="center_horizontal"
-        android:id="@+id/content_explain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="시작 전/후로 웃는 얼굴을 촬영 합니다. \n 카메라를 보고 '치~즈'라고 \n 말하며 사진 촬영을 해주세요."
+        <TextView
+            android:id="@+id/content_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:gravity="center_horizontal"
 
-        android:textSize="25sp"
-        android:textColor="#ffffff"
-        android:layout_marginBottom="28dp"
+            android:text="시작 전/후로 웃는 얼굴을 촬영 합니다. \n 카메라를 보고 '치~즈'라고 \n 말하며 사진 촬영을 해주세요."
+            android:textColor="#ffffff"
+            android:textSize="25sp"
 
-        />
+            />
 
-    <Button
-        android:id="@+id/camera_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/camerabtn"
-        />
+        <Button
+            android:id="@+id/camera_start"
+            android:layout_width="86.5dp"
+            android:layout_height="86.5dp"
+            android:background="@drawable/camerabtn" />
 
+    </LinearLayout>
 
 </LinearLayout>

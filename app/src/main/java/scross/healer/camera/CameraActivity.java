@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,6 +68,9 @@ public class CameraActivity extends BaseActivity{
         cameraBackground = (LinearLayout) findViewById(R.id.camera_background);
 
         cameraCheck = (ImageView) findViewById(R.id.camera_check);
+
+        //TODO 애니메이션 마저하기!
+//        RunAnimation();
 
 
         if (state == 1) {// 네트워크 통신해서 받아와야함. 1단계 임(감정상태 선택전, 컨텐츠 듣기전, ).
@@ -262,5 +267,13 @@ public class CameraActivity extends BaseActivity{
 
     }
 
+    private void RunAnimation()
+    {
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
+        a.reset();
+        TextView tv = (TextView) findViewById(R.id.content_day);
+        tv.clearAnimation();
+        tv.startAnimation(a);
+    }
 
 }

@@ -94,30 +94,30 @@ public class LoginActivity extends BaseActivity {
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); // 폰번호에 하이픈 붙이기
 
 
-
-        TextWatcher tw = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-                if (i1 == 13) {
-                    phoneInput.clearFocus();
-                    passwordInput.requestFocus();
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        };
-        phoneInput.addTextChangedListener(tw);
+//
+//        TextWatcher tw = new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//
+//                if (i1 == 13) {
+//                    phoneInput.clearFocus();
+//                    passwordInput.requestFocus();
+//                }
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        };
+//        phoneInput.addTextChangedListener(tw);
 
 /*
 

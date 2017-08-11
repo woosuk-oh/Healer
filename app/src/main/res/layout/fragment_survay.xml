@@ -72,10 +72,11 @@
       android:id="@+id/last_survay_check"
       android:layout_width="280dp"
       android:layout_height="wrap_content"
-      android:src="@drawable/last_survay_check"
+      android:background="@drawable/last_survay_check"
       android:scaleType="fitXY"
       android:visibility="gone"
       android:layout_marginBottom="8.75dp"
+
 
       />
 

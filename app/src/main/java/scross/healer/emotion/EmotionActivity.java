@@ -84,10 +84,12 @@ public class EmotionActivity extends BaseActivity{
 
         }else if (state ==3){
 
-            Intent intent1 = new Intent(getApplication(), MediaplayerActivity.class);
+           /* Intent intent1 = new Intent(getApplication(), MediaplayerActivity.class);
             intent1.putExtra("state", state);
-            startActivity(intent1);
+            startActivity(intent1);*/
             finish();
+            // 미디어플레이어에서 뒤로가기 하면 다시 스타트액티비티 되서 꼬임. 그냥 꺼버려야됨.
+
         }/*else if(state == 6 && lastDay < 8 ){
             Intent intent1 = new Intent(getApplication(), MainActivity.class);
             intent1.putExtra("state", state);

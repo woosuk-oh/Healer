@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -277,7 +278,12 @@ public class MainActivity extends BaseActivity
                 long tempTime = System.currentTimeMillis();
                 long intervalTime = tempTime - backPressedTime;
                 if ( 0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime ) {
+
+                    /** 루트 액티비티가 안꺼져있는 경우. 프로세스까지 죽이는 방법! **/
+                    ActivityCompat.finishAffinity(this);
+                    System.runFinalizersOnExit(true);
                     finish();
+                    System.exit(0);
                 }
                 else {
                     backPressedTime = tempTime;

@@ -16,12 +16,15 @@
         android:layout_width="290dp"
         android:layout_height="352.5dp"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+
+        >
 
 
         <LinearLayout
+            android:paddingTop="35.25dp"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="match_parent"
             android:background="@color/color3"
             android:gravity="center"
             android:orientation="vertical">
@@ -30,7 +33,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10.75dp"
                 android:text="상태선택"
                 android:textColor="@color/color5"
 
@@ -227,7 +229,6 @@
                 android:id="@+id/emotion_layout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="15.5dp"
                 android:orientation="horizontal">
 
@@ -314,67 +315,67 @@
 
             </LinearLayout>
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color3"
-            android:gravity="center|bottom"
-            android:orientation="vertical">
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color1">
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-                <Button
-                    android:id="@+id/emotion_success_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:background="@null"
-                    android:text="적용"
-                    android:textColor="@color/color5"
-                    app:font="custom1"
-
-
-                    />
+                android:layout_height="match_parent"
+                android:background="@color/color3"
+                android:gravity="center|bottom"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:background="@color/color1">
+
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/emotion_cancel_btn"
-
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:background="@null"
-                    android:text="취소"
+                    android:orientation="horizontal">
 
-                    android:textColor="@color/color5"
-                    app:font="custom1"
 
-                    />
+                    <Button
+                        android:id="@+id/emotion_success_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:background="@null"
+                        android:text="적용"
+                        android:textColor="@color/color5"
+                        app:font="custom1"
+
+
+                        />
+
+                    <LinearLayout
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/color1">
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/emotion_cancel_btn"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:background="@null"
+                        android:text="취소"
+
+                        android:textColor="@color/color5"
+                        app:font="custom1"
+
+                        />
+
+                </LinearLayout>
 
             </LinearLayout>
-
         </LinearLayout>
+
+
 
 
     </LinearLayout>

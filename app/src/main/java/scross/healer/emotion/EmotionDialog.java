@@ -1,6 +1,7 @@
 package scross.healer.emotion;
 
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -51,11 +52,11 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
 
     private EmotionEntityObject entityObject;
-//    private LinearLayout emotion1, emotion2, emotion3, emotion4, emotion5, emotion6, emotion7;
-    private ToggleButton iv1, iv2, iv4, iv3,  iv5, iv6, iv7;
+    //    private LinearLayout emotion1, emotion2, emotion3, emotion4, emotion5, emotion6, emotion7;
+    private ToggleButton iv1, iv2, iv4, iv3, iv5, iv6, iv7;
     private Button btn1, btn2;
 
-    int emotionValue =0;
+    int emotionValue = 0;
     int state;
     String lastDay;
 
@@ -71,7 +72,6 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 //        Log.e("st emotionDialog get1", state+"");
 
 
-
         return emotionDialog;
     }
 
@@ -83,13 +83,10 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
         Bundle bundle = getArguments();
         state = bundle.getInt("state");
 
-        Log.e("st emotionDialog get2", state+"");
-
+        Log.e("st emotionDialog get2", state + "");
 
 
     }
-
-
 
 
     @Override
@@ -165,7 +162,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
         switch (view.getId()) {
             case R.id.emotion_img1:
-                if(iv1.isChecked()){
+                if (iv1.isChecked()) {
 
                     iv2.setChecked(false);
                     iv3.setChecked(false);
@@ -175,7 +172,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                     iv7.setChecked(false);
 
                     emotionValue = 1;
-                }else if(iv1.isChecked() == false){
+                } else if (iv1.isChecked() == false) {
 
                     iv2.setChecked(false);
                     iv3.setChecked(false);
@@ -188,9 +185,8 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                 break;
 
 
-
             case R.id.emotion_img2:
-                if(iv2.isChecked()){
+                if (iv2.isChecked()) {
 
                     iv1.setChecked(false);
                     iv3.setChecked(false);
@@ -200,7 +196,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                     iv7.setChecked(false);
 
                     emotionValue = 2;
-                }else if(iv2.isChecked() == false){
+                } else if (iv2.isChecked() == false) {
 
                     iv1.setChecked(false);
                     iv3.setChecked(false);
@@ -215,7 +211,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
 
             case R.id.emotion_img3:
-                if(iv3.isChecked()){
+                if (iv3.isChecked()) {
 
                     iv1.setChecked(false);
                     iv2.setChecked(false);
@@ -225,7 +221,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                     iv7.setChecked(false);
 
                     emotionValue = 3;
-                }else if(iv3.isChecked() == false){
+                } else if (iv3.isChecked() == false) {
 
                     iv1.setChecked(false);
                     iv2.setChecked(false);
@@ -239,7 +235,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                 break;
 
             case R.id.emotion_img4:
-                if(iv4.isChecked() == true || iv4.isChecked()){
+                if (iv4.isChecked() == true || iv4.isChecked()) {
 //                    Toast.makeText(HealerContext.getContext(), "버튼4 눌림1.", Toast.LENGTH_SHORT).show();
 
                     iv1.setChecked(false);
@@ -251,7 +247,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
                     emotionValue = 4;
 
-                }else if(iv4.isChecked() == false){
+                } else if (iv4.isChecked() == false) {
 //                    Toast.makeText(HealerContext.getContext(), "버튼4 눌림2.", Toast.LENGTH_SHORT).show();
 
                     iv1.setChecked(false);
@@ -291,7 +287,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
 
             case R.id.emotion_img5:
-                if(iv5.isChecked()){
+                if (iv5.isChecked()) {
 
                     iv2.setChecked(false);
                     iv3.setChecked(false);
@@ -301,7 +297,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                     iv7.setChecked(false);
 
                     emotionValue = 5;
-                }else if(iv5.isChecked() == false){
+                } else if (iv5.isChecked() == false) {
 
                     iv2.setChecked(false);
                     iv3.setChecked(false);
@@ -316,7 +312,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
 
             case R.id.emotion_img6:
-                if(iv6.isChecked()){
+                if (iv6.isChecked()) {
 
                     iv2.setChecked(false);
                     iv3.setChecked(false);
@@ -326,7 +322,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                     iv7.setChecked(false);
 
                     emotionValue = 6;
-                }else if(iv6.isChecked() == false){
+                } else if (iv6.isChecked() == false) {
 
                     iv2.setChecked(false);
                     iv3.setChecked(false);
@@ -341,7 +337,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
 
             case R.id.emotion_img7:
-                if(iv7.isChecked()){
+                if (iv7.isChecked()) {
 
                     iv2.setChecked(false);
                     iv3.setChecked(false);
@@ -351,7 +347,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                     iv1.setChecked(false);
 
                     emotionValue = 7;
-                }else if(iv7.isChecked() == false){
+                } else if (iv7.isChecked() == false) {
 
                     iv2.setChecked(false);
                     iv3.setChecked(false);
@@ -365,9 +361,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                 break;
 
 
-
             case R.id.emotion_success_btn:
-
 
 
                 network();
@@ -376,75 +370,75 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
             case R.id.emotion_cancel_btn:
                 dismiss();
+                getActivity().finish();
                 break;
-
-
 
 
         }
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        getActivity().finish();
 
-    public void network(){
+    }
 
-        if(emotionValue == 0){
+    public void network() {
+
+        if (emotionValue == 0) {
 
             Toast.makeText(HealerContext.getContext(), "감정 선택을 해주세요!", Toast.LENGTH_SHORT).show();
 
-        }else if(state == 2 ) {
+        } else if (state == 2) {
 
             apiService = NetworkApi.getInstance(getActivity()).getServce();
 
-                Call<ResponseBody> process2 = apiService.process2(lastDay, emotionValue);
+            Call<ResponseBody> process2 = apiService.process2(lastDay, emotionValue);
             process2.enqueue(new Callback<ResponseBody>() {
 
 
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
-                                String code = new JSONObject(response.body().string()).get("code").toString();
-                                if (code.equals("1")) {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                            String code = new JSONObject(response.body().string()).get("code").toString();
+                            if (code.equals("1")) {
 
-                                    Toast.makeText(HealerContext.getContext(), "감정 선택이 완료되었습니다!", Toast.LENGTH_SHORT).show();
-
-
+                                Toast.makeText(HealerContext.getContext(), "감정 선택이 완료되었습니다!", Toast.LENGTH_SHORT).show();
 
 
-                                        state = state + 1;
+                                state = state + 1;
 
-                                        if (sharedPreferenceUtil.getProcess() != state) {
-                                            sharedPreferenceUtil.setProcess(state);
+                                if (sharedPreferenceUtil.getProcess() != state) {
+                                    sharedPreferenceUtil.setProcess(state);
 
 //            state = sharedPreferenceUtil.getProcess();
-                                        }
-                                        Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " EmotionDialog. 감정선택 완료.");
-
-
-                                        Intent intent1 = new Intent(HealerContext.getContext(), MediaplayerActivity.class);
-                                        intent1.putExtra("state", state);
-                                        startActivity(intent1);
-
-                                        dismiss();
-
-
-
-
-
-
-                                } else {
-                                    Toast.makeText(HealerContext.getContext(), "감정 선택에 실패했습니다", Toast.LENGTH_SHORT).show();
                                 }
+                                Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " EmotionDialog. 감정선택 완료.");
+
+
+                                Intent intent1 = new Intent(HealerContext.getContext(), MediaplayerActivity.class);
+                                intent1.putExtra("state", state);
+                                startActivity(intent1);
+
+                                dismiss();
+                                getActivity().finish();
+
 
                             } else {
-                                Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(HealerContext.getContext(), "감정 선택에 실패했습니다", Toast.LENGTH_SHORT).show();
                             }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+
+                        } else {
+                            Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+                }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
@@ -453,8 +447,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
                 }
             });
-        }
-        else if(state == 5){
+        } else if (state == 5) {
 
 
             apiService = NetworkApi.getInstance(getActivity()).getServce();
@@ -470,25 +463,18 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                             String code = new JSONObject(response.body().string()).get("code").toString();
                             if (code.equals("1")) {
 
-                                Toast.makeText(HealerContext.getContext(), "감정 선택이 완료되었습니다!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(HealerContext.getContext(), "금일 과정은 모두 종료되었습니다. 내일 다시 진행해주세요", Toast.LENGTH_LONG).show();
 
-
-
-
-
-                                    state = 1;
+                                state = 1;
 
                                 sharedPreferenceUtil.setProcess(state);
 
-                                    Intent intent1 = new Intent(HealerContext.getContext(), MainActivity.class);
-                                    intent1.putExtra("state", state);
-                                    Toast.makeText(HealerContext.getContext(), "금일 과정은 모두 종료되었습니다. 내일 다시 진행해주세요",Toast.LENGTH_LONG);
+                                Intent intent1 = new Intent(HealerContext.getContext(), MainActivity.class);
+                                intent1.putExtra("state", state);
 
-                                    startActivity(intent1);
-                                    dismiss();
-
-
-
+                                getActivity().finish();
+                                startActivity(intent1);
+                                dismiss();
 
 
                             } else {
@@ -514,6 +500,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
             });
         }
     }
+
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
 /*

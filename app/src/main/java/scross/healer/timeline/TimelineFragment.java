@@ -93,7 +93,6 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
         stateProcess = sharedPreferenceUtil.getProcess();
 */
-
         network();
     }
 
@@ -539,22 +538,20 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                 }
                 contentsLayout.addView(contentItem);
             }
-            LinearLayout afterSurveyItem = (LinearLayout) inflater.inflate(R.layout.item_timeline_survey, null);
-            ImageView afterIcon = beforeSurveyItem.findViewById(R.id.timeline_icon);
-            TextView afterDate = beforeSurveyItem.findViewById(R.id.timeline_survey_date);
-            TextView afterName = beforeSurveyItem.findViewById(R.id.timeline_survey_t);
-            ImageView afterArrowButton = afterSurveyItem.findViewById(R.id.timeline_survey_arrow);
+            LinearLayout afterSurveyItem = (LinearLayout) inflater.inflate(R.layout.item_timeline_survey2, null);
+            ImageView afterIcon = (ImageView) afterSurveyItem.findViewById(R.id.timeline_icon2);
+            TextView afterDate = afterSurveyItem.findViewById(R.id.timeline_survey_date2);
+            TextView afterName = afterSurveyItem.findViewById(R.id.timeline_survey_t2);
+            ImageView afterArrowButton = afterSurveyItem.findViewById(R.id.timeline_survey_arrow2);
             if (surveyAfter == 1) {
                 afterIcon.setBackground(getDrawable(getActivity(), R.drawable.projectcomplete));
 
-                afterName.setText("사후 서베이 등록");
                 afterName.setTextColor(completeColor);
                 afterDate.setTextColor(completeColor);
                 DateTime time = DateTime.parse(results.getString("survey_after_date"));
                 afterDate.setText(time.plusHours(9).toString("yyyy.MM.dd"));
             }else if(lastDay == 9 && surveyAfter == 0){
 
-                afterName.setText("사후 서베이 등록");
                 afterArrowButton.setVisibility(View.VISIBLE);
                 afterArrowButton.setOnClickListener(new View.OnClickListener() {
                     @Override

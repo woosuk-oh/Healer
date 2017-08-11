@@ -148,7 +148,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         mediaSkipBtn = (Button) findViewById(R.id.media_skip_btn);
 
         //skip 버튼!!
-        mediaSkipBtn.setVisibility(GONE);
+        mediaSkipBtn.setVisibility(View.VISIBLE);
 
         mediaSkipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -447,8 +447,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                 SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
 
-                                                Log.e("남은시간: ", mp.getDuration() - mp.getCurrentPosition()+" ms");
-//                                                if(mp.getCurrentPosition() >= savetime){ //TODO 테스트용. 수정필요
+//                                                Log.e("남은시간: ", mp.getDuration() - mp.getCurrentPosition()+" ms");
                                                 if (mp.getDuration() - mp.getCurrentPosition() < 1000) {
 //                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
 
