@@ -146,11 +146,11 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
                     signupPhoneCheck1.postDelayed(new Runnable() {
                         public void run() {
                             if(check == 2){
-                                signupPhoneCheck2.setVisibility(View.VISIBLE);
-                                signupPhoneCheck1.setVisibility(View.GONE);
-                            }else if(check == 1){
                                 signupPhoneCheck1.setVisibility(View.VISIBLE);
                                 signupPhoneCheck2.setVisibility(View.GONE);
+                            }else if(check == 1){
+                                signupPhoneCheck2.setVisibility(View.VISIBLE);
+                                signupPhoneCheck1.setVisibility(View.GONE);
                             }
 
                     /*        signupPhoneCheck1.setVisibility(View.VISIBLE);

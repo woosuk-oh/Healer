@@ -7,7 +7,7 @@ import scross.healer.timeline.TimelineFragment;
  * Created by hanee on 2017-07-30.
  */
 
-public class TimelineObject extends TimelineFragment {
+public class TimelineObject  {
     public final String name;
     public final String birth;
     public final String emotion;
