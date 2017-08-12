@@ -5,8 +5,23 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:id="@+id/timeline_survey">
+
+        <FrameLayout
+            android:id="@+id/fr"
+            android:layout_width="14.5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp">
+
+            <LinearLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="1dp"
+                android:layout_height="57dp"
+                android:layout_gravity="center"
+                android:background="#b0b1b2"
+                android:orientation="horizontal" />
+
+        </FrameLayout>
 
         <ImageView
             android:id="@+id/timeline_icon2"
