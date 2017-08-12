@@ -330,6 +330,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                 TextView date = contentItem.findViewById(R.id.timeline_content_date);
                 TextView detail = contentItem.findViewById(R.id.timeline_content_detail_btn);
                 ImageView arrowButton = contentItem.findViewById(R.id.timeline_content_arrow);
+                LinearLayout arrowButton2 = contentItem.findViewById(R.id.timeline_content_arrow_linear);
                 final LinearLayout detailLayout = contentItem.findViewById(R.id.timeline_content_detail);
                 TextView detailcontent1 = detailLayout.findViewById(R.id.content_detail_state1);
                 TextView detailcontent2 = detailLayout.findViewById(R.id.content_detail_state2);
@@ -473,7 +474,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                         }
                     });
                     if (day == lastDay) {
-                        arrowButton.setVisibility(View.VISIBLE);
+                        arrowButton2.setVisibility(View.VISIBLE);
                         icon.setImageDrawable(getDrawable(getActivity(), R.drawable.projectprogress));
                         //detail.setVisibility(View.GONE);
                         state.setText("진행중");
@@ -481,7 +482,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
 
 
-                        arrowButton.setOnClickListener(new View.OnClickListener() {
+                        arrowButton2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = null;

@@ -13,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import scross.healer.BaseActivity;
 import scross.healer.HealerContext;
 import scross.healer.R;
@@ -70,7 +68,7 @@ public class CameraActivity extends BaseActivity{
         cameraCheck = (ImageView) findViewById(R.id.camera_check);
 
         //TODO 애니메이션 마저하기!
-//        RunAnimation();
+        RunAnimation();
 
 
         if (state == 1) {// 네트워크 통신해서 받아와야함. 1단계 임(감정상태 선택전, 컨텐츠 듣기전, ).
@@ -175,6 +173,9 @@ public class CameraActivity extends BaseActivity{
         } else if (state == 4) {// ?일차 4단계. 컨텐츠 듣기후,
             cameraCheck.setVisibility(View.VISIBLE);
             contentExplain.setText("수고하셨습니다.\n웃는 얼굴을 다시 한 번 촬영 합니다.\n전과 같이 '치~즈'를 외쳐주세요.");
+            final Animation a3 = AnimationUtils.loadAnimation(this, R.anim.scale);
+            a3.reset();
+            cameraCheck.startAnimation(a3);
 
 
 
@@ -269,11 +270,35 @@ public class CameraActivity extends BaseActivity{
 
     private void RunAnimation()
     {
-        Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
+        final Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
+        final Animation a1 = AnimationUtils.loadAnimation(this, R.anim.anim);
+        final Animation a2 = AnimationUtils.loadAnimation(this, R.anim.anim);
         a.reset();
-        TextView tv = (TextView) findViewById(R.id.content_day);
-        tv.clearAnimation();
+        a1.reset();
+        a2.reset();
+
+        a.setStartOffset(1000);
+        a1.setStartOffset(2600);
+        a2.setStartOffset(3900);
+
+
+        final TextView tv = (TextView) findViewById(R.id.content_day);
+        final TextView contentName = (TextView) findViewById(R.id.content_name);
+        final TextView contentBody = (TextView) findViewById(R.id.content_body);
+        final TextView contentExplain = (TextView) findViewById(R.id.content_explain);
+
+
+
+
         tv.startAnimation(a);
+        contentName.startAnimation(a1);
+        contentBody.startAnimation(a1);
+        contentExplain.startAnimation(a2);
+
+
+
+
+
     }
 
 }

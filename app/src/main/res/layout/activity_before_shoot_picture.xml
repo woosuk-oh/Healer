@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/camera_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,6 +40,7 @@
             android:text="초기 트라우마"
             android:textColor="#ffffff"
             android:textSize="25sp"
+            app:font="custom1"
 
             />
 
@@ -50,6 +52,7 @@
             android:text="부정적 기억 내보내기"
             android:textColor="@color/white"
             android:textSize="25sp"
+            app:font="custom1"
 
             />
 

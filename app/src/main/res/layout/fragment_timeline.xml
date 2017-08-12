@@ -766,7 +766,6 @@
                         android:orientation="horizontal">
 
 
-                        <!--TODO 화살표 아이콘 위치 잡아야됌!-->
                         <LinearLayout
                             android:id="@+id/timeline_child_content6"
 

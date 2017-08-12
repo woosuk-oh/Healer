@@ -340,8 +340,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
         @Override
         public void onClick(View v) {
-            // TODO Auto-generated method stub
-            // TODO Auto-generated method stub
+
 
             if (!playPause) {
                 btnt.setBackgroundResource(R.drawable.pausebtn);
