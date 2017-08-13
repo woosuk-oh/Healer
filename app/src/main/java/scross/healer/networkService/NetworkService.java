@@ -63,6 +63,9 @@ public interface NetworkService {
     @GET("survey")
     Call<ResponseBody> surveyState();
 
+    @GET("nowstate")
+    Call<ResponseBody> nowState();
+
     @Multipart
     @POST("day/{day}/process1")
     Call<ResponseBody> process1(
@@ -104,7 +107,6 @@ public interface NetworkService {
     @FormUrlEncoded
     @POST("sendEmail")
     Call<ResponseBody> SendEmail(
-            @Field("id") String id
     );
 
     @FormUrlEncoded
@@ -112,4 +114,6 @@ public interface NetworkService {
     Call<ResponseBody> checkPhone(
             @Field("phone") int phone
     );
+
+
 }

@@ -67,7 +67,6 @@ public class HomeFragment extends BaseFragment {
 
 
 
-        Log.e("AAA","onCreate");
 
 
 
@@ -77,7 +76,6 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("AAA","Retrofit");
 
                 if(response.body()!= null){
                     try{
@@ -184,16 +182,11 @@ public class HomeFragment extends BaseFragment {
                 startFragment(getFragmentManager(), TimelineFragment.class);
             }
         });
-        Log.e("AAA","onCreateView");
 
         DateFormat df = new SimpleDateFormat("MM월 dd일");
         String date = df.format(Calendar.getInstance().getTime());
 
 
-
-   /*     Log.e("aaa", homeUserState.getText()+"");
-        Log.e("bbb", userEmotion+"");
-*/
    Log.e("name",userName+"");
         homeToday.setText("오늘은 "+date);
 

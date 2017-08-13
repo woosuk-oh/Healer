@@ -33,6 +33,7 @@ import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.SharedPreferenceUtil;
 import scross.healer.emotion.EmotionDialog;
+import scross.healer.networkService.GetNowDayProcess;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
@@ -61,6 +62,8 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
     //    private WebView mWebView;
     int phone;
     String link;
+    int finishCheck;
+    int day;
 
     public String getLink() {
         return link;
@@ -75,8 +78,15 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        Network();
 
+        getLatestDay();
+        /*
+        GetNowDayProcess getNowDayProcess = new GetNowDayProcess();
+        finishCheck = getNowDayProcess.getLatestDay();
+        Log.e("finish Check: ", finishCheck+"");*/
+
+
+        Network();
     }
 
     @Override
@@ -86,7 +96,6 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         inflater.inflate(R.menu.actionbar_menu_survay, menu);
 
 
-        //TODO 네트워크 통신해서 이메일로 사진 전송해야됨!
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -96,6 +105,17 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
             case R.id.action_search:
                 ProfileDialogFragment dialog = new ProfileDialogFragment();
                 dialog.show(getFragmentManager(), "Profile Update test");
+                return true;
+            case R.id.email_send:
+
+
+                if (day == 9) {
+                    Network2();
+                } else {
+                    Toast.makeText(HealerContext.getContext(), "모든 컨텐츠를 아직 완료하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                }
+
+
                 return true;
 
             default:
@@ -114,7 +134,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
 */
 
         firstSurveyCheck = (ImageView) view.findViewById(R.id.first_survay_check);
-        lastSurveyCheck = (ImageView)view.findViewById(R.id.last_survay_check);
+        lastSurveyCheck = (ImageView) view.findViewById(R.id.last_survay_check);
         beforeSurvayBtn = (Button) view.findViewById(R.id.before_survay_btn);
         afterSurvayBtn = (Button) view.findViewById(R.id.after_survay_btn);
 
@@ -206,29 +226,27 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                             JSONObject results = data.getJSONObject("results");
 
                             beforeSuveySuc = results.getBoolean("survey_before");
-                            Log.e("before survey: ",""+results.getBoolean("survey_before"));
+                            Log.e("before survey: ", "" + results.getBoolean("survey_before"));
                             afterSuveySuc = results.getBoolean("survey_after");
 
-                            if(beforeSuveySuc == true ){
+                            if (beforeSuveySuc == true) {
 //                                sharedPreferenceUtil.setSurveyState(1);
-
 
 
                                 beforeSurvayBtn.setVisibility(View.GONE);
 
                                 firstSurveyCheck.setVisibility(View.VISIBLE);
-                            }else{
+                            } else {
                                 beforeSurvayBtn.setEnabled(true);
                             }
-                            if(afterSuveySuc == true){
+                            if (afterSuveySuc == true) {
 //                                sharedPreferenceUtil.setSurveyState(2);
                                 afterSurvayBtn.setVisibility(View.GONE);
                                 afterSurvayBtn.setEnabled(false);
                                 lastSurveyCheck.setVisibility(View.VISIBLE);
-                            }else{
+                            } else {
                                 afterSurvayBtn.setEnabled(true);
                             }
-
 
 
                         } else {
@@ -253,16 +271,14 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
             }
         });
 
-    }/*
+    }
 
     public void Network2() {
-        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
-        phone = sharedPreferenceUtil.getPhoneNum();
 
         apiService = NetworkApi.getInstance(getActivity()).getServce();
 
-        Call<ResponseBody> surveyAfter = apiService.surveyAfter(phone);
-        surveyAfter.enqueue(new Callback<ResponseBody>() {
+        Call<ResponseBody> SendEmail = apiService.SendEmail();
+        SendEmail.enqueue(new Callback<ResponseBody>() {
 
 
             @Override
@@ -273,8 +289,6 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                         if (code.equals("1")) {
 
 
-
-
                         } else {
                             Toast.makeText(HealerContext.getContext(), "설문 내용 저장에 실패하였습니다. 다시 시도 해주세요", Toast.LENGTH_SHORT).show();
                         }
@@ -297,7 +311,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
             }
         });
 
-    }*/
+    }
 
     @Override
     public void onClick(View view) {
@@ -367,5 +381,52 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
+
+    public void getLatestDay() {
+        apiService = NetworkApi.getInstance(HealerContext.getContext()).getServce();
+
+        Call<ResponseBody> nowState = apiService.nowState();
+
+
+        nowState.enqueue(new Callback<ResponseBody>() {
+
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                        JSONObject data = new JSONObject(response.body().string());
+                        String code = data.get("code").toString();
+                        JSONObject results = data.getJSONObject("results");
+
+                        if (code.equals("1")) {
+
+                            day = results.getInt("latest_day");
+
+
+                            SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                            sharedPreferenceUtil.setLastDay(day);
+                            Log.e("Get Now Day: ", sharedPreferenceUtil.getLastDay() + " , 겟 데이.");
+                        }
+
+                    } else {
+                        Toast.makeText(HealerContext.getContext(), "일시적인 네트워크 문제입니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                Log.d("value", t.getMessage());
+
+            }
+        });
+    }
 
 }

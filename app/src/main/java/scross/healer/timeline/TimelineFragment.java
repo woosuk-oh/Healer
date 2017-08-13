@@ -45,6 +45,7 @@ import scross.healer.SharedPreferenceUtil;
 import scross.healer.camera.CameraActivity;
 import scross.healer.emotion.EmotionActivity;
 import scross.healer.media.MediaplayerActivity;
+import scross.healer.networkService.GetNowDayProcess;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
@@ -88,12 +89,14 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         JodaTimeAndroid.init(getActivity());
-     /*   network();
 
-        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
-        stateProcess = sharedPreferenceUtil.getProcess();
-*/
-        network();
+        network();getProcess();
+/*
+        GetNowDayProcess getNowDayProcess = new GetNowDayProcess();
+        stateProcess = getNowDayProcess.getProcess();
+
+
+        Log.e("timeline state: ", stateProcess+"");*/
     }
 
     @Override
@@ -235,7 +238,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
                             }
                             int lastDay1 = results.getInt("lastday");
-                            Log.e("Server!!!", "서버콜 라스트데이: "+lastDay1);
+//                            Log.e("Server!!!", "서버콜 라스트데이: "+lastDay1);
                             bindingData(results);
 
 
@@ -516,23 +519,23 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
 
                                         break;
                                     case 6:
-                                        //TODO 마지막 단계 다 갔으면 오늘날짜 저장하고 날짜 비교해서 하루 안지났으면 낼 해달라고 토스트 띄우기. else 다른날짜면 state = 1 넣어두고(인텐트,쉐어드) 다시 cameraActivity부터 시작
                                         Toast.makeText(HealerContext.getContext(), "테스트 수정필요!",Toast.LENGTH_LONG);
                                         break;
 
 
 
                                 }
+
                                 intent.putExtra("day", day);
                                 intent.putExtra("state", stateProcess);
                                 startActivity(intent);
 
 
-                                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+                               /* SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
                                 if(sharedPreferenceUtil.getProcess() != stateProcess)
                                     sharedPreferenceUtil.setProcess(stateProcess);
-                                Log.e("shared Timeline: ", sharedPreferenceUtil.getProcess()+" , 449번줄");
+                                Log.e("shared Timeline: ", sharedPreferenceUtil.getProcess()+" , 449번줄");*/
                             }
                         });
                     }
@@ -547,6 +550,7 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
             if (surveyAfter == 1) {
                 afterIcon.setBackground(getDrawable(getActivity(), R.drawable.projectcomplete));
 
+//                Toast.makeText(HealerContext.getContext(), "모든 컨텐츠가 완료되었습니다. 서베이에서 우측 상단의 이메일 전송 버튼을 눌러주세요.", Toast.LENGTH_SHORT).show();
                 afterName.setTextColor(completeColor);
                 afterDate.setTextColor(completeColor);
                 DateTime time = DateTime.parse(results.getString("survey_after_date"));
@@ -590,5 +594,56 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
             return context.getResources().getDrawable(id);
         }
     }
+
+    public void getProcess(){
+
+        apiService = NetworkApi.getInstance(HealerContext.getContext()).getServce();
+
+        Call<ResponseBody> nowState = apiService.nowState();
+
+
+        nowState.enqueue(new Callback<ResponseBody>() {
+
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                        JSONObject data = new JSONObject(response.body().string());
+                        String code = data.get("code").toString();
+                        JSONObject results = data.getJSONObject("results");
+
+                        if (code.equals("1")) {
+
+                            stateProcess= results.getInt("latest_state");
+
+
+                            SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+
+                            sharedPreferenceUtil.setProcess(stateProcess);
+                            Log.e("Get Now Process: ", sharedPreferenceUtil.getProcess() + " , 서버 리스폰스.");
+                        }
+
+                    } else {
+                        Toast.makeText(HealerContext.getContext(), "일시적인 네트워크 문제입니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                Log.d("value", t.getMessage());
+
+            }
+        });
+    }
+
+
+
 }
 
