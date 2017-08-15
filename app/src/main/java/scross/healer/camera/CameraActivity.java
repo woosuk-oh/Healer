@@ -34,6 +34,12 @@ public class CameraActivity extends BaseActivity{
     private Context context;
     private LinearLayout cameraBackground;
 
+    final int ANIMATION_TIME1 = 500;
+    final int ANIMATION_TIME2 = 650;
+    final int ANIMATION_TIME3 = 1300;
+    final int ANIMATION_TIME4 = 1950;
+
+
 
     // TODO 네트워크로 부터 state받아와야함. daystate는 메인액티비티에서 받아오고 인텐트로 전달받기!
     int state;
@@ -174,6 +180,7 @@ public class CameraActivity extends BaseActivity{
             cameraCheck.setVisibility(View.VISIBLE);
             contentExplain.setText("수고하셨습니다.\n웃는 얼굴을 다시 한 번 촬영 합니다.\n전과 같이 '치~즈'를 외쳐주세요.");
             final Animation a3 = AnimationUtils.loadAnimation(this, R.anim.scale);
+            a3.setStartOffset(ANIMATION_TIME1);
             a3.reset();
             cameraCheck.startAnimation(a3);
 
@@ -277,9 +284,9 @@ public class CameraActivity extends BaseActivity{
         a1.reset();
         a2.reset();
 
-        a.setStartOffset(1000);
-        a1.setStartOffset(2600);
-        a2.setStartOffset(3900);
+        a.setStartOffset(ANIMATION_TIME2);
+        a1.setStartOffset(ANIMATION_TIME3);
+        a2.setStartOffset(ANIMATION_TIME4);
 
 
         final TextView tv = (TextView) findViewById(R.id.content_day);

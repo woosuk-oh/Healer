@@ -33,7 +33,6 @@ import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.SharedPreferenceUtil;
 import scross.healer.emotion.EmotionDialog;
-import scross.healer.networkService.GetNowDayProcess;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
@@ -277,7 +276,7 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
 
         apiService = NetworkApi.getInstance(getActivity()).getServce();
 
-        Call<ResponseBody> SendEmail = apiService.SendEmail();
+        Call<ResponseBody> SendEmail = apiService.SendEmail(0);
         SendEmail.enqueue(new Callback<ResponseBody>() {
 
 
