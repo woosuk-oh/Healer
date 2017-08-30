@@ -1,8 +1,11 @@
 package scross.healer;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.view.WindowManager;
 
 /**
  * Created by gta2v on 2017-07-26.
@@ -57,6 +60,22 @@ public class BaseFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+
+    private ProgressDialog mProgressDialog;
+
+
+    public void showDialog(){
+
+
+        if(mProgressDialog != null && !mProgressDialog.isShowing())
+            mProgressDialog.show();
+    }
+
+    public void hideDialog(){
+        if(mProgressDialog != null && mProgressDialog.isShowing())
+            mProgressDialog.dismiss();;
     }
 
 

@@ -5,6 +5,8 @@ import android.content.Context;
 
 import okhttp3.OkHttpClient;
 import java.net.NetworkInterface;
+import java.util.concurrent.TimeUnit;
+
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 
@@ -33,6 +35,9 @@ public class NetworkApi {
         ReceivedCookiesInterceptor in2 = new ReceivedCookiesInterceptor(context);
 
         OkHttpClient httpClient = new OkHttpClient.Builder()
+                .connectTimeout(120, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
                 .addNetworkInterceptor(in1)
                 .addInterceptor(in2)
                 .build();

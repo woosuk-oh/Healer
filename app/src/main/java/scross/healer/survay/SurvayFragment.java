@@ -1,7 +1,7 @@
 package scross.healer.survay;
 
-import android.app.Fragment;
-import android.content.Intent;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -21,18 +22,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import scross.healer.BaseActivity;
 import scross.healer.BaseFragment;
 import scross.healer.HealerContext;
-import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.SharedPreferenceUtil;
-import scross.healer.emotion.EmotionDialog;
 import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 import scross.healer.profile.ProfileDialogFragment;
@@ -243,6 +242,8 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                                 afterSurvayBtn.setVisibility(View.GONE);
                                 afterSurvayBtn.setEnabled(false);
                                 lastSurveyCheck.setVisibility(View.VISIBLE);
+                                Toast.makeText(HealerContext.getContext(), "우측 상단 버튼을 누르면 저장된 데이터가 전송 됩니다.", Toast.LENGTH_LONG).show();
+
                             } else {
                                 afterSurvayBtn.setEnabled(true);
                             }
@@ -271,10 +272,17 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
         });
 
     }
-
     public void Network2() {
 
         apiService = NetworkApi.getInstance(getActivity()).getServce();
+        final ProgressDialog mProgressDialog = new ProgressDialog(getActivity());
+
+
+
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage("이메일 전송중");
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.show();
 
         Call<ResponseBody> SendEmail = apiService.SendEmail(0);
         SendEmail.enqueue(new Callback<ResponseBody>() {
@@ -282,12 +290,14 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
 
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(mProgressDialog.isShowing())
+                    mProgressDialog.dismiss();
+
                 try {
                     if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
                         String code = new JSONObject(response.body().string()).get("code").toString();
                         if (code.equals("1")) {
                             Log.e("pic test1","사진1");
-//                            Toast.makeText(HealerContext.getContext(), "사진 전송이 완료되었습니다!", Toast.LENGTH_SHORT).show();
 
                         } else {
                             Log.e("pic test1","사진2");
@@ -312,10 +322,17 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
-                Log.d("value", t.getMessage());
-                Log.e("pic test1","사진5");
+                if(mProgressDialog.isShowing())
+                    mProgressDialog.dismiss();
 
+
+                if(t instanceof SocketTimeoutException){
+                    Toast.makeText(HealerContext.getContext(), "서버로 부터 반응이 없습니다. 다시 시도 해주세요", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    Toast.makeText(HealerContext.getContext(), "서버오류입니다. 관리자에게 문의해주세요", Toast.LENGTH_SHORT).show();
+                    Log.e("error value", t.getMessage());
+                }
 
             }
         });
