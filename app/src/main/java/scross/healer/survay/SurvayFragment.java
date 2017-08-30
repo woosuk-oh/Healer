@@ -286,14 +286,22 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
                     if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
                         String code = new JSONObject(response.body().string()).get("code").toString();
                         if (code.equals("1")) {
-
+                            Log.e("pic test1","사진1");
+//                            Toast.makeText(HealerContext.getContext(), "사진 전송이 완료되었습니다!", Toast.LENGTH_SHORT).show();
 
                         } else {
-                            Toast.makeText(HealerContext.getContext(), "설문 내용 저장에 실패하였습니다. 다시 시도 해주세요", Toast.LENGTH_SHORT).show();
+                            Log.e("pic test1","사진2");
+
+                            Toast.makeText(HealerContext.getContext(), "사진 저장에 실패하였습니다. 다시 시도 해주세요", Toast.LENGTH_SHORT).show();
                         }
+                        Log.e("pic test1","사진3");
+
+                        Toast.makeText(HealerContext.getContext(), "사진 전송이 완료되었습니다!", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                        Log.e("pic test1","사진4");
+
+//                        Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -306,6 +314,8 @@ public class SurvayFragment extends BaseFragment implements View.OnClickListener
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
                 Log.d("value", t.getMessage());
+                Log.e("pic test1","사진5");
+
 
             }
         });

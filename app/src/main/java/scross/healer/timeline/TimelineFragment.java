@@ -243,16 +243,14 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             bindingData(results);
 
 
-                            /*    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());  */
-                /*            sharedPreferenceUtil.setLastDay(lastDay1);
-                            Log.e("Shared!!!", "타임라인 라스트데이: "+sharedPreferenceUtil.getLastDay());*/
-/*
+                                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+                            sharedPreferenceUtil.setLastDay(lastDay);
+                            Log.e("Shared!!!", "타임라인 라스트데이: "+sharedPreferenceUtil.getLastDay());
 
                             if(sharedPreferenceUtil.getLastDay() != lastDay) {
                                 lastDay = sharedPreferenceUtil.getLastDay();
                             }
                             Log.e("SharedPreference!!!!: " , lastDay+ " 라스트데이.");
-*/
 
 
 
@@ -533,11 +531,11 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                                 startActivity(intent);
 
 
-                               /* SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+                                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
                                 if(sharedPreferenceUtil.getProcess() != stateProcess)
                                     sharedPreferenceUtil.setProcess(stateProcess);
-                                Log.e("shared Timeline: ", sharedPreferenceUtil.getProcess()+" , 449번줄");*/
+                                Log.e("shared Timeline: ", sharedPreferenceUtil.getProcess()+" , 449번줄");
                             }
                         });
                     }
