@@ -2,6 +2,7 @@ package scross.healer.account;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.telephony.PhoneNumberFormattingTextWatcher;
@@ -9,6 +10,7 @@ import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
 import android.view.View;
@@ -114,7 +116,13 @@ public class SignupActivity extends BaseActivity implements AdapterView.OnItemSe
         phoneInput = (EditText) findViewById(R.id.phone_number);
         userName = (EditText) findViewById(R.id.user_name);
         pw1 = (EditText) findViewById(R.id.password1);
+        pw1.setTypeface(Typeface.DEFAULT);
+        pw1.setTransformationMethod(new PasswordTransformationMethod());
+
         pw2 = (EditText) findViewById(R.id.password2);
+        pw2.setTypeface(Typeface.DEFAULT);
+        pw2.setTransformationMethod(new PasswordTransformationMethod());
+
         checkSelect = (CheckBox) findViewById(R.id.signup_check);
         signupPhoneCheck1 = (TextView) findViewById(R.id.signup_phone_check1);
         signupPhoneCheck2 = (TextView) findViewById(R.id.signup_phone_check2);

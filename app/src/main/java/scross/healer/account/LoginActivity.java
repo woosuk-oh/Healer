@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -68,8 +69,6 @@ public class LoginActivity extends BaseActivity {
 
 
 
-
-
         //권한획득
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -88,7 +87,13 @@ public class LoginActivity extends BaseActivity {
 
         loginBtn = (Button) findViewById(R.id.login_btn);
         phoneInput = (EditText) findViewById(R.id.phone_input);
+
+        /** (비밀번호 입력창) 텍스트 인풋 백그라운드가 있는 경우, password dot으로 표현!**/
         passwordInput = (EditText) findViewById(R.id.password_input);
+        passwordInput.setTypeface(Typeface.DEFAULT);
+        passwordInput.setTransformationMethod(new PasswordTransformationMethod());
+
+
 
         phoneInput.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher()); // 폰번호에 하이픈 붙이기

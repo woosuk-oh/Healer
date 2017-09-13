@@ -148,7 +148,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         mediaSkipBtn = (Button) findViewById(R.id.media_skip_btn);
 
         //skip 버튼!!
-        mediaSkipBtn.setVisibility(View.VISIBLE);
+        mediaSkipBtn.setVisibility(View.INVISIBLE
+        );
 
         mediaSkipBtn.setOnClickListener(new View.OnClickListener() {
             @Override

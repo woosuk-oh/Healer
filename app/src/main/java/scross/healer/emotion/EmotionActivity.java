@@ -73,6 +73,8 @@ public class EmotionActivity extends BaseActivity{
 
 
         if (state == 2 || state == 5) {
+
+            //액티비티에서 다이얼로그 프래그먼트로 값 전달하기
             Bundle bundle = new Bundle();
             bundle.putInt("state", state);
             EmotionDialog dialog = new EmotionDialog();

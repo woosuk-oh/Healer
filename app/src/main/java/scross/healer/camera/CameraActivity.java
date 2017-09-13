@@ -1,6 +1,12 @@
 package scross.healer.camera;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +15,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,12 +24,14 @@ import scross.healer.BaseActivity;
 import scross.healer.HealerContext;
 import scross.healer.R;
 import scross.healer.SharedPreferenceUtil;
+import scross.healer.home.HomeFragment;
+import scross.healer.setting.SettingFragment;
 
 /**
  * Created by gta2v on 2017-07-23.
  */
 
-public class CameraActivity extends BaseActivity{
+public class CameraActivity extends BaseActivity {
 
 
     private Button cameraStart;
@@ -33,6 +42,7 @@ public class CameraActivity extends BaseActivity{
     private TextView contentExplain;
     private Context context;
     private LinearLayout cameraBackground;
+    private FrameLayout fragmentSetting;
 
     final int ANIMATION_TIME1 = 500;
     final int ANIMATION_TIME2 = 650;
@@ -40,11 +50,12 @@ public class CameraActivity extends BaseActivity{
     final int ANIMATION_TIME4 = 1950;
 
 
-
     // TODO 네트워크로 부터 state받아와야함. daystate는 메인액티비티에서 받아오고 인텐트로 전달받기!
     int state;
     int dayState = 0;
 
+    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+    public Fragment fragment = new SettingFragment();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,8 +66,6 @@ public class CameraActivity extends BaseActivity{
 
         Intent intent = getIntent();
         dayState = intent.getExtras().getInt("day");
-
-
 
 
         Log.e("dayState", dayState + "");
@@ -73,6 +82,9 @@ public class CameraActivity extends BaseActivity{
 
         cameraCheck = (ImageView) findViewById(R.id.camera_check);
 
+        fragmentSetting = (FrameLayout) findViewById(R.id.fragment_setting);
+
+
         //TODO 애니메이션 마저하기!
         RunAnimation();
 
@@ -85,23 +97,57 @@ public class CameraActivity extends BaseActivity{
                 @Override
                 public void onClick(View view) {
 
+                    int networkCheck = sharedPreferenceUtil.getSaveNetworkType();
 
-                    Intent intent = new Intent(getApplication(), TakePictureActivity.class);
-                    intent.putExtra("state", state);
-                    Log.e("state Camera put", state + "");
 
-                    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+                    // 와이파이 연결 안되어있는 경우
+                    if (networkCheck == 1) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CameraActivity.this);
+                        alertDialogBuilder.setTitle(" Wi-fi 연결된 상태에서만 진행 가능합니다. \n");
+                        alertDialogBuilder.setMessage("3G/LTE 모드로 진행 하시려면\n" +
+                                "설정에 ’Wi-fi로만 연결’ 에서\n" +
+                                "체크 해제를 해 주세요.").setCancelable(false);
 
-                    if (sharedPreferenceUtil.getProcess() != state) {
-                        sharedPreferenceUtil.setProcess(state);
+                        alertDialogBuilder
+                                .setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                                    public void onClick(
+                                            DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                })
+                                .setNegativeButton("설정이동", new DialogInterface.OnClickListener() {
+                                    public void onClick(
+                                            DialogInterface dialog, int id) {
+                                        dialog.cancel();
+
+                                        fragmentSetting.setVisibility(View.VISIBLE);
+
+                                        FragmentManager fragmentManager = getFragmentManager();
+                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                        fragmentTransaction.add(R.id.fragment_setting, fragment);
+                                        fragmentTransaction.commit();
+                                    }
+                                });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+
+                    } else {
+                        Intent intent = new Intent(getApplication(), TakePictureActivity.class);
+                        intent.putExtra("state", state);
+                        Log.e("state Camera put", state + "");
+
+
+                        if (sharedPreferenceUtil.getProcess() != state) {
+                            sharedPreferenceUtil.setProcess(state);
 
 //            state = sharedPreferenceUtil.getProcess();
+                        }
+                        Log.e("SharedPreference!!!!: ", state + " 프로세스.");
+
+
+                        startActivity(intent);
+                        finish();
                     }
-                    Log.e("SharedPreference!!!!: ", state + " 프로세스.");
-
-
-                    startActivity(intent);
-                    finish();
                 }
             });
             // 몇일차인지에 따라 컨텐츠 제목이랑 일자 수정!
@@ -183,7 +229,6 @@ public class CameraActivity extends BaseActivity{
             a3.setStartOffset(ANIMATION_TIME1);
             a3.reset();
             cameraCheck.startAnimation(a3);
-
 
 
             switch (dayState) {
@@ -275,8 +320,7 @@ public class CameraActivity extends BaseActivity{
 
     }
 
-    private void RunAnimation()
-    {
+    private void RunAnimation() {
         final Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
         final Animation a1 = AnimationUtils.loadAnimation(this, R.anim.anim);
         final Animation a2 = AnimationUtils.loadAnimation(this, R.anim.anim);
@@ -295,15 +339,10 @@ public class CameraActivity extends BaseActivity{
         final TextView contentExplain = (TextView) findViewById(R.id.content_explain);
 
 
-
-
         tv.startAnimation(a);
         contentName.startAnimation(a1);
         contentBody.startAnimation(a1);
         contentExplain.startAnimation(a2);
-
-
-
 
 
     }

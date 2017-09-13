@@ -60,7 +60,9 @@
     <!--  DatePickerAlert-->
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
     <!--buttons color-->
-    <item name="colorAccent">@color/pink</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <item name="colorAccent">@color/colorPrimary</item>
     <!--title and message color-->
     <item name="android:textColorPrimary">@color/grayFont</item>
     <!--dialog background-->

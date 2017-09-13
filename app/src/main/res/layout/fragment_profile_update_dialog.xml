@@ -88,8 +88,8 @@
 
                 <TextView
                     android:id="@+id/profile_update_birth"
-                    android:layout_width="162dp"
-                    android:layout_height="0dp"
+                    android:layout_width="140dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
@@ -101,7 +101,12 @@
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintVertical_bias="0.555"
+                    app:layout_constraintRight_toRightOf="@+id/imageView2"
+                    app:layout_constraintHorizontal_bias="1.0" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -138,8 +143,8 @@
 
                 <Spinner
                     android:id="@+id/profile_update_sex"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_width="99dp"
+                    android:layout_height="33dp"
                     android:layout_gravity="center"
 
                     android:layout_marginBottom="8dp"
@@ -148,8 +153,10 @@
                     android:textAlignment="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="0.671"
+                    app:layout_constraintRight_toLeftOf="@+id/imageView4"
+                    android:layout_marginRight="0dp" />
 
                 <ImageView
                     android:id="@+id/imageView4"

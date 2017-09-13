@@ -393,35 +393,35 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                         if (!data.isNull("emotion_2")) {
                             switch (data.getInt("emotion_2")) {
                                 case 1:
-                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selactivity));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.activitymini));
                                     detailcontent3.setText("활기참");
                                     break;
                                 case 2:
-                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selcalm));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.calmmini));
                                     detailcontent3.setText("평온함");
                                     break;
                                 case 3:
-                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selhappy));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.happymini));
                                     detailcontent3.setText("행복함");
                                     break;
                                 case 4:
-                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selsoso));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.sosomini));
                                     detailcontent3.setText("보통");
                                     break;
                                 case 5:
-                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selsadly));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.sadlymini));
                                     detailcontent3.setText("우울함");
                                     break;
                                 case 6:
-                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selangry));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.angrymini));
                                     detailcontent3.setText("화가남");
                                     break;
                                 case 7:
-                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selanxious));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.anxiousmini));
                                     detailcontent3.setText("불안함");
                                     break;
                                 default:
-                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.selanxious));
+                                    detailicon3.setBackground(getDrawable(getActivity(), R.drawable.anxiousmini));
                                     detailcontent3.setText("불안함");
                                     break;
 
@@ -430,35 +430,35 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                         if (!data.isNull("emotion_5")) {
                             switch (data.getInt("emotion_5")) {
                                 case 1:
-                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selactivity));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.activitymini));
                                     detailcontent4.setText("활기참");
                                     break;
                                 case 2:
-                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selcalm));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.calmmini));
                                     detailcontent4.setText("평온함");
                                     break;
                                 case 3:
-                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selhappy));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.happymini));
                                     detailcontent4.setText("행복함");
                                     break;
                                 case 4:
-                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selsoso));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.sosomini));
                                     detailcontent4.setText("보통");
                                     break;
                                 case 5:
-                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selsadly));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.sadlymini));
                                     detailcontent4.setText("우울함");
                                     break;
                                 case 6:
-                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selangry));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.angrymini));
                                     detailcontent4.setText("화가남");
                                     break;
                                 case 7:
-                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selanxious));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.anxiousmini));
                                     detailcontent4.setText("불안함");
                                     break;
                                 default:
-                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.selanxious));
+                                    detailicon4.setBackground(getDrawable(getActivity(), R.drawable.anxiousmini));
                                     detailcontent4.setText("불안함");
                                     break;
 
