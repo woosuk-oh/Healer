@@ -622,7 +622,9 @@ public class TimelineFragment extends BaseFragment implements View.OnClickListen
                             SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
                             sharedPreferenceUtil.setProcess(stateProcess);
-                            Log.e("Get Now Process: ", sharedPreferenceUtil.getProcess() + " , 서버 리스폰스.");
+
+
+//                            Log.e("Get Now Process: ", sharedPreferenceUtil.getProcess() + " , 서버 리스폰스.");
                         }
 
                     } else {

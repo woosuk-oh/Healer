@@ -1,5 +1,6 @@
 package scross.healer.emotion;
 
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +36,7 @@ import scross.healer.HealerContext;
 import scross.healer.MainActivity;
 import scross.healer.R;
 import scross.healer.SharedPreferenceUtil;
+import scross.healer.camera.CameraActivity;
 import scross.healer.media.MediaplayerActivity;
 import scross.healer.networkService.EmotionEntityObject;
 import scross.healer.networkService.NetworkApi;
@@ -61,7 +63,13 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
     String lastDay;
 
 
+
     NetworkService apiService;
+
+    private AlertDialog.Builder alertDialogBuilder1;
+    private AlertDialog alertDialog1;
+    private AlertDialog.Builder alertDialogBuilder2;
+    private AlertDialog alertDialog2;
 
     public static EmotionDialog newInstance(int state) {
 
@@ -85,6 +93,9 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
         Log.e("st emotionDialog get2", state + "");
 
+        if(savedInstanceState != null){
+            dismiss();
+        }
 
     }
 
@@ -108,16 +119,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
         if (entityObject == null) {
             entityObject = new EmotionEntityObject();
         }
-/*
 
-        emotion1 = (LinearLayout) view.findViewById(R.id.emotion_btn1);
-        emotion2 = (LinearLayout) view.findViewById(R.id.emotion_btn2);
-        emotion3 = (LinearLayout) view.findViewById(R.id.emotion_btn3);
-        emotion4 = (LinearLayout) view.findViewById(R.id.emotion_btn4);
-        emotion5 = (LinearLayout) view.findViewById(R.id.emotion_btn5);
-        emotion6 = (LinearLayout) view.findViewById(R.id.emotion_btn6);
-        emotion7 = (LinearLayout) view.findViewById(R.id.emotion_btn7);
-*/
 
         btn1 = (Button) view.findViewById(R.id.emotion_success_btn);
         btn2 = (Button) view.findViewById(R.id.emotion_cancel_btn);
@@ -378,9 +380,24 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        if(alertDialog1 != null){
+            alertDialog1.dismiss();
+            resetState();
+        }else if(alertDialog2 != null){
+            alertDialog2.dismiss();
+            resetState();
+        }else{
+            getActivity().finish();
+        }
+    }
+
+    @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        getActivity().finish();
+//        getActivity().finish();
 
     }
 
@@ -390,7 +407,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
             Toast.makeText(HealerContext.getContext(), "감정 선택을 해주세요!", Toast.LENGTH_SHORT).show();
 
-        } else if (state == 2) {
+        } else if (state == 2) { // 컨텐츠 진행 전
 
             apiService = NetworkApi.getInstance(getActivity()).getServce();
 
@@ -447,7 +464,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
 
                 }
             });
-        } else if (state == 5) {
+        } else if (state == 5) { //컨텐츠 진행 후
 
 
             apiService = NetworkApi.getInstance(getActivity()).getServce();
@@ -463,18 +480,14 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                             String code = new JSONObject(response.body().string()).get("code").toString();
                             if (code.equals("1")) {
 
-                                Toast.makeText(HealerContext.getContext(), "금일 과정은 모두 종료되었습니다. 내일 다시 진행해주세요", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(HealerContext.getContext(), "금일 과정은 모두 종료되었습니다. 내일 다시 진행해주세요", Toast.LENGTH_LONG).show();
 
-                                state = 1;
 
-                                sharedPreferenceUtil.setProcess(state);
-
-                                Intent intent1 = new Intent(HealerContext.getContext(), MainActivity.class);
-                                intent1.putExtra("state", state);
-
-                                getActivity().finish();
-                                startActivity(intent1);
-                                dismiss();
+                                if(Integer.valueOf(lastDay) < 8) { // 진행일자가 8일 전이면,
+                                    firstDialog();
+                                }else{
+                                    secondDialog();
+                                }
 
 
                             } else {
@@ -610,5 +623,54 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
                 break;
 
         }*/
+    }
+
+    public void resetState(){
+        state = 1;
+
+        sharedPreferenceUtil.setProcess(state);
+
+        Intent intent1 = new Intent(HealerContext.getContext(), MainActivity.class);
+        intent1.putExtra("state", state);
+
+        getActivity().finish();
+        startActivity(intent1);
+        dismiss();
+    }
+
+    public void firstDialog(){
+        alertDialogBuilder1 = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder1.setTitle(lastDay + " 일차 콘텐츠를 마쳤습니다. \n");
+        int day = Integer.valueOf(lastDay) + 1;
+        alertDialogBuilder1.setMessage("수고하셨습니다. 다음 콘텐츠는 " + day + "일차 입니다.\n").setCancelable(false);
+
+        alertDialogBuilder1
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    public void onClick(
+                            DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        resetState();
+                    }
+                });
+        alertDialog1 = alertDialogBuilder1.create();
+        alertDialog1.show();
+    }
+    public void secondDialog(){
+        alertDialogBuilder2 = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder2.setTitle(lastDay + "마지막 콘텐츠를 마쳤습니다. \n");
+        alertDialogBuilder2.setMessage("수고하셨습니다. 모든 컨텐츠를 완료하셨습니다 마지막 서베이를 진행해주세요.\n").setCancelable(false);
+
+        alertDialogBuilder2
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    public void onClick(
+                            DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        resetState();
+
+                    }
+                });
+
+        alertDialog2 = alertDialogBuilder2.create();
+        alertDialog2.show();
     }
 }
