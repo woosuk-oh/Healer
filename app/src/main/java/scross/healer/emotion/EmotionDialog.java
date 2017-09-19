@@ -657,7 +657,7 @@ public class EmotionDialog extends DialogFragment implements View.OnClickListene
     }
     public void secondDialog(){
         alertDialogBuilder2 = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder2.setTitle(lastDay + "마지막 콘텐츠를 마쳤습니다. \n");
+        alertDialogBuilder2.setTitle("마지막 콘텐츠를 마쳤습니다. \n");
         alertDialogBuilder2.setMessage("수고하셨습니다. 모든 컨텐츠를 완료하셨습니다 마지막 서베이를 진행해주세요.\n").setCancelable(false);
 
         alertDialogBuilder2
