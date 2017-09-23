@@ -1,8 +1,10 @@
 package scross.healer.media;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
@@ -56,6 +58,7 @@ import scross.healer.networkService.NetworkApi;
 import scross.healer.networkService.NetworkService;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 import static scross.healer.HealerContext.getContext;
 
@@ -90,7 +93,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
     NetworkService apiService;
 
-
+    private AlertDialog alertDialog;
     int networkChangereceive;
 
     public static String BROADCAST_ACTION =
@@ -148,7 +151,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         mediaSkipBtn = (Button) findViewById(R.id.media_skip_btn);
 
         //skip 버튼!!
-        mediaSkipBtn.setVisibility(View.VISIBLE
+        mediaSkipBtn.setVisibility(View.INVISIBLE
         );
 
         mediaSkipBtn.setOnClickListener(new View.OnClickListener() {
@@ -157,13 +160,13 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                 SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
                 stateProcess = sharedPreferenceUtil.getProcess();
-                stateProcess = stateProcess +1;
+                stateProcess = stateProcess + 1;
                 sharedPreferenceUtil.setProcess(stateProcess);
-                Log.e("쉐어드프리페어런스","Mediaplayer Skip getProcess: "+sharedPreferenceUtil.getProcess());
+                Log.e("쉐어드프리페어런스", "Mediaplayer Skip getProcess: " + sharedPreferenceUtil.getProcess());
 
                 savetime = 0;
                 sharedPreferenceUtil.setSaveTime(savetime);
-                Log.e("쉐어드프리페어런스","Mediaplayer Skip getSaveTime: "+sharedPreferenceUtil.getSaveTime());
+                Log.e("쉐어드프리페어런스", "Mediaplayer Skip getSaveTime: " + sharedPreferenceUtil.getSaveTime());
                 if (mp != null) {
                     mp.pause();
                     mp.stop();
@@ -255,7 +258,6 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         }
 
 
-
         ConnectivityManager manager =
                 (ConnectivityManager) MediaplayerActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -294,12 +296,11 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                         Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d("network type", "Network - > (와이파이)" + networkTypeName);
-                        mPause.setVisibility(view.VISIBLE);
+                        mPause.setVisibility(VISIBLE);
                         mPlay.setVisibility(GONE);
 
                         //재생
                         if (savetime == 0) {
-
                             playVideo(0);
                         } else {
                             playVideo(savetime);
@@ -308,7 +309,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                     }
                 } else { //네트워크 연결 관련 설정안한 경우 체크하지 않고 바로 재생
 
-                    mPause.setVisibility(view.VISIBLE);
+                    mPause.setVisibility(VISIBLE);
                     mPlay.setVisibility(GONE);
 
                     //재생
@@ -327,7 +328,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
             public void onClick(View view) {
                 if (mp != null) {
                     mp.pause();
-                    mPlay.setVisibility(view.VISIBLE);
+                    mPlay.setVisibility(VISIBLE);
                     mPause.setVisibility(GONE);
                 }
             }
@@ -516,7 +517,6 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
                                                     }
 
 
-
                                                 }
 /*
                                                 if(mp.getCurrentPosition() == mp.getDuration()){
@@ -617,128 +617,65 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     }
 
 
-
-
-
     @Override
     public void onBackPressed() {
-        if (savetime != 0) {
-//            savetime = mp.getCurrentPosition();
-
-            SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(this);
-            sharedPreferenceUtil.setSaveTime(savetime);
-            Log.e("savetime!!!!!", "" + savetime);
-        }
-
-//        onPause();
+// TODO 재생 후 바로 뒤로가기 누르면 튕김, 일시정지해도 마찬가지.
 
         if (mp != null) {
             mp.pause();
-            mp.stop();
-            mp.reset();
+            mPlay.setVisibility(VISIBLE);
+            mPause.setVisibility(GONE);
 
-            //리셋은 다시 재생 가능하도록 대기상태 완전 끝낼때는 release() 해줘야됨. 현재는 문제 없는듯
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MediaplayerActivity.this);
+            alertDialogBuilder.setTitle(" 콘텐츠를 중단하시겠습니까? \n");
+            alertDialogBuilder.setMessage("지금까지 들었던 콘텐츠는 완료되지 않으며 다시 시작시 중단 부분부터 시작됩니다.\n").setCancelable(false);
+
+            alertDialogBuilder
+                    .setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                        public void onClick(
+                                DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                        public void onClick(
+                                DialogInterface dialog, int id) {
+
+                            if (savetime != 0) {
+
+                                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+                                sharedPreferenceUtil.setSaveTime(savetime);
+                                Log.e("savetime!!!!!", "" + savetime);
+                            }
+
+
+                            if (mp != null) {
+                                mp.pause();
+                                mp.stop();
+                                mp.reset();
+
+                                //리셋은 다시 재생 가능하도록 대기상태 완전 끝낼때는 release() 해줘야됨. 현재는 문제 없는듯
+                            }
+
+
+                            dialog.cancel();
+                            alertDialog.dismiss();
+                            finish();
+
+                        }
+                    });
+
+            alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
         }
-        super.onBackPressed();
-        finish();
 
+        else {
+            super.onBackPressed(); //이거 안해도 이제 자동으로 백프레스드 됨.
+            finish();
+        }
     }
 
-
-    //TODO 브로드캐스트로 할 경우 밑에 완성시키기. 이상태로하면 퍼미션 디나이드 뜸
-
-   /* public void sendBroadcast() {
-        Intent broadcast = new Intent();
-        broadcast.setAction(BROADCAST_ACTION);
-        broadcast.addCategory(Intent.CATEGORY_DEFAULT);
-        sendBroadcast(broadcast);
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-      *//*  IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        try {
-            registerReceiver(mNetworkStateReceiver, filter);
-        } catch (Exception e) {
-           e.printStackTrace();
-        }*//*
-
-
-        ConnectivityManager manager =
-                (ConnectivityManager) MediaplayerActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo ni = manager.getActiveNetworkInfo();
-        String networkTypeName = ni.getTypeName();
-
-
-        if (networkCheck == 1 && networkTypeName.equals("MOBILE")) {// 환경설정에서 와이파이만 연결로 체크한경우.
-            // + 네트워크 상태가 모바일인 경우
-            Log.d("network type", "Network - > (모바일)" + networkTypeName);
-            Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-            onBackPressed();
-        }
-
-        sendBroadcast();
-
-
-    }
-
-
-    BroadcastReceiver br = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.w("Check", "Inside On Receiver");
-            String action = intent.getAction();
-
-            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                ConnectivityManager connectivityManager =
-                        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-                NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-                NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-
-              *//*  Toast.makeText(context, "Active Network Type : " + activeNetInfo.getTypeName(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(context, "Mobile Network Type : " + mobNetInfo.getTypeName(), Toast.LENGTH_SHORT).show();
-*//*
-                NetworkInfo ni = connectivityManager.getActiveNetworkInfo();
-                String networkTypeName = ni.getTypeName();
-
-                if (networkTypeName.equals("MOBILE") && networkCheck == 1) {
-                    Log.d("network type", "Network - > (모바일)" + networkTypeName);
-                    Toast.makeText(HealerContext.getContext(), "WIFI 연결상태가 아닙니다. 연결 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-
-                    mPlay.setEnabled(false);
-                    mp.pause();
-
-
-
-                } else {
-                    Log.d("network type", "Network - > (와이파이)" + networkTypeName);
-                    mPlay.setEnabled(true); //와이파이로 변경된 경우 버튼 작동 가능.
-
-                }
-            }
-
-            Toast.makeText(getApplicationContext(), "메시지 받음",
-                    Toast.LENGTH_SHORT).show();
-        }
-    };
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-      *//*  try {
-            if (mNetworkStateReceiver != null) unregisterReceiver(mNetworkStateReceiver);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }*//*
-        unregisterReceiver(br);
-
-    }*/
 
 
 }
