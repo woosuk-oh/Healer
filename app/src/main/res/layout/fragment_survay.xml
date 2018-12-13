@@ -26,7 +26,7 @@
         android:text="서베이를 진행 합니다."
         android:textSize="25sp"
         android:layout_marginBottom="36.5dp"
-        app:font="custom1"
+        app:fontName="custom1"
 
         />
     <TextView

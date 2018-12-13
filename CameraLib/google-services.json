@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "462593976268",
+    "firebase_url": "https://healer-46570.firebaseio.com",
+    "project_id": "healer-46570",
+    "storage_bucket": "healer-46570.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462593976268:android:b87f7c3a7c8b4acc",
+        "android_client_info": {
+          "package_name": "com.google.android.cameraview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462593976268-ieuosjq4p15heha88226onqnqilgnuk3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxyCTEH3QX9RMnKhyvNO-1tYiQAqxd-mA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462593976268:android:33643810e02ef118",
+        "android_client_info": {
+          "package_name": "scross.healer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462593976268-mj5mlp3m1jg0b3f0gah4tqrlrnkrffkt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "scross.healer",
+            "certificate_hash": "b0d019723802f2d8f09ba4e7466b8c45663c6a80"
+          }
+        },
+        {
+          "client_id": "462593976268-ieuosjq4p15heha88226onqnqilgnuk3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxyCTEH3QX9RMnKhyvNO-1tYiQAqxd-mA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462593976268-ieuosjq4p15heha88226onqnqilgnuk3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

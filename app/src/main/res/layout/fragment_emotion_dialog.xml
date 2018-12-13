@@ -37,7 +37,7 @@
                 android:textColor="@color/color5"
 android:layout_marginBottom="10.75dp"
                 android:textSize="20sp"
-                app:font="custom1"
+                app:fontName="custom1"
 
                 />
 
@@ -344,7 +344,7 @@ android:layout_marginBottom="10.75dp"
                         android:background="@null"
                         android:text="적용"
                         android:textColor="@color/color5"
-                        app:font="custom1"
+                        app:fontName="custom1"
 
 
                         />
@@ -366,7 +366,7 @@ android:layout_marginBottom="10.75dp"
                         android:text="취소"
 
                         android:textColor="@color/color5"
-                        app:font="custom1"
+                        app:fontName="custom1"
 
                         />
 

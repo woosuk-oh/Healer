@@ -40,7 +40,7 @@
         android:text="상태값"
         android:textColor="@color/color5"
         android:textSize="30sp"
-        app:font="custom1"
+        app:fontName="custom1"
 
         />
 
@@ -71,7 +71,7 @@
             android:text="0%"
             android:textColor="@color/white"
             android:textSize="45sp"
-            app:font="custom1" />
+            app:fontName="custom1" />
 
         <ImageView
 

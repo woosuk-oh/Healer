@@ -47,7 +47,7 @@
             android:text="초기 트라우마"
             android:textColor="#ffffff"
             android:textSize="25sp"
-            app:font="custom1"
+            app:fontName="custom1"
 
             />
 
@@ -59,7 +59,7 @@
             android:text="부정적 기억 내보내기"
             android:textColor="@color/white"
             android:textSize="25sp"
-            app:font="custom1"
+            app:fontName="custom1"
 
             />
 

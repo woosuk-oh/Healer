@@ -42,7 +42,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="#ccc5bd"
                     android:textSize="30sp"
-                    app:font="custom1"
+                    app:fontName="custom1"
 
 
                     />

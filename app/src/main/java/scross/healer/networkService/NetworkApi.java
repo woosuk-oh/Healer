@@ -7,7 +7,7 @@ import okhttp3.OkHttpClient;
 import java.net.NetworkInterface;
 import java.util.concurrent.TimeUnit;
 
-import retrofit2.GsonConverterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.Retrofit;
 
 /**
