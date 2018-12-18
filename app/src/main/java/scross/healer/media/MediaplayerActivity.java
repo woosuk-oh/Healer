@@ -90,6 +90,9 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     int tempTime = 0;
     int stateProcess;
     int lastDay = 0;
+    Timer timer1 = new Timer();
+    Timer timer2 = new Timer();
+
 
     NetworkService apiService;
 
@@ -107,6 +110,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
     SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
     int networkCheck = sharedPreferenceUtil.getSaveNetworkType();
+
 
     /**
      * Called when the activity is first created.
@@ -325,7 +329,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
         });
         mPause.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if (mp != null) {
+                if (mp != null && mp.isPlaying()) {
                     mp.pause();
                     mPlay.setVisibility(VISIBLE);
                     mPause.setVisibility(GONE);
@@ -369,7 +373,8 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
             if (path.equals(current) && mp != null) {
                 Log.e("saveTime" + savetime, "테스트: ");
 
-                mp.start();
+                if (!mp.isPlaying())
+                    mp.start();
 
 
                 return;
@@ -389,6 +394,7 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
             mp.setVolume(1, 1);
 
+            mp.reset();
 
             // Set the surface for the video output
 
@@ -398,136 +404,146 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
             Runnable r = new Runnable() {
                 public void run() {
                     try {
-
-
                         mp.setDataSource(getApplicationContext(), Uri.parse(path));
+                        if (!mp.isPlaying())
+                            mp.prepare();
                     } catch (IOException e) {
                         Log.e(TAG, e.getMessage(), e);
                     }
-                    try {
-                        mp.prepare();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Log.v(TAG, "Duration:  ===>" + mp.getDuration());
+                    mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            //Now your media player is ready to play
+                            Log.e("ready!", "ready!");
 
-
-                    if (savetime != 0) {
-                        mp.seekTo(savetime);
-                    }
+                            if (savetime != 0) {
+                                mp.seekTo(savetime);
+                            }
 //                    mp.seekTo(990000);
-                    mp.start();
+                            if (!mp.isPlaying())
+                                mp.start();
 
-                    Timer timer = new Timer();
-                    timer.scheduleAtFixedRate(new TimerTask() {
+                        }
+
+                    });
+
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (mp != null && mp.isPlaying()) {
-                                        tv.post(new Runnable() {
-                                            @Override
-                                            public void run() {
-
-                                                tv.setText("재생시간: " + mmss.format(mp.getCurrentPosition()));
-                                                if (mp.getCurrentPosition() != 0) {
-                                                    savetime = mp.getCurrentPosition();
+                            if (mp != null) {
+                                if (mp.isPlaying()) {
+                                    timer1.scheduleAtFixedRate(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            tv.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    tv.setText("재생시간: " + mmss.format(mp.getCurrentPosition()));
+                                                    if (mp.getCurrentPosition() != 0) {
+                                                        savetime = mp.getCurrentPosition();
+                                                    }
                                                 }
+                                            }, 1000);
+                                        }
+                                    }, 0, 1000);
+
+                                    timer2.scheduleAtFixedRate(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            tv2.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+
+                                                    tv2.setText("남은시간: " + mmss.format(mp.getDuration() - mp.getCurrentPosition()));
+                                                    Log.v(TAG, "Duration:  ===>" + mp.getDuration());
 
 
-                                            }
-                                        });
-                                        tv2.post(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                tv2.setText("남은시간: " + mmss.format(mp.getDuration() - mp.getCurrentPosition()));
-
-
-                                                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+                                                    SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
 
 //                                                Log.e("남은시간: ", mp.getDuration() - mp.getCurrentPosition()+" ms");
-                                                if (mp.getDuration() - mp.getCurrentPosition() < 1000) {
+                                                    if (mp.getDuration()!=0 && mp.getDuration() - mp.getCurrentPosition() < 1000) {
 //                                                    Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
 
-                                                    Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
+                                                        Log.e("SharedPreference!!!!: ", sharedPreferenceUtil.getProcess() + " MediaPlayer onCreate.");
 
-                                                    if (stateProcess == 3) {
+                                                        if (stateProcess == 3) {
 
-                                                        String dayString = String.valueOf(lastDay);
-                                                        apiService = NetworkApi.getInstance(HealerContext.getContext()).getServce();
+                                                            String dayString = String.valueOf(lastDay);
+                                                            apiService = NetworkApi.getInstance(HealerContext.getContext()).getServce();
 
-                                                        Call<ResponseBody> process3 = apiService.process3(dayString, 200);
-                                                        process3.enqueue(new Callback<ResponseBody>() {
-
-
-                                                            @Override
-                                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                                                try {
-                                                                    if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
-                                                                        String code = new JSONObject(response.body().string()).get("code").toString();
-                                                                        if (code.equals("1")) {
-
-                                                                            Toast.makeText(HealerContext.getContext(), "금일 컨텐츠 듣기가 완료되었습니다!", Toast.LENGTH_SHORT).show();
+                                                            Call<ResponseBody> process3 = apiService.process3(dayString, 200);
+                                                            process3.enqueue(new Callback<ResponseBody>() {
 
 
-                                                                            SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
+                                                                @Override
+                                                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                                    try {
+                                                                        if (response.body() != null) { //JSONObject(response.body().string()) 이게 내가 보낸 json 받는 부분임
+                                                                            String code = new JSONObject(response.body().string()).get("code").toString();
+                                                                            if (code.equals("1")) {
+
+                                                                                Toast.makeText(HealerContext.getContext(), "금일 컨텐츠 듣기가 완료되었습니다!", Toast.LENGTH_SHORT).show();
 
 
-                                                                            stateProcess = stateProcess + 1;
-                                                                            if (sharedPreferenceUtil.getProcess() != stateProcess) {
-                                                                                sharedPreferenceUtil.setProcess(stateProcess);
+                                                                                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(HealerContext.getContext());
 
+
+                                                                                stateProcess = stateProcess + 1;
+                                                                                if (sharedPreferenceUtil.getProcess() != stateProcess) {
+                                                                                    sharedPreferenceUtil.setProcess(stateProcess);
+
+                                                                                }
+
+                                                                                sharedPreferenceUtil.setSaveTime(0);
+
+                                                                                Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                                                                                intent.putExtra("state", stateProcess);
+                                                                                intent.putExtra("day", lastDay);
+                                                                                startActivity(intent);
+                                                                                finish();
+
+
+                                                                                //camera
+
+                                                                            } else {
+                                                                                Toast.makeText(HealerContext.getContext(), "컨텐츠 재생시간 저장에 실패했습니다", Toast.LENGTH_SHORT).show();
                                                                             }
 
-                                                                            sharedPreferenceUtil.setSaveTime(0);
-
-                                                                            Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-                                                                            intent.putExtra("state", stateProcess);
-                                                                            intent.putExtra("day", lastDay);
-                                                                            startActivity(intent);
-                                                                            finish();
-
-
-                                                                            //camera
-
                                                                         } else {
-                                                                            Toast.makeText(HealerContext.getContext(), "컨텐츠 재생시간 저장에 실패했습니다", Toast.LENGTH_SHORT).show();
+                                                                            Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
                                                                         }
-
-                                                                    } else {
-                                                                        Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                                                    } catch (IOException e) {
+                                                                        e.printStackTrace();
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
                                                                     }
-                                                                } catch (IOException e) {
-                                                                    e.printStackTrace();
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
                                                                 }
-                                                            }
 
-                                                            @Override
-                                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                                                Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
-                                                                Log.d("value", t.getMessage());
+                                                                @Override
+                                                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                                                    Toast.makeText(HealerContext.getContext(), "서버오류입니다.", Toast.LENGTH_SHORT).show();
+                                                                    Log.d("value", t.getMessage());
 
-                                                            }
-                                                        });
+                                                                }
+                                                            });
+                                                        }
+
+
                                                     }
-
-
-                                                }
 /*
                                                 if(mp.getCurrentPosition() == mp.getDuration()){
                                                     Toast.makeText(MediaplayerActivity.this, "재생 끝", Toast.LENGTH_SHORT).show();
                                                 }*/
-                                            }
-                                        });
-                                    }
+                                                };
+                                            },1000);
+                                        }
+                                    }, 0, 1000);
                                 }
-                            });
+                            }
                         }
-                    }, 0, 1000);
+                    });
+
 
                 }
             };
@@ -618,9 +634,14 @@ public class MediaplayerActivity extends Activity implements OnErrorListener,
 
     @Override
     public void onBackPressed() {
-// TODO 재생 후 바로 뒤로가기 누르면 튕김, 일시정지해도 마찬가지.
 
         if (mp != null) {
+            if(timer1 != null) {
+                timer1.cancel();
+                timer1.purge();
+                timer2.cancel();
+                timer2.purge();
+            }
             mp.pause();
             mPlay.setVisibility(VISIBLE);
             mPause.setVisibility(GONE);
